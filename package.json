@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,16 @@
     "koa": "^2.13.1",
     "koa-bodyparser": "^3.2.0",
     "koa2-cors": "^2.0.6"
+  },
+  "devDependencies": {
+    "@types/koa-bodyparser": "^4.3.4",
+    "@types/koa2-cors": "^2.0.2",
+    "@types/node": "^17.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.7.0",
+    "@typescript-eslint/parser": "^5.7.0",
+    "eslint": "^8.5.0",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.4.0",
+    "tslib": "^2.3.1"
   }
 }
