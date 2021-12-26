@@ -1,0 +1,38 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="demo()">demo</button>
+    <script>
+      const reqParam = {
+        name: "lixingjuan",
+        age: 25,
+      };
+
+      function demo() {
+        //请求百度的logo图片 会拦截
+        fetch("http://127.0.0.1:4000/add-one-user?aa", {
+          method: "POST", // *GET, POST, PUT, DELETE, etc.
+          mode: "cors", // no-cors, *cors, same-origin
+          cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: "same-origin", // include, *same-origin, omit
+          headers: {
+            "Content-Type": "application/json",
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: "follow", // manual, *follow, error
+          referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(reqParam),
+        })
+          .then(function (response) {})
+          .catch(function (err) {
+            console.log("Fetch错误:" + err);
+          });
+      }
+    </script>
+  </body>
+</html>

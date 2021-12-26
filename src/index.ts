@@ -1,59 +1,29 @@
 import Koa from "koa";
 import cors from "koa2-cors";
 import bodyParser from "koa-bodyparser";
-import { cwd } from "process";
 
-// const { aa } = require("./utils/index.ts");
-import { queryLocalJson } from "./utils/index";
-
-// import Koa = require("koa");
-// const { queryLocalJson } = require("./utils/index.js");
-
-// const getKeys = require("../getKeys");
+import routeMiddleWare from "./routes";
 
 const app = new Koa();
 
 const corsMiddleware = cors({
-  origin: "*",
+  // 奇怪？为什么是null
+  origin: "null",
   credentials: true,
-  allowMethods: ["GET", "POST", "DELETE"],
 });
+
+/* 路由信息 */
+app.use(corsMiddleware);
 
 app.use(bodyParser());
 
-app.use(corsMiddleware);
+/* 路由信息 */
+app.use(routeMiddleWare);
 
 app.use((ctx) => {
-  const { path, method } = ctx;
-  console.log(path);
-
-  ctx.body = {
-    data: "hello world",
-    code: 200,
-    message: "Succeed",
-    status: "Succeed",
-  };
+  console.log("ceeee", ctx);
 });
 
-// app.use(async (ctx) => {
-//   const { path, method } = ctx;
-//   console.log(path);
-//   const res = "queryLocalJson(path)";
-
-//   ctx.body = {
-//     data: res,
-//     code: 304,
-//     message: "查询成功",
-//     status: "Succeed",
-//   };
-// });
-
-app.listen(
-  {
-    port: 3000,
-    // host: "www.taobao.com",
-  },
-  () => {
-    console.log("SUCCESS, 监听在3000端口");
-  }
-);
+app.listen(4000, () => {
+  console.log("SUCCESS, 监听在4000端口");
+});
