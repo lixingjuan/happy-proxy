@@ -2,16 +2,10 @@ import Koa from "koa";
 import fs from "fs";
 import _ from "lodash";
 import axios from "axios";
-import {
-  rootPath,
-  pathToFileMapPath,
-  responseBasePath,
-} from "../configs/index";
+import { pathToFileMapPath, responseBasePath } from "../constant";
+import configs from "../my-configs";
 
-const targetBaseUrl = "api.juejin.cn";
-const protocal = "https:";
-
-const filePath = `${rootPath}/src/response/juejin.json`;
+const { targetBaseUrl, cookie } = configs;
 
 /**
  * @desc
@@ -20,8 +14,12 @@ const filePath = `${rootPath}/src/response/juejin.json`;
 const queryLocalJson = (routePath: string) => {
   console.log({ routePath });
 
-  const pathMap = JSON.parse(fs.readFileSync(pathToFileMapPath, "utf8"));
+  const pathMap = fs.readFileSync(pathToFileMapPath, "utf8")
+    ? JSON.parse(fs.readFileSync(pathToFileMapPath, "utf8"))
+    : {};
+
   const responseFilePath = pathMap[routePath];
+
   if (!responseFilePath) {
     return "";
   }
@@ -35,25 +33,37 @@ const queryLocalJson = (routePath: string) => {
   return localContent || "";
 };
 
+/**
+ * @desc 保存接口返回数据到本地，并更新映射文件
+ * @param {string} path 请求完整接口
+ * @param {any} resData 接口响应数据
+ */
 const saveResponseToLocal = (path: string, resData: any) => {
+  // 去除 / . : 等符号后做为文件名称
   const fileName = `${path.replace(/[\/|\.|:]/g, "")}.json`;
 
+  // 文件存储路径
   const filePath = `${responseBasePath}/${fileName}`;
 
   console.log("新的文件地址", fileName);
 
+  // 新的path to file 映射文件内容
   const newPathToFileMapPath = {
-    ...JSON.parse(fs.readFileSync(pathToFileMapPath, "utf-8")),
+    ...(JSON.parse(fs.readFileSync(pathToFileMapPath, "utf-8")) || {}),
     [path]: filePath,
   };
 
   console.log("新的映射文件内容", newPathToFileMapPath);
 
-  const resStr = JSON.stringify(_.cloneDeep(resData));
+  // 接口响应数据
+  const resStr = JSON.stringify(_.cloneDeep(resData), undefined, 2);
   // 写入接口响应
   fs.writeFileSync(filePath, resStr);
   // 更新 映射文件
-  fs.writeFileSync(pathToFileMapPath, JSON.stringify(newPathToFileMapPath));
+  fs.writeFileSync(
+    pathToFileMapPath,
+    JSON.stringify(newPathToFileMapPath, undefined, 4)
+  );
 };
 
 /**
@@ -61,23 +71,29 @@ const saveResponseToLocal = (path: string, resData: any) => {
  * @param {string} path
  * @param {Koa} method
  */
-const queryRealData = async (props: { url: string; method: any }) => {
-  const { url, method } = props;
+const queryRealData = async (props: {
+  url: string;
+  method: any;
+  headers: any;
+}) => {
+  const { url, method, headers } = props;
+  const queryParams = {
+    url,
+    method,
+    headers: { cookie },
+  };
 
-  console.log("queryRealData 请求接口", url);
+  console.log("queryRealData 请求参数 =>", queryParams);
 
   try {
-    const res = await axios({
-      url,
-      method,
-    });
+    const res = await axios(queryParams);
 
     console.log("真实接口请求成功，返回数据", res.data);
-    saveResponseToLocal(url, res.data);
+    saveResponseToLocal(props.url, res.data);
     return res;
   } catch (err) {
     /* @ts-ignore */
-    console.log("err.message", err?.message);
+    console.log("真实接口请求成功，返回数据 失败原因", err?.message);
     return err;
   }
 };
@@ -93,11 +109,16 @@ const queryRealData = async (props: { url: string; method: any }) => {
  *         3-2-2. 将响应内容写入该地址
  */
 const routeMiddleWare = async (ctx: Koa.Context) => {
+  console.clear();
   console.log("--------------------------分割线-----------------------------");
 
   console.log("来自网页的请求 ctx.request", ctx.request);
-  const { url, method } = ctx.request;
-  const completeUrl = `${protocal}//${targetBaseUrl}${url}`;
+
+  const { url, method, headers } = ctx.request;
+
+  const completeUrl = `${targetBaseUrl}${url}`;
+
+  console.log("目标URl", completeUrl);
 
   const localContent = queryLocalJson(completeUrl);
 
@@ -111,53 +132,11 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
      * 3. header
      */
 
-    const res = await queryRealData({ method, url: completeUrl });
+    const res = await queryRealData({ method, url: completeUrl, headers });
     console.log("将要响应给前端的数据", res);
     /* @ts-ignore */
     ctx.body = res.data;
   }
-
-  // 此时仅测试 /demo
-  // console.log(path);
-
-  // console.log("localMock", localMock);
-
-  // localMock
-  //   .then((res) => {
-  //     ctx.body = res;
-  //   })
-  //   .catch((err: Error) => {
-  //     console.log("本地mock查询出错, 错误原因=>", err);
-  //     // 发起真实的请求
-  //     return queryRealData(path, method);
-  //   });
 };
 
 export default routeMiddleWare;
-
-/* 测试请求掘金 */
-// const juejinIp = "180.97.251.22";
-
-// const options = {
-//   hostname: juejinIp,
-//   port: 80,
-//   path: "/extension/banner",
-//   method: "GET",
-// };
-
-// console.log({ options });
-// const req = http.request(options, (res) => {
-//   console.log("statusCode:", res.statusCode);
-//   console.log("headers:", res.headers);
-
-//   res.on("data", (d) => {
-//     console.log(d.toString());
-//     // process.stdout.write(d);
-//   });
-// });
-
-// console.log({ req });
-// req.on("error", (e) => {
-//   console.error(e);
-// });
-// req.end();

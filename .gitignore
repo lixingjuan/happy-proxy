@@ -1,2 +1,3 @@
 node_modules
 src/response/**/*
+# my-configs/index.ts
