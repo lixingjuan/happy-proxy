@@ -1,8 +1,10 @@
 import Koa from "koa";
 import fs from "fs";
+import { readFileSync, writeFileSync } from "fs";
 import _ from "lodash";
 import axios from "axios";
-import { pathToFileMapPath, responseBasePath } from "../constant";
+import { pathToFileMapPath, responseBasePath, logsFilePath } from "./constant";
+import { log } from "./utils";
 import configs from "../my-configs";
 
 const { targetBaseUrl, cookie } = configs;
@@ -12,10 +14,8 @@ const { targetBaseUrl, cookie } = configs;
  * 1. 根据请求路由去寻找对应的文件路径
  */
 const queryLocalJson = (routePath: string) => {
-  console.log({ routePath });
-
-  const pathMap = fs.readFileSync(pathToFileMapPath, "utf8")
-    ? JSON.parse(fs.readFileSync(pathToFileMapPath, "utf8"))
+  const pathMap = readFileSync(pathToFileMapPath, "utf8")
+    ? JSON.parse(readFileSync(pathToFileMapPath, "utf8"))
     : {};
 
   const responseFilePath = pathMap[routePath];
@@ -23,12 +23,10 @@ const queryLocalJson = (routePath: string) => {
   if (!responseFilePath) {
     return "";
   }
-  // const localFilePath = `${responseBasePath}${responseFilePath}`;
+
   const localFilePath = responseFilePath;
 
-  console.log("localFilePath--->", localFilePath);
-
-  const localContent = fs.readFileSync(localFilePath, "utf-8");
+  const localContent = readFileSync(localFilePath, "utf-8");
 
   return localContent || "";
 };
@@ -45,22 +43,22 @@ const saveResponseToLocal = (path: string, resData: any) => {
   // 文件存储路径
   const filePath = `${responseBasePath}/${fileName}`;
 
-  console.log("新的文件地址", fileName);
+  const localPathToFileMap = readFileSync(pathToFileMapPath, "utf-8")
+    ? JSON.parse(readFileSync(pathToFileMapPath, "utf-8"))
+    : {};
 
   // 新的path to file 映射文件内容
   const newPathToFileMapPath = {
-    ...(JSON.parse(fs.readFileSync(pathToFileMapPath, "utf-8")) || {}),
+    ...localPathToFileMap,
     [path]: filePath,
   };
-
-  console.log("新的映射文件内容", newPathToFileMapPath);
 
   // 接口响应数据
   const resStr = JSON.stringify(_.cloneDeep(resData), undefined, 2);
   // 写入接口响应
-  fs.writeFileSync(filePath, resStr);
+  writeFileSync(filePath, resStr);
   // 更新 映射文件
-  fs.writeFileSync(
+  writeFileSync(
     pathToFileMapPath,
     JSON.stringify(newPathToFileMapPath, undefined, 4)
   );
@@ -75,7 +73,7 @@ const queryRealData = async (props: {
   url: string;
   method: any;
   headers: any;
-}) => {
+}): Promise<any> => {
   const { url, method, headers } = props;
   const queryParams = {
     url,
@@ -83,17 +81,15 @@ const queryRealData = async (props: {
     headers: { cookie },
   };
 
-  console.log("queryRealData 请求参数 =>", queryParams);
-
   try {
     const res = await axios(queryParams);
-
-    console.log("真实接口请求成功，返回数据", res.data);
-    saveResponseToLocal(props.url, res.data);
     return res;
   } catch (err) {
     /* @ts-ignore */
-    console.log("真实接口请求成功，返回数据 失败原因", err?.message);
+    log(`🚗🚗🚗真实接口请求错误,
+              失败原因 => ${(err as Error)?.message}
+              请求参数 => ${JSON.stringify(queryParams, undefined, 4)}
+    `);
     return err;
   }
 };
@@ -109,34 +105,37 @@ const queryRealData = async (props: {
  *         3-2-2. 将响应内容写入该地址
  */
 const routeMiddleWare = async (ctx: Koa.Context) => {
-  console.clear();
-  console.log("--------------------------分割线-----------------------------");
+  log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
-  console.log("来自网页的请求 ctx.request", ctx.request);
+  log(`🚗请求参数${JSON.stringify(ctx.request, undefined, 4)}`);
 
   const { url, method, headers } = ctx.request;
 
   const completeUrl = `${targetBaseUrl}${url}`;
 
-  console.log("目标URl", completeUrl);
+  const localContent = (await queryLocalJson(completeUrl)) as any;
 
-  const localContent = queryLocalJson(completeUrl);
-
+  /* @ts-ignore */
   if (localContent) {
     ctx.body = localContent;
-  } else {
-    /**
-     * 接下来发起真正的请求，
-     * 1. 域名
-     * 2. 路径
-     * 3. header
-     */
-
-    const res = await queryRealData({ method, url: completeUrl, headers });
-    console.log("将要响应给前端的数据", res);
-    /* @ts-ignore */
-    ctx.body = res.data;
+    // log(`🌼响应来自本地, URL 👉🏻 ${url}🌼`);
+    return;
   }
+
+  /**
+   * 接下来发起真正的请求，
+   * 1. 域名
+   * 2. 路径
+   * 3. header
+   */
+  const res = await queryRealData({ method, url: completeUrl, headers });
+
+  ctx.body = res?.data;
+
+  // log(`🌳响应来自接口, URL 👉🏻 ${url}🌳`);
+
+  /* @ts-ignore */
+  saveResponseToLocal(completeUrl, res.data);
 };
 
 export default routeMiddleWare;

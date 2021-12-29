@@ -6,6 +6,7 @@ import routeMiddleWare from "./routes";
 
 const app = new Koa();
 
+/* 允许跨域 */
 const corsMiddleware = cors({
   // 奇怪？为什么是null
   origin: "null",
@@ -15,15 +16,14 @@ const corsMiddleware = cors({
 /* 路由信息 */
 app.use(corsMiddleware);
 
+/* body 解析中间件 */
 app.use(bodyParser());
 
 /* 路由信息 */
 app.use(routeMiddleWare);
 
-app.use((ctx) => {
-  console.log("ceeee", ctx);
-});
-
 app.listen(4000, () => {
-  console.log("SUCCESS, 监听在4000端口");
+  console.log(
+    "🌈🌈🌈🌈🌈 🦄🦄🦄🦄🦄 SUCCESS, 监听在4000端口 🦄🦄🦄🦄🦄 🌈🌈🌈🌈🌈"
+  );
 });

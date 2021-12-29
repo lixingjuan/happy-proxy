@@ -2,9 +2,9 @@
 
 // TODO 以下变量 怎么从接口中获取呢？
 const importantVars = {
-  /* 目标接口的base地址 */
+  /** 目标接口的base地址 */
   targetBaseUrl: "",
-  /* 接口的cookie */
+  /** 接口的cookie */
   cookie: "",
 };
 
