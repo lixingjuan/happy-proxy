@@ -12,7 +12,6 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "no-unused-vars": "warn"
-    // "no-var-requires": "false"
   },
-  "ignore": ["./src/response"]
+  "ignore": ["./response"]
 }

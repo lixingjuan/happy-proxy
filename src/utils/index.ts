@@ -1,7 +1,13 @@
 import fs from "fs";
-import { pathToFileMapPath, responseBasePath, logsFilePath } from "../constant";
+import { logsFilePath } from "./constant";
 
 /* 向本地打入日志 */
-export const log = (text: string) => {
-  fs.appendFile(logsFilePath, `\n${text}`, "utf8", () => {});
+export const log = (text: string, type?: "error" | "info") => {
+  let theText = `\n${text}`;
+
+  if (type === "error") {
+    theText = `💔Error,${text}`;
+  }
+
+  fs.appendFile(logsFilePath, theText, "utf8", () => {});
 };

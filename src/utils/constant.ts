@@ -16,17 +16,3 @@ export const logsFilePath = `${rootPath}/logs/${currentDate}.log`;
 
 /** respnse json base file path */
 export const responseBasePath = `${rootPath}/response`;
-
-import { writeFile, readFile, readFileSync } from "fs";
-
-// writeFile(`${rootPath}/logs/2021-12-10.log`, "utf8", {}, (err, data) => {
-//   console.log({ data });
-// });
-
-// writeFile(`${rootPath}/logs/2021-12-10.log`, "", (err) => {
-//   console.log({ err });
-// });
-
-// readFile(`${rootPath}/logs/2021-12-11.log`, "utf8", (err, data) => {
-//   console.log({ data });
-// });

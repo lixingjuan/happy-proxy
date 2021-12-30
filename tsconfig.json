@@ -101,5 +101,5 @@
   "rules": {
     // "no-var-requires": true
   },
-  "include": ["src", "routes", "routes.ts", "my-configs"]
+  "include": ["src"]
 }

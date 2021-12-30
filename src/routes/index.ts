@@ -3,9 +3,9 @@ import fs from "fs";
 import { readFileSync, writeFileSync } from "fs";
 import _ from "lodash";
 import axios from "axios";
-import { pathToFileMapPath, responseBasePath, logsFilePath } from "./constant";
-import { log } from "./utils";
-import configs from "../my-configs";
+import { pathToFileMapPath, responseBasePath } from "../utils/constant";
+import { log } from "../utils";
+import configs from "../../settings";
 
 const { targetBaseUrl, cookie } = configs;
 
@@ -14,21 +14,26 @@ const { targetBaseUrl, cookie } = configs;
  * 1. 根据请求路由去寻找对应的文件路径
  */
 const queryLocalJson = (routePath: string) => {
-  const pathMap = readFileSync(pathToFileMapPath, "utf8")
-    ? JSON.parse(readFileSync(pathToFileMapPath, "utf8"))
-    : {};
+  try {
+    const pathMap = readFileSync(pathToFileMapPath, "utf8")
+      ? JSON.parse(readFileSync(pathToFileMapPath, "utf8"))
+      : {};
 
-  const responseFilePath = pathMap[routePath];
+    const responseFilePath = pathMap[routePath];
 
-  if (!responseFilePath) {
+    if (!responseFilePath) {
+      return "";
+    }
+
+    const localFilePath = responseFilePath;
+
+    const localContent = readFileSync(localFilePath, "utf-8");
+
+    return localContent || "";
+  } catch (error) {
+    log(`函数queryLocalJson， 错误原因: ${(error as Error).message}`, "error");
     return "";
   }
-
-  const localFilePath = responseFilePath;
-
-  const localContent = readFileSync(localFilePath, "utf-8");
-
-  return localContent || "";
 };
 
 /**
@@ -37,31 +42,38 @@ const queryLocalJson = (routePath: string) => {
  * @param {any} resData 接口响应数据
  */
 const saveResponseToLocal = (path: string, resData: any) => {
-  // 去除 / . : 等符号后做为文件名称
-  const fileName = `${path.replace(/[\/|\.|:]/g, "")}.json`;
+  try {
+    // 去除 / . : 等符号后做为文件名称
+    const fileName = `${path.replace(/[\/|\.|:]/g, "")}.json`;
 
-  // 文件存储路径
-  const filePath = `${responseBasePath}/${fileName}`;
+    // 文件存储路径
+    const filePath = `${responseBasePath}/${fileName}`;
 
-  const localPathToFileMap = readFileSync(pathToFileMapPath, "utf-8")
-    ? JSON.parse(readFileSync(pathToFileMapPath, "utf-8"))
-    : {};
+    const localPathToFileMap = readFileSync(pathToFileMapPath, "utf-8")
+      ? JSON.parse(readFileSync(pathToFileMapPath, "utf-8"))
+      : {};
 
-  // 新的path to file 映射文件内容
-  const newPathToFileMapPath = {
-    ...localPathToFileMap,
-    [path]: filePath,
-  };
+    // 新的path to file 映射文件内容
+    const newPathToFileMapPath = {
+      ...localPathToFileMap,
+      [path]: filePath,
+    };
 
-  // 接口响应数据
-  const resStr = JSON.stringify(_.cloneDeep(resData), undefined, 2);
-  // 写入接口响应
-  writeFileSync(filePath, resStr);
-  // 更新 映射文件
-  writeFileSync(
-    pathToFileMapPath,
-    JSON.stringify(newPathToFileMapPath, undefined, 4)
-  );
+    // 接口响应数据
+    const resStr = JSON.stringify(_.cloneDeep(resData), undefined, 2);
+    // 写入接口响应
+    writeFileSync(filePath, resStr);
+    // 更新 映射文件
+    writeFileSync(
+      pathToFileMapPath,
+      JSON.stringify(newPathToFileMapPath, undefined, 4)
+    );
+  } catch (error) {
+    log(
+      `函数saveResponseToLocal， 错误原因: ${(error as Error).message}`,
+      "error"
+    );
+  }
 };
 
 /**
@@ -118,7 +130,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
   /* @ts-ignore */
   if (localContent) {
     ctx.body = localContent;
-    // log(`🌼响应来自本地, URL 👉🏻 ${url}🌼`);
+    log(`🌼响应来自本地, URL 👉🏻 ${url}🌼`);
     return;
   }
 
@@ -132,7 +144,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   ctx.body = res?.data;
 
-  // log(`🌳响应来自接口, URL 👉🏻 ${url}🌳`);
+  log(`🌳响应来自接口, URL 👉🏻 ${url}🌳`);
 
   /* @ts-ignore */
   saveResponseToLocal(completeUrl, res.data);
