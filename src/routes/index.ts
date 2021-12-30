@@ -1,10 +1,10 @@
 import Koa from "koa";
-import fs from "fs";
-import { readFileSync, writeFileSync } from "fs";
 import _ from "lodash";
 import axios from "axios";
+import { readFileSync, writeFileSync } from "fs";
+
 import { pathToFileMapPath, responseBasePath } from "../utils/constant";
-import { log } from "../utils";
+import log from "../utils";
 import configs from "../../settings";
 
 const { targetBaseUrl, cookie } = configs;
@@ -31,7 +31,7 @@ const queryLocalJson = (routePath: string) => {
 
     return localContent || "";
   } catch (error) {
-    log(`函数queryLocalJson， 错误原因: ${(error as Error).message}`, "error");
+    log.error(`函数queryLocalJson， 错误原因: ${(error as Error).message}`);
     return "";
   }
 };
@@ -69,9 +69,8 @@ const saveResponseToLocal = (path: string, resData: any) => {
       JSON.stringify(newPathToFileMapPath, undefined, 4)
     );
   } catch (error) {
-    log(
-      `函数saveResponseToLocal， 错误原因: ${(error as Error).message}`,
-      "error"
+    log.error(
+      `函数saveResponseToLocal， 错误原因: ${(error as Error).message}`
     );
   }
 };
@@ -98,7 +97,7 @@ const queryRealData = async (props: {
     return res;
   } catch (err) {
     /* @ts-ignore */
-    log(`🚗🚗🚗真实接口请求错误,
+    log.error(`🚗🚗🚗真实接口请求错误,
               失败原因 => ${(err as Error)?.message}
               请求参数 => ${JSON.stringify(queryParams, undefined, 4)}
     `);
@@ -119,7 +118,7 @@ const queryRealData = async (props: {
 const routeMiddleWare = async (ctx: Koa.Context) => {
   log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
-  log(`🚗请求参数${JSON.stringify(ctx.request, undefined, 4)}`);
+  // log(`🚗请求参数${JSON.stringify(ctx.request, undefined, 4)}`);
 
   const { url, method, headers } = ctx.request;
 
@@ -130,7 +129,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
   /* @ts-ignore */
   if (localContent) {
     ctx.body = localContent;
-    log(`🌼响应来自本地, URL 👉🏻 ${url}🌼`);
+    // log(`🌼响应来自本地, URL 👉🏻 ${url}🌼`);
     return;
   }
 

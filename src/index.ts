@@ -3,13 +3,16 @@ import cors from "koa2-cors";
 import bodyParser from "koa-bodyparser";
 
 import routeMiddleWare from "./routes";
+import log from "./utils";
 
 const app = new Koa();
 
 /* 允许跨域 */
 const corsMiddleware = cors({
-  // 奇怪？为什么是null
-  origin: "null",
+  // TODO: 奇怪？为什么是null, 是chrome转发的时候丢失了么？
+  origin: (ctx: any) => {
+    return ctx.request.header.origin;
+  },
   credentials: true,
 });
 
