@@ -42,23 +42,31 @@ const queryLocalJson = (routePath: string) => {
  * @param {any} resData 接口响应数据
  */
 const saveResponseToLocal = (path: string, resData: any) => {
+  let filePath = "";
+  let newPathToFileMap = {};
   try {
     // 去除 / . : 等符号后做为文件名称
     const fileName = `${path.replace(/[\/|\.|:]/g, "")}.json`;
 
     // 文件存储路径
-    const filePath = `${responseBasePath}/${fileName}`;
+    filePath = `${responseBasePath}/${fileName}`;
 
     const localPathToFileMap = readFileSync(pathToFileMapPath, "utf-8")
       ? JSON.parse(readFileSync(pathToFileMapPath, "utf-8"))
       : {};
 
     // 新的path to file 映射文件内容
-    const newPathToFileMapPath = {
+    newPathToFileMap = {
       ...localPathToFileMap,
       [path]: filePath,
     };
+  } catch (error) {
+    log.error(
+      `函数saveResponseToLocal(1)， 错误原因:  ${(error as Error).message}`
+    );
+  }
 
+  try {
     // 接口响应数据
     const resStr = JSON.stringify(_.cloneDeep(resData), undefined, 2);
     // 写入接口响应
@@ -66,11 +74,13 @@ const saveResponseToLocal = (path: string, resData: any) => {
     // 更新 映射文件
     writeFileSync(
       pathToFileMapPath,
-      JSON.stringify(newPathToFileMapPath, undefined, 4)
+      JSON.stringify(newPathToFileMap, undefined, 4)
     );
   } catch (error) {
     log.error(
-      `函数saveResponseToLocal， 错误原因: ${(error as Error).message}`
+      `函数saveResponseToLocal(2)，
+      错误原因: ${(error as Error).message},
+      接口返回: ${resData}`
     );
   }
 };
@@ -118,7 +128,8 @@ const queryRealData = async (props: {
 const routeMiddleWare = async (ctx: Koa.Context) => {
   log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
-  // log(`🚗请求参数${JSON.stringify(ctx.request, undefined, 4)}`);
+  // log(`🚗请求参数${ctx.request}`);
+  log(`🚗请求参数${JSON.stringify(ctx.request, undefined, 4)}`);
 
   const { url, method, headers } = ctx.request;
 
@@ -126,7 +137,6 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   const localContent = (await queryLocalJson(completeUrl)) as any;
 
-  /* @ts-ignore */
   if (localContent) {
     ctx.body = localContent;
     // log(`🌼响应来自本地, URL 👉🏻 ${url}🌼`);
@@ -143,7 +153,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   ctx.body = res?.data;
 
-  log(`🌳响应来自接口, URL 👉🏻 ${url}🌳`);
+  // log(`🌳响应来自接口, URL 👉🏻 ${url}🌳`);
 
   /* @ts-ignore */
   saveResponseToLocal(completeUrl, res.data);
