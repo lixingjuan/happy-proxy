@@ -1,19 +1,18 @@
+/**
+ * @desc 生成项目国际化中英文配置json
+ */
 const getUpperStr = (val) =>
   val.toLocaleUpperCase().split(" ").slice(0, 5).join("_");
 
 const demo = (arr) => {
   const enRes = arr.reduce(
-    // eslint-disable-next-line no-return-assign
     (tol, [zhStr, enStr]) =>
-      // eslint-disable-next-line no-param-reassign
       (tol += `"${getUpperStr(enStr)}": "${enStr}",
   `),
     ""
   );
   const zhRes = arr.reduce(
-    // eslint-disable-next-line no-return-assign
     (tol, [zhStr, enStr]) =>
-      // eslint-disable-next-line no-param-reassign
       (tol += `"${getUpperStr(enStr)}": "${zhStr}",
   `),
     ""
@@ -26,7 +25,16 @@ const demo = (arr) => {
   `);
 };
 
+/**
+ * @desc 使用说明书
+ * const needTranslateArr = [
+ *  ["中文描述", "English description"],
+ * ];
+ */
 const needTranslateArr = [
-  ["查看更多该阶段行业", "Check more industries under this phase"],
+  ["", ""],
+  ["", ""],
+  ["", ""],
 ];
+
 demo(needTranslateArr);

@@ -22,5 +22,6 @@ const errorLog = (text: string) => {
 };
 
 log.error = errorLog;
+log.info = log;
 
 export default log;

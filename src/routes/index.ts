@@ -4,7 +4,7 @@ import axios from "axios";
 import { readFileSync, writeFileSync } from "fs";
 
 import { pathToFileMapPath, responseBasePath } from "../utils/constant";
-import log from "../utils";
+import log from "../utils/log";
 import configs from "../../settings";
 
 const { targetBaseUrl, cookie } = configs;
@@ -86,7 +86,7 @@ const saveResponseToLocal = (path: string, resData: any) => {
 };
 
 /**
- * @desc 像真正的接口发起请求
+ * @desc 向真正的接口发起请求
  * @param {string} path
  * @param {Koa} method
  */
@@ -104,6 +104,7 @@ const queryRealData = async (props: {
 
   try {
     const res = await axios(queryParams);
+    log(JSON.stringify(res.data, undefined, 4));
     return res;
   } catch (err) {
     /* @ts-ignore */
