@@ -1,14 +1,24 @@
-// import { promises as fsPromises } from "fs";
+const fs = require("fs");
 const fsPromises = require("fs/promises");
 
+const initSettingStr = `// TODO 以下两个配置暂时无法从转发请求获取, 需手动配置
+const configs = {
+  cookie: "",
+  targetBaseUrl: ""
+};
+
+export default configs;
+`;
+
 /**
- * 1. 依次检查文件/文件夹是否存在，若不存在，则创建
+ * 依次检查以下 文件/文件夹是否存在，若不存在，则创建
  *    response
  *    logs
  *    settings/index.ts
  *    path_map/index.ts
  */
 
+/** logs */
 fsPromises
   .access("logs")
   .then(() => {
@@ -16,6 +26,7 @@ fsPromises
   })
   .catch(() => fsPromises.mkdir("logs"));
 
+/** response  */
 fsPromises
   .access("response")
   .then(() => {
@@ -23,6 +34,7 @@ fsPromises
   })
   .catch(() => fsPromises.mkdir("response"));
 
+/** path_map  */
 fsPromises
   .access("path_map")
   .catch(() => {
@@ -39,31 +51,11 @@ fsPromises
     console.log("SUCCESS", "path_map/index.json文件创建成功");
   });
 
+/** settings/index.ts */
 fsPromises
   .access("settings")
-  .catch(() => {
-    return fsPromises.mkdir("settings");
-  })
+  .catch(() => fs.mkdirSync("settings"))
   .then(() => {
-    return fsPromises.access("settings/index.json");
+    return fsPromises.access("settings/index.ts");
   })
-  .then(() => {
-    console.log("SUCCESS", "本地存在settings文件");
-  })
-  .catch(() =>
-    fsPromises.writeFile(
-      "settings/index.ts",
-      `
-// TODO 以下两个配置暂时无法从转发请求获取, 需手动配置
-const configs = {
-  cookie: "",
-  targetBaseUrl: ""
-};
-
-export default configs;
-`
-    )
-  )
-  .then(() => {
-    console.log("SUCCESS", "settings/index.json文件创建成功");
-  });
+  .catch(() => fsPromises.writeFile("settings/index.ts", initSettingStr));
