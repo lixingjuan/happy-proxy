@@ -1,2 +1,12 @@
-body{width:360px;height:510px}
-/*# sourceMappingURL=main.css.map */
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+
+body {
+  width: 360px;
+  height: 510px;
+}
+/*# sourceMappingURL=src/popup/popup.css.map */
+
+/*# sourceMappingURL=main.css.map*/

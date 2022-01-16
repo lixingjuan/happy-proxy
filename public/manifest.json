@@ -11,8 +11,9 @@
   "page_action": {
     "default_icon": "images/icon.png",
     "default_title": "React CRX",
-    "default_popup": "index.html"
+    "default_popup": "popup.html"
   },
+  "options_page": "options.html",
   "background": {
     "scripts": ["static/js/background.js"]
   },
@@ -26,8 +27,8 @@
   ],
   "permissions": [
     "webRequest",
-    "storage",
     "webRequestBlocking",
+    "storage",
     "browsingData",
     "<all_urls>",
     "cookies"
