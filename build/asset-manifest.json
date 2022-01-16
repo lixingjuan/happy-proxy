@@ -1,0 +1,28 @@
+{
+  "files": {
+    "background.js": "/static/js/background.js",
+    "background.js.map": "/static/js/background.js.map",
+    "content.css": "/static/css/content.css",
+    "content.js": "/static/js/content.js",
+    "content.css.map": "/static/css/content.css.map",
+    "content.js.map": "/static/js/content.js.map",
+    "main.css": "/static/css/main.css",
+    "main.js": "/static/js/main.js",
+    "main.css.map": "/static/css/main.css.map",
+    "main.js.map": "/static/js/main.js.map",
+    "options.css": "/static/css/options.css",
+    "options.js": "/static/js/options.js",
+    "options.css.map": "/static/css/options.css.map",
+    "options.js.map": "/static/js/options.js.map",
+    "icon.png": "/icon.png",
+    "index.html": "/index.html",
+    "options.html": "/options.html",
+    "precache-manifest.a25e599d51268fe625c7bb3a8f98ea03.js": "/precache-manifest.a25e599d51268fe625c7bb3a8f98ea03.js",
+    "service-worker.js": "/service-worker.js",
+    "static/media/options.less": "/static/media/options.0e3e8069.less"
+  },
+  "entrypoints": [
+    "static/css/main.css",
+    "static/js/main.js"
+  ]
+}
