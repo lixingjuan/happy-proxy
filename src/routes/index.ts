@@ -60,7 +60,7 @@ const saveResponseToLocal = (path: string, response: any) => {
     };
   } catch (error) {
     log.error(
-      `函数saveResponseToLocal(1)， 错误原因:  ${(error as Error).message}`
+      `保存response到本地出错 \n 错误原因: ${(error as Error).message}`
     );
   }
 
@@ -76,9 +76,7 @@ const saveResponseToLocal = (path: string, response: any) => {
     );
   } catch (error) {
     log.error(
-      `函数saveResponseToLocal(2)，
-      错误原因: ${(error as Error).message},
-      接口返回: ${responseData}`
+      `保存response到本地出错 \n 错误原因: ${(error as Error).message}`
     );
   }
 };
@@ -92,11 +90,13 @@ const queryRealData = (props: {
   url: string;
   method: any;
   headers: any;
+  body: any;
 }): Promise<any> => {
-  const { url, method, headers } = props;
+  const { url, method, headers, body } = props;
   const queryParams = {
     url,
     method,
+    data: body,
     headers: {
       cookie,
     },
@@ -108,15 +108,15 @@ const queryRealData = (props: {
       const isRequestOk = res.status === 200 && res.data.code > 0;
 
       if (!isRequestOk) {
-        log.error(`接口请求出错，接口：${url}， 错误原因：${res.data}`);
-        throw Error("请求出错");
+        const errMsg = `请求出错, \n 错误原因=> ${res.data.message} \n URL=> ${url}`;
+        throw Error(errMsg);
       }
 
       saveResponseToLocal(url, res);
-      return res;
+      return res.data;
     })
     .catch((err) => {
-      const errMsg = `数据存储本地出错, 错误原因=> ${err.message}`;
+      const errMsg = `请求出错, \n 错误原因=> ${err.message} \n URL=> ${url}`;
       log.error(errMsg);
       return Promise.reject(errMsg);
     });
@@ -135,7 +135,7 @@ const queryRealData = (props: {
 const routeMiddleWare = async (ctx: Koa.Context) => {
   log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
-  const { url, method, headers } = ctx.request;
+  const { url, method, headers, body } = ctx.request;
 
   log(`header: ${JSON.stringify(headers, undefined, 4)}`);
 
@@ -143,7 +143,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   return queryLocalJson(completeUrl)
     .then((localContent) => (ctx.body = localContent))
-    .catch((err) => queryRealData({ method, url: completeUrl, headers }))
+    .catch((err) => queryRealData({ method, url: completeUrl, headers, body }))
     .then((res: any) => {
       ctx.body = res;
     });
