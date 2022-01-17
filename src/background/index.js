@@ -1,8 +1,8 @@
 export const demo = ({ sourceUrl, targetUrl, cookie, targetBaseUrl }) => {
-  if (sourceUrl || targetUrl || cookie) {
-    console.error("输入有误");
-    return;
-  }
+  // if (sourceUrl || targetUrl || cookie) {
+  //   console.error("输入有误");
+  //   return;
+  // }
 
   chrome.webRequest.onBeforeRequest.addListener(
     (details) => {

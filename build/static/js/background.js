@@ -92,7 +92,11 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "demo", function() { return demo; });
-var demo=function demo(_ref){var sourceUrl=_ref.sourceUrl,targetUrl=_ref.targetUrl,cookie=_ref.cookie,targetBaseUrl=_ref.targetBaseUrl;if(sourceUrl||targetUrl||cookie){console.error("输入有误");return;}chrome.webRequest.onBeforeRequest.addListener(function(details){console.log("onBeforeRequest",details);return{redirectUrl:targetUrl};},{urls:[sourceUrl]},["blocking","requestBody"]);chrome.webRequest.onBeforeSendHeaders.addListener(function(details){console.log("onBeforeSendHeaders",details);details.headers.push({name:"cookie",value:cookie});return{requestHeaders:details.requestHeaders};},{urls:[targetUrl]},["blocking","requestHeaders","extraHeaders"]);};
+var demo=function demo(_ref){var sourceUrl=_ref.sourceUrl,targetUrl=_ref.targetUrl,cookie=_ref.cookie,targetBaseUrl=_ref.targetBaseUrl;// if (sourceUrl || targetUrl || cookie) {
+//   console.error("输入有误");
+//   return;
+// }
+chrome.webRequest.onBeforeRequest.addListener(function(details){console.log("onBeforeRequest",details);return{redirectUrl:targetUrl};},{urls:[sourceUrl]},["blocking","requestBody"]);chrome.webRequest.onBeforeSendHeaders.addListener(function(details){console.log("onBeforeSendHeaders",details);details.headers.push({name:"cookie",value:cookie});return{requestHeaders:details.requestHeaders};},{urls:[targetUrl]},["blocking","requestHeaders","extraHeaders"]);};
 
 /***/ })
 

@@ -27,11 +27,11 @@ function Option() {
       cookie,
       targetBaseUrl,
     });
-  }, [cookie, targetBaseUrl]);
+  }, [sourceUrl, targetBaseUrl]);
 
   return (
     <div className="wrapper">
-      <ul className="configs">
+      {/* <ul className="configs">
         <li>
           <span>cookie</span>
           <input value={cookie} onChange={(e) => setCookie(e.target.value)} />
@@ -44,7 +44,7 @@ function Option() {
             onChange={(e) => setTargetBaseUrl(e.target.value)}
           />
         </li>
-      </ul>
+      </ul> */}
 
       <div
         style={{
@@ -85,5 +85,3 @@ ReactDOM.render(
   </ConfigProvider>,
   document.getElementById("root")
 );
-
-// export default Option;
