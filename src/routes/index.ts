@@ -72,7 +72,7 @@ const saveResponseToLocal = (path: string, response: any) => {
     // 更新 映射文件
     fs.writeFileSync(
       pathToFileMapPath,
-      JSON.stringify(newPathToFileMap, undefined, 4)
+      JSON.stringify(newPathToFileMap, undefined, 2)
     );
   } catch (error) {
     log.error(
@@ -136,8 +136,6 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
   log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
   const { url, method, headers, body } = ctx.request;
-
-  log(`header: ${JSON.stringify(headers, undefined, 4)}`);
 
   const completeUrl = join(targetBaseUrl, url);
 
