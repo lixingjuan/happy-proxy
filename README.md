@@ -1,21 +1,34 @@
+# 使用说明
+
+1. `npm run install`
+2. `npm run start`
+3. 需要搭配 xswitch将接口转发到`http://127.0.0.1:4000`
+4. 在 `settings/index.ts` 配置
+   1. targetBaseUrl: 真实的目标domain
+   2. cookie
+
+
+
 # TODO
 
 1. [ ] 需要一个项目初始化/清理的脚本, 帮忙删除
-   1. [ ] 所有的接口数据
-   2. [ ] logs
+   1. [x] 所有的接口数据
+   2. [x] logs
    3. [ ] path_map
 2. [ ] 存储时根据域名将接口response 进行文件夹分类
-3. [ ] 需要一个脚本清除历史数据
-4. [ ] 校验接口为真的时候才存储本地
+3. [x] 需要一个脚本清除历史数据
+4. [x] 校验接口为真的时候才存储本地
 5. [x] 日志存储到本地文件中
 6. [ ] 配置路径alias
 7. [ ] 存储本地的文件名称
    1. [ ] decode便于查找
-   2. [ ] 用下划线替代不能识别的符号
+   2. [x] 用下划线替代不能识别的符号
 8. [ ] 项目启动的时候，脚本判断 logs、configs 文件夹是否存在, 如果不存在创建
 9.  [ ] 向logs文件打印日志的时候判断文件是否存在，如果不存在则按照当天日期创建
 10. [ ] 参考 console.log 和 egg.js, 写一个日志方法
-11. [ ] 更新fs为fs/promises
+11. [x] 更新fs为fs/promises
+12. [x] 增加launch.json文件支持调试
+13. [x] 项目 `npm run start`检查本地是否有settting、responseData、path_map 等文件[夹]
 
 
 # 目前的问题
