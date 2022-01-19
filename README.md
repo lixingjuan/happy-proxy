@@ -29,6 +29,7 @@
 11. [x] 更新fs为fs/promises
 12. [x] 增加launch.json文件支持调试
 13. [x] 项目 `npm run start`检查本地是否有settting、responseData、path_map 等文件[夹]
+14. [ ] 或许？可以把 targetBaseUrl 和 cookie做为环境变量存储？配置与逻辑分离
 
 
 # 目前的问题
