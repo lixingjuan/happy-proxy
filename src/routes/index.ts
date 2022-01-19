@@ -1,15 +1,15 @@
+import chalk from "chalk";
 import Koa from "koa";
-import _ from "lodash";
-import axios from "axios";
 import fs from "fs";
+import _ from "lodash";
 import fsPromises from "fs/promises";
+import axios from "axios";
 import join from "url-join";
 
 import log from "../utils/log";
-import configs from "../../settings";
 import { pathToFileMapPath, responseBasePath } from "../utils/constant";
 
-const { targetBaseUrl, cookie } = configs;
+const { cookie = "", targetBaseUrl = "" } = process.env;
 
 /**
  * 根据请求路由去寻找对应的文件路径
@@ -122,6 +122,18 @@ const queryRealData = (props: {
     });
 };
 
+const checkEnv = () => {
+  if (!cookie || !targetBaseUrl) {
+    console.log(
+      chalk
+        .hex("#DEADED")
+        .bold("请到根目录下文件 .env 中配置 cookie & targetBaseUrl")
+    );
+    return false;
+  }
+  return true;
+};
+
 /**
  * @desc 路由
  * 1. 收到请求
@@ -133,6 +145,10 @@ const queryRealData = (props: {
  *         3-2-2. 将响应内容写入该地址
  */
 const routeMiddleWare = async (ctx: Koa.Context) => {
+  if (!checkEnv()) {
+    return;
+  }
+
   log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
   const { url, method, headers, body } = ctx.request;

@@ -101,5 +101,5 @@
   "rules": {
     // "no-var-requires": true
   },
-  "include": ["src", "scripts"]
+  "include": ["src", "scripts", "index.ts"]
 }

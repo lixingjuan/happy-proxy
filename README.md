@@ -3,7 +3,7 @@
 1. `npm run install`
 2. `npm run start`
 3. 需要搭配 xswitch将接口转发到`http://127.0.0.1:4000`
-4. 在 `settings/index.ts` 配置
+4. 在 `env` 配置
    1. targetBaseUrl: 真实的目标domain
    2. cookie
 
@@ -29,7 +29,7 @@
 11. [x] 更新fs为fs/promises
 12. [x] 增加launch.json文件支持调试
 13. [x] 项目 `npm run start`检查本地是否有settting、responseData、path_map 等文件[夹]
-14. [ ] 或许？可以把 targetBaseUrl 和 cookie做为环境变量存储？配置与逻辑分离
+14. [x] 或许？可以把 targetBaseUrl 和 cookie做为环境变量存储？配置与逻辑分离
 
 
 # 目前的问题

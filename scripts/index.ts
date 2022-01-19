@@ -1,20 +1,37 @@
-const fs = require("fs");
+const chalk = require("chalk");
+const env = require("dotenv/config");
 const fsPromises = require("fs/promises");
 
-const initSettingStr = `// TODO 以下两个配置暂时无法从转发请求获取, 需手动配置
-const configs = {
-  cookie: "",
-  targetBaseUrl: ""
-};
+const { exit } = require("process");
 
-export default configs;
-`;
+const { cookie = "", targetBaseUrl = "" } = process.env;
+
+if (!cookie) {
+  console.log(
+    chalk.hex("#DEADED").bold(`
+\n\n***********************************************************\n
+*    请到根目录下文件 .env 中配置 cookie, 否则项目无法使用    *\n
+***************************************************************\n
+    `)
+  );
+  exit(1);
+}
+
+if (!targetBaseUrl) {
+  console.log(
+    chalk.hex("#DEADED").bold(`
+\n\n***********************************************************\n
+*    请到根目录下文件 .env 中配置 targetBaseUrl, 否则项目无法使用   *\n
+***************************************************************\n
+`)
+  );
+  exit(1);
+}
 
 /**
  * 依次检查以下 文件/文件夹是否存在，若不存在，则创建
- *    response
  *    logs
- *    settings/index.ts
+ *    response
  *    path_map/index.ts
  */
 
@@ -37,12 +54,8 @@ fsPromises
 /** path_map  */
 fsPromises
   .access("path_map")
-  .catch(() => {
-    return fsPromises.mkdir("path_map");
-  })
-  .then(() => {
-    return fsPromises.access("path_map/index.json");
-  })
+  .catch(() => fsPromises.mkdir("path_map"))
+  .then(() => fsPromises.access("path_map/index.json"))
   .then(() => {
     console.log("SUCCESS", "本地存在path_map文件");
   })
@@ -51,11 +64,6 @@ fsPromises
     console.log("SUCCESS", "path_map/index.json文件创建成功");
   });
 
-/** settings/index.ts */
-fsPromises
-  .access("settings")
-  .catch(() => fs.mkdirSync("settings"))
-  .then(() => {
-    return fsPromises.access("settings/index.ts");
-  })
-  .catch(() => fsPromises.writeFile("settings/index.ts", initSettingStr));
+Promise.reject().catch((res) => {
+  console.log(1);
+});
