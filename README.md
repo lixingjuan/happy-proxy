@@ -9,6 +9,24 @@
 
 
 
+# 搭配xswitch使用
+
+xSwitch的使用示例
+
+```js
+{
+   "proxy": [
+      [
+         // 需要被代理的地址
+         "https://gw.datayes-stg.com/ams_monitor_qa/(.*)",
+         // 目标地址
+         "http://localhost:4000/ams_monitor_qa/$1",
+      ],
+   ]
+}
+
+```
+
 # TODO
 
 1. [ ] 需要一个项目初始化/清理的脚本, 帮忙删除
