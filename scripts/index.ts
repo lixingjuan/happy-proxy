@@ -63,7 +63,3 @@ fsPromises
   .then(() => {
     console.log("SUCCESS", "path_map/index.json文件创建成功");
   });
-
-Promise.reject().catch((res) => {
-  console.log(1);
-});
