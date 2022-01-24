@@ -48,6 +48,7 @@ xSwitch的使用示例
 12. [x] 增加launch.json文件支持调试
 13. [x] 项目 `npm run start`检查本地是否有settting、responseData、path_map 等文件[夹]
 14. [x] 或许？可以把 targetBaseUrl 和 cookie做为环境变量存储？配置与逻辑分离
+15. [ ] ？？307-warterfall-Stalled 时间较久
 
 
 # 目前的问题
