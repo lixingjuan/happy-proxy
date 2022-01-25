@@ -1,0 +1,37 @@
+{
+  "name": "lxj-chrome插件demo",
+  "version": "1.0",
+  "description": "React开发chrome插件Demo。",
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": "images/icon.png",
+    "default_title": "React CRX",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": [
+    "cookies",
+    "storage",
+    "browsingData",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": ["<all_urls>"]
+}
