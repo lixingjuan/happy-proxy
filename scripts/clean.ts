@@ -12,6 +12,7 @@ fs.rm("response", {
     console.log("err", err.message);
   }
 );
+
 fs.rm("logs", {
   force: true,
   recursive: true,

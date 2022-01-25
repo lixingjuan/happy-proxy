@@ -64,6 +64,89 @@
     "@nodelib/fs.scandir" "2.1.5"
     "fastq" "^1.6.0"
 
+"@opencensus/core@^0.0.8":
+  "integrity" "sha1-3wHyAMLS+/4U2uEpoahvuHKG25I="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@opencensus%2fcore/-/core-0.0.8.tgz"
+  "version" "0.0.8"
+  dependencies:
+    "continuation-local-storage" "^3.2.1"
+    "log-driver" "^1.2.7"
+    "semver" "^5.5.0"
+    "shimmer" "^1.2.0"
+    "uuid" "^3.2.1"
+
+"@opencensus/core@0.0.9":
+  "integrity" "sha1-sW93VDXuMJQz5BJq8ZTTcxP8k7M="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@opencensus%2fcore/-/core-0.0.9.tgz"
+  "version" "0.0.9"
+  dependencies:
+    "continuation-local-storage" "^3.2.1"
+    "log-driver" "^1.2.7"
+    "semver" "^5.5.0"
+    "shimmer" "^1.2.0"
+    "uuid" "^3.2.1"
+
+"@opencensus/propagation-b3@0.0.8":
+  "integrity" "sha1-B1Hm/XXwlADZ08QZAB6eFaDfaOk="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@opencensus%2fpropagation-b3/-/propagation-b3-0.0.8.tgz"
+  "version" "0.0.8"
+  dependencies:
+    "@opencensus/core" "^0.0.8"
+    "uuid" "^3.2.1"
+
+"@pm2/agent@~2.0.0":
+  "integrity" "sha1-Dt/8VM2O4rEvkBNiZOeIDz94x50="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@pm2%2fagent/-/agent-2.0.1.tgz"
+  "version" "2.0.1"
+  dependencies:
+    "async" "~3.2.0"
+    "chalk" "~3.0.0"
+    "dayjs" "~1.8.24"
+    "debug" "~4.3.1"
+    "eventemitter2" "~5.0.1"
+    "fast-json-patch" "^3.0.0-1"
+    "fclone" "~1.0.11"
+    "nssocket" "0.6.0"
+    "pm2-axon" "~4.0.1"
+    "pm2-axon-rpc" "~0.7.0"
+    "proxy-agent" "~5.0.0"
+    "semver" "~7.2.0"
+    "ws" "~7.4.0"
+
+"@pm2/io@~5.0.0":
+  "integrity" "sha1-Yjy8r2/jk3XyCsLnVJdHehsexcU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@pm2%2fio/-/io-5.0.0.tgz"
+  "version" "5.0.0"
+  dependencies:
+    "@opencensus/core" "0.0.9"
+    "@opencensus/propagation-b3" "0.0.8"
+    "async" "~2.6.1"
+    "debug" "~4.3.1"
+    "eventemitter2" "^6.3.1"
+    "require-in-the-middle" "^5.0.0"
+    "semver" "6.3.0"
+    "shimmer" "^1.2.0"
+    "signal-exit" "^3.0.3"
+    "tslib" "1.9.3"
+
+"@pm2/js-api@~0.6.7":
+  "integrity" "sha1-7SjDt7bSbwP4JjGHVP3FRor6WJ8="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@pm2%2fjs-api/-/js-api-0.6.7.tgz"
+  "version" "0.6.7"
+  dependencies:
+    "async" "^2.6.3"
+    "axios" "^0.21.0"
+    "debug" "~4.3.1"
+    "eventemitter2" "^6.3.1"
+    "ws" "^7.0.0"
+
+"@pm2/pm2-version-check@latest":
+  "integrity" "sha1-z5f7sUsOypVDDKBe7cy9JoOAbkM="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@pm2%2fpm2-version-check/-/pm2-version-check-1.0.4.tgz"
+  "version" "1.0.4"
+  dependencies:
+    "debug" "^4.3.1"
+
 "@sindresorhus/is@^0.14.0":
   "integrity" "sha1-n7OjzzEyMoFR81PeRjLgHlIQK+o="
   "resolved" "https://registry.nlark.com/@sindresorhus/is/download/@sindresorhus/is-0.14.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sindresorhus%2Fis%2Fdownload%2F%40sindresorhus%2Fis-0.14.0.tgz"
@@ -75,6 +158,11 @@
   "version" "1.1.2"
   dependencies:
     "defer-to-connect" "^1.0.1"
+
+"@tootallnate/once@1":
+  "integrity" "sha1-zLkURTYBeaBOf+av94wA/8Hur4I="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/@tootallnate%2fonce/-/once-1.1.2.tgz"
+  "version" "1.1.2"
 
 "@tsconfig/node10@^1.0.7":
   "integrity" "sha1-weToDW+WT77LM1nEO9SLQPfK2tk="
@@ -142,7 +230,7 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express@*":
+"@types/express@*", "@types/express@^4.17.13":
   "integrity" "sha1-p24plXKJmbq1GjP6vOHXBaNwkDQ="
   "resolved" "https://registry.npmmirror.com/@types/express/download/@types/express-4.17.13.tgz"
   "version" "4.17.13"
@@ -161,6 +249,13 @@
   "integrity" "sha1-6BrSimC+4DKMbSOE4Cmuxibxrmc="
   "resolved" "https://registry.npmmirror.com/@types/http-errors/download/@types/http-errors-1.8.1.tgz?cache=0&sync_timestamp=1637266389969&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Fhttp-errors%2Fdownload%2F%40types%2Fhttp-errors-1.8.1.tgz"
   "version" "1.8.1"
+
+"@types/http-proxy@^1.17.8":
+  "integrity" "sha512-5kPLG5BKpWYkw/LVOGWpiq3nEVqxiN32rTgI53Sk12/xHFQ2rG3ehI9IO+O3W2QoKeyB92dJkoka8SUm6BX1pA=="
+  "resolved" "https://registry.npmjs.org/@types/http-proxy/-/http-proxy-1.17.8.tgz"
+  "version" "1.17.8"
+  dependencies:
+    "@types/node" "*"
 
 "@types/json-schema@^7.0.9":
   "integrity" "sha1-l+3JA36gw4WFMgsolk3eOznkZg0="
@@ -271,7 +366,7 @@
     "eslint-scope" "^5.1.1"
     "eslint-utils" "^3.0.0"
 
-"@typescript-eslint/parser@^5.0.0", "@typescript-eslint/parser@^5.7.0":
+"@typescript-eslint/parser@^5.7.0":
   "integrity" "sha512-m/gWCCcS4jXw6vkrPQ1BjZ1vomP01PArgzvauBqzsoZ3urLbsRChexB8/YV8z9HwE3qlJM35FxfKZ1nfP/4x8g=="
   "resolved" "https://registry.npmmirror.com/@typescript-eslint/parser/download/@typescript-eslint/parser-5.7.0.tgz"
   "version" "5.7.0"
@@ -338,10 +433,17 @@
   "resolved" "https://registry.nlark.com/acorn-walk/download/acorn-walk-8.2.0.tgz"
   "version" "8.2.0"
 
-"acorn@^6.0.0 || ^7.0.0 || ^8.0.0", "acorn@^8.4.1", "acorn@^8.6.0":
+"acorn@^8.4.1", "acorn@^8.6.0":
   "integrity" "sha512-U1riIR+lBSNi3IbxtaHOIKdH8sLFv3NYfNv8sg7ZsNhcfl4HF2++BfqqrNAxoCLQW1iiylOj76ecnaUxz+z9yw=="
   "resolved" "https://registry.npmmirror.com/acorn/download/acorn-8.6.0.tgz?cache=0&sync_timestamp=1637225522161&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Facorn%2Fdownload%2Facorn-8.6.0.tgz"
   "version" "8.6.0"
+
+"agent-base@^6.0.0", "agent-base@^6.0.2", "agent-base@6":
+  "integrity" "sha1-Sf/1hXfP7j83F2/qtMIuAPhtf3c="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/agent-base/-/agent-base-6.0.2.tgz"
+  "version" "6.0.2"
+  dependencies:
+    "debug" "4"
 
 "ajv@^6.10.0", "ajv@^6.12.4":
   "integrity" "sha1-uvWmLoArB9l3A0WG+MO69a3ybfQ="
@@ -352,6 +454,18 @@
     "fast-json-stable-stringify" "^2.0.0"
     "json-schema-traverse" "^0.4.1"
     "uri-js" "^4.2.2"
+
+"amp-message@~0.1.1":
+  "integrity" "sha1-p48cmJlQh602GSpBKY5NtJ49/EU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/amp-message/-/amp-message-0.1.2.tgz"
+  "version" "0.1.2"
+  dependencies:
+    "amp" "0.3.1"
+
+"amp@~0.3.1", "amp@0.3.1":
+  "integrity" "sha1-at+NWKdPNh6CwfqNOJwHnhOfxH0="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/amp/-/amp-0.3.1.tgz"
+  "version" "0.3.1"
 
 "ansi-align@^3.0.0":
   "integrity" "sha1-DN8S4RGs53OobpofrRIlxDyxmlk="
@@ -395,6 +509,13 @@
   "resolved" "https://registry.nlark.com/arg/download/arg-4.1.3.tgz?cache=0&sync_timestamp=1629166495886&other_urls=https%3A%2F%2Fregistry.nlark.com%2Farg%2Fdownload%2Farg-4.1.3.tgz"
   "version" "4.1.3"
 
+"argparse@^1.0.7":
+  "integrity" "sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/argparse/-/argparse-1.0.10.tgz"
+  "version" "1.0.10"
+  dependencies:
+    "sprintf-js" "~1.0.2"
+
 "argparse@^2.0.1":
   "integrity" "sha1-JG9Q88p4oyQPbJl+ipvR6sSeSzg="
   "resolved" "https://registry.npm.taobao.org/argparse/download/argparse-2.0.1.tgz"
@@ -404,6 +525,47 @@
   "integrity" "sha1-t5hCCtvrHego2ErNii4j0+/oXo0="
   "resolved" "https://registry.npm.taobao.org/array-union/download/array-union-2.1.0.tgz?cache=0&sync_timestamp=1614624302839&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Farray-union%2Fdownload%2Farray-union-2.1.0.tgz"
   "version" "2.1.0"
+
+"ast-types@^0.13.2":
+  "integrity" "sha1-7g13s0MmOWXsw/ti2hbnIisrZ4I="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/ast-types/-/ast-types-0.13.4.tgz"
+  "version" "0.13.4"
+  dependencies:
+    "tslib" "^2.0.1"
+
+"async-listener@^0.6.0":
+  "integrity" "sha1-p8l6vlcLpgLXgic8DeYKUePhfLw="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/async-listener/-/async-listener-0.6.10.tgz"
+  "version" "0.6.10"
+  dependencies:
+    "semver" "^5.3.0"
+    "shimmer" "^1.1.0"
+
+"async@^2.6.3":
+  "integrity" "sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/async/-/async-2.6.3.tgz"
+  "version" "2.6.3"
+  dependencies:
+    "lodash" "^4.17.14"
+
+"async@^3.2.0", "async@~3.2.0":
+  "integrity" "sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/async/-/async-3.2.3.tgz"
+  "version" "3.2.3"
+
+"async@~2.6.1":
+  "integrity" "sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/async/-/async-2.6.3.tgz"
+  "version" "2.6.3"
+  dependencies:
+    "lodash" "^4.17.14"
+
+"axios@^0.21.0":
+  "integrity" "sha1-xnuQ3AVo5cHPKwuFjEO6KOLtpXU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/axios/-/axios-0.21.4.tgz"
+  "version" "0.21.4"
+  dependencies:
+    "follow-redirects" "^1.14.0"
 
 "axios@^0.24.0":
   "integrity" "sha1-gE5voeS5xSiFAd2d/1anoJQNINY="
@@ -421,6 +583,16 @@
   "integrity" "sha1-dfUC7q+f/eQvyYgpZFvk6na9ni0="
   "resolved" "https://registry.npm.taobao.org/binary-extensions/download/binary-extensions-2.2.0.tgz?cache=0&sync_timestamp=1610299293319&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fbinary-extensions%2Fdownload%2Fbinary-extensions-2.2.0.tgz"
   "version" "2.2.0"
+
+"blessed@0.1.81":
+  "integrity" "sha1-+WLWh+wsNpVwrnGvhDJW5tDKESk="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/blessed/-/blessed-0.1.81.tgz"
+  "version" "0.1.81"
+
+"bodec@^0.1.0":
+  "integrity" "sha1-vIUVVUMPI8n3ZQp172TGqUw0GMw="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/bodec/-/bodec-0.1.0.tgz"
+  "version" "0.1.0"
 
 "boxen@^5.0.0":
   "integrity" "sha1-eIy2hvyDwfSG36ikDGj8K4MdK1A="
@@ -451,10 +623,20 @@
   dependencies:
     "fill-range" "^7.0.1"
 
+"buffer-from@^1.0.0":
+  "integrity" "sha1-KxRqb9cugLT1XSVfNe1Zo6mkG9U="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/buffer-from/-/buffer-from-1.1.2.tgz"
+  "version" "1.1.2"
+
 "bytes@2.4.0":
   "integrity" "sha1-fZcZb51br39pNeJZhVSe3SpsIzk="
   "resolved" "https://registry.npm.taobao.org/bytes/download/bytes-2.4.0.tgz"
   "version" "2.4.0"
+
+"bytes@3.1.1":
+  "integrity" "sha1-PwGCkctMutmsy25pcLypyIieh5o="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/bytes/-/bytes-3.1.1.tgz"
+  "version" "3.1.1"
 
 "cache-content-type@^1.0.0":
   "integrity" "sha1-A1zeKwjuISn0qDFeqPAKANuhRTw="
@@ -487,15 +669,52 @@
   "resolved" "https://registry.npmmirror.com/camelcase/download/camelcase-6.2.1.tgz?cache=0&sync_timestamp=1636945191390&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fcamelcase%2Fdownload%2Fcamelcase-6.2.1.tgz"
   "version" "6.2.1"
 
-"chalk@^4.0.0", "chalk@^4.1.0":
-  "integrity" "sha1-qsTit3NKdAhnrrFr8CqtVWoeegE="
-  "resolved" "https://registry.npmmirror.com/chalk/download/chalk-4.1.2.tgz"
+"chalk@^4.0.0":
+  "integrity" "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="
+  "resolved" "http://mirrors.tencent.com/npm/chalk/-/chalk-4.1.2.tgz"
   "version" "4.1.2"
   dependencies:
     "ansi-styles" "^4.1.0"
     "supports-color" "^7.1.0"
 
-"chokidar@^3.5.2":
+"chalk@^4.1.0":
+  "integrity" "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="
+  "resolved" "http://mirrors.tencent.com/npm/chalk/-/chalk-4.1.2.tgz"
+  "version" "4.1.2"
+  dependencies:
+    "ansi-styles" "^4.1.0"
+    "supports-color" "^7.1.0"
+
+"chalk@^4.1.2":
+  "integrity" "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="
+  "resolved" "https://mirrors.tencent.com/npm/chalk/-/chalk-4.1.2.tgz"
+  "version" "4.1.2"
+  dependencies:
+    "ansi-styles" "^4.1.0"
+    "supports-color" "^7.1.0"
+
+"chalk@~3.0.0":
+  "integrity" "sha1-P3PCv1JlkfV0zEksUeJFY0n4ROQ="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/chalk/-/chalk-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "ansi-styles" "^4.1.0"
+    "supports-color" "^7.1.0"
+
+"chalk@3.0.0":
+  "integrity" "sha1-P3PCv1JlkfV0zEksUeJFY0n4ROQ="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/chalk/-/chalk-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "ansi-styles" "^4.1.0"
+    "supports-color" "^7.1.0"
+
+"charm@~0.1.1":
+  "integrity" "sha1-BsIe7RobBq62dVPNxT4jJ0usIpY="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/charm/-/charm-0.1.2.tgz"
+  "version" "0.1.2"
+
+"chokidar@^3.5.1", "chokidar@^3.5.2":
   "integrity" "sha1-26OXb8rbAW9m/TZQIdkWANAcHnU="
   "resolved" "https://registry.npmmirror.com/chokidar/download/chokidar-3.5.2.tgz"
   "version" "3.5.2"
@@ -519,6 +738,13 @@
   "integrity" "sha1-3dUDXSUJT84iDpyrQKRYQKRAMY8="
   "resolved" "https://registry.nlark.com/cli-boxes/download/cli-boxes-2.2.1.tgz"
   "version" "2.2.1"
+
+"cli-tableau@^2.0.0":
+  "integrity" "sha1-uqeNg+CKLXq3m32tlAbwJUl3BT8="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/cli-tableau/-/cli-tableau-2.0.1.tgz"
+  "version" "2.0.1"
+  dependencies:
+    "chalk" "3.0.0"
 
 "clone-response@^1.0.2":
   "integrity" "sha1-0dyXOSAxTfZ/vrlCI7TuNQI56Ws="
@@ -554,6 +780,11 @@
   "resolved" "https://registry.npm.taobao.org/color-name/download/color-name-1.1.4.tgz"
   "version" "1.1.4"
 
+"commander@2.15.1":
+  "integrity" "sha512-VlfT9F3V0v+jr4yxPc5gg9s62/fIVWsd2Bk2iD435um1NlGMYdVCq+MjcXnhYq2icNOizHr1kK+5TI6H0Hy0ag=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/commander/-/commander-2.15.1.tgz"
+  "version" "2.15.1"
+
 "concat-map@0.0.1":
   "integrity" "sha1-2Klr13/Wjfd5OnMDajug1UBdR3s="
   "resolved" "https://registry.npm.taobao.org/concat-map/download/concat-map-0.0.1.tgz"
@@ -583,6 +814,14 @@
   "resolved" "https://registry.npm.taobao.org/content-type/download/content-type-1.0.4.tgz"
   "version" "1.0.4"
 
+"continuation-local-storage@^3.2.1":
+  "integrity" "sha1-EfYT906RT+mzTJKtLSj+auHbf/s="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/continuation-local-storage/-/continuation-local-storage-3.2.1.tgz"
+  "version" "3.2.1"
+  dependencies:
+    "async-listener" "^0.6.0"
+    "emitter-listener" "^1.1.1"
+
 "cookies@~0.8.0":
   "integrity" "sha1-EpPOSzkXQKhAbjyYcOgoxLVPP5A="
   "resolved" "https://registry.npm.taobao.org/cookies/download/cookies-0.8.0.tgz"
@@ -591,10 +830,22 @@
     "depd" "~2.0.0"
     "keygrip" "~1.1.0"
 
+"core-util-is@~1.0.0":
+  "integrity" "sha1-pgQtNjTCsn6TKPg3uWX6yDgI24U="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/core-util-is/-/core-util-is-1.0.3.tgz"
+  "version" "1.0.3"
+
 "create-require@^1.1.0":
   "integrity" "sha1-wdfo8eX2z8n/ZfnNNS03NIdWwzM="
   "resolved" "https://registry.npm.taobao.org/create-require/download/create-require-1.1.1.tgz"
   "version" "1.1.1"
+
+"cron@1.8.2":
+  "integrity" "sha1-SsXjxVuowWPYTzQHvelGMtqDcM4="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/cron/-/cron-1.8.2.tgz"
+  "version" "1.8.2"
+  dependencies:
+    "moment-timezone" "^0.5.x"
 
 "cross-spawn@^7.0.2":
   "integrity" "sha1-9zqFudXUHQRVUcF34ogtSshXKKY="
@@ -610,6 +861,28 @@
   "resolved" "https://registry.nlark.com/crypto-random-string/download/crypto-random-string-2.0.0.tgz"
   "version" "2.0.0"
 
+"culvert@^0.1.2":
+  "integrity" "sha1-lQL18BVKLVoioCPnn3HMk2+m728="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/culvert/-/culvert-0.1.2.tgz"
+  "version" "0.1.2"
+
+"data-uri-to-buffer@3":
+  "integrity" "sha1-WUuJc5OMW8LDMEZTV4U0GrxPNjY="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz"
+  "version" "3.0.1"
+
+"dayjs@~1.8.24", "dayjs@~1.8.25":
+  "integrity" "sha1-vjbiSEZ6+r+PWoa64N4M3O7M7VA="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/dayjs/-/dayjs-1.8.36.tgz"
+  "version" "1.8.36"
+
+"debug@^3.2.6":
+  "integrity" "sha1-clgLfpFF+zm2Z2+cXl+xALk0F5o="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/debug/-/debug-3.2.7.tgz"
+  "version" "3.2.7"
+  dependencies:
+    "ms" "^2.1.1"
+
 "debug@^3.2.7":
   "integrity" "sha1-clgLfpFF+zm2Z2+cXl+xALk0F5o="
   "resolved" "https://registry.npmmirror.com/debug/download/debug-3.2.7.tgz"
@@ -619,7 +892,14 @@
 
 "debug@^4.1.1":
   "integrity" "sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q=="
-  "resolved" "https://registry.npmmirror.com/debug/download/debug-4.3.3.tgz"
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/debug/-/debug-4.3.3.tgz"
+  "version" "4.3.3"
+  dependencies:
+    "ms" "2.1.2"
+
+"debug@^4.3.1":
+  "integrity" "sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/debug/-/debug-4.3.3.tgz"
   "version" "4.3.3"
   dependencies:
     "ms" "2.1.2"
@@ -638,6 +918,20 @@
   dependencies:
     "ms" "2.0.0"
 
+"debug@~4.3.1":
+  "integrity" "sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/debug/-/debug-4.3.3.tgz"
+  "version" "4.3.3"
+  dependencies:
+    "ms" "2.1.2"
+
+"debug@4":
+  "integrity" "sha512-/zxw5+vh1Tfv+4Qn7a5nsbcJKPaSvCDhojn6FEl9vupwK2VCSDtEiEtqr8DFtzYFOdz63LBkxec7DYuc2jon6Q=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/debug/-/debug-4.3.3.tgz"
+  "version" "4.3.3"
+  dependencies:
+    "ms" "2.1.2"
+
 "decompress-response@^3.3.0":
   "integrity" "sha1-gKTdMjdIOEv6JICDYirt7Jgq3/M="
   "resolved" "https://registry.npmmirror.com/decompress-response/download/decompress-response-3.3.0.tgz"
@@ -655,7 +949,7 @@
   "resolved" "https://registry.npm.taobao.org/deep-extend/download/deep-extend-0.6.0.tgz"
   "version" "0.6.0"
 
-"deep-is@^0.1.3":
+"deep-is@^0.1.3", "deep-is@~0.1.3":
   "integrity" "sha1-pvLc5hL63S7x9Rm3NVHxfoUZmDE="
   "resolved" "https://registry.nlark.com/deep-is/download/deep-is-0.1.4.tgz"
   "version" "0.1.4"
@@ -664,6 +958,16 @@
   "integrity" "sha1-MxrgUMCNz3ifjIOnuB8O2U9KxZE="
   "resolved" "https://registry.nlark.com/defer-to-connect/download/defer-to-connect-1.1.3.tgz"
   "version" "1.1.3"
+
+"degenerator@^3.0.1":
+  "integrity" "sha1-fveOwMhXelREdzCN3x0tbojVH1s="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/degenerator/-/degenerator-3.0.1.tgz"
+  "version" "3.0.1"
+  dependencies:
+    "ast-types" "^0.13.2"
+    "escodegen" "^1.8.1"
+    "esprima" "^4.0.0"
+    "vm2" "^3.9.3"
 
 "delegates@^1.0.0":
   "integrity" "sha1-hMbhWbgZBP3KWaDvRM2HDTElD5o="
@@ -711,6 +1015,11 @@
   dependencies:
     "is-obj" "^2.0.0"
 
+"dotenv@^14.2.0":
+  "integrity" "sha512-05POuPJyPpO6jqzTNweQFfAyMSD4qa4lvsMOWyTRTdpHKy6nnnN+IYWaXF+lHivhBH/ufDKlR4IWCAN3oPnHuw=="
+  "resolved" "http://mirrors.tencent.com/npm/dotenv/-/dotenv-14.2.0.tgz"
+  "version" "14.2.0"
+
 "duplexer3@^0.1.4":
   "integrity" "sha1-7gHdHKwO08vH/b6jfcCo8c4ALOI="
   "resolved" "https://registry.npmmirror.com/duplexer3/download/duplexer3-0.1.4.tgz"
@@ -720,6 +1029,13 @@
   "integrity" "sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0="
   "resolved" "https://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz"
   "version" "1.1.1"
+
+"emitter-listener@^1.1.1":
+  "integrity" "sha1-VrFA6PaZI3Wz18ssqxzHQy2WMug="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/emitter-listener/-/emitter-listener-1.1.2.tgz"
+  "version" "1.1.2"
+  dependencies:
+    "shimmer" "^1.2.0"
 
 "emoji-regex@^8.0.0":
   "integrity" "sha1-6Bj9ac5cz8tARZT4QpY79TFkzDc="
@@ -738,7 +1054,7 @@
   dependencies:
     "once" "^1.4.0"
 
-"enquirer@^2.3.5":
+"enquirer@^2.3.5", "enquirer@2.3.6":
   "integrity" "sha1-Kn/l3WNKHkElqXXsmU/1RW3Dc00="
   "resolved" "https://registry.npm.taobao.org/enquirer/download/enquirer-2.3.6.tgz"
   "version" "2.3.6"
@@ -759,6 +1075,18 @@
   "integrity" "sha1-FLqDpdNz49MR5a/KKc9b+tllvzQ="
   "resolved" "https://registry.npm.taobao.org/escape-string-regexp/download/escape-string-regexp-4.0.0.tgz?cache=0&sync_timestamp=1618677243201&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fescape-string-regexp%2Fdownload%2Fescape-string-regexp-4.0.0.tgz"
   "version" "4.0.0"
+
+"escodegen@^1.8.1":
+  "integrity" "sha1-TnuB+6YVgdyXWC7XjKt/Do1j9QM="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/escodegen/-/escodegen-1.14.3.tgz"
+  "version" "1.14.3"
+  dependencies:
+    "esprima" "^4.0.1"
+    "estraverse" "^4.2.0"
+    "esutils" "^2.0.2"
+    "optionator" "^0.8.1"
+  optionalDependencies:
+    "source-map" "~0.6.1"
 
 "eslint-scope@^5.1.1":
   "integrity" "sha1-54blmmbLkrP2wfsNUIqrF0hI9Iw="
@@ -793,7 +1121,7 @@
   "resolved" "https://registry.npmmirror.com/eslint-visitor-keys/download/eslint-visitor-keys-3.1.0.tgz?cache=0&sync_timestamp=1636378420914&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Feslint-visitor-keys%2Fdownload%2Feslint-visitor-keys-3.1.0.tgz"
   "version" "3.1.0"
 
-"eslint@*", "eslint@^6.0.0 || ^7.0.0 || ^8.0.0", "eslint@^8.5.0", "eslint@>=5":
+"eslint@^8.5.0":
   "integrity" "sha512-tVGSkgNbOfiHyVte8bCM8OmX+xG9PzVG/B4UCF60zx7j61WIVY/AqJECDgpLD4DbbESD0e174gOg3ZlrX15GDg=="
   "resolved" "https://registry.npmmirror.com/eslint/download/eslint-8.5.0.tgz"
   "version" "8.5.0"
@@ -846,6 +1174,11 @@
     "acorn-jsx" "^5.3.1"
     "eslint-visitor-keys" "^3.1.0"
 
+"esprima@^4.0.0", "esprima@^4.0.1":
+  "integrity" "sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/esprima/-/esprima-4.0.1.tgz"
+  "version" "4.0.1"
+
 "esquery@^1.4.0":
   "integrity" "sha1-IUj/w4uC6McFff7UhCWz5h8PJKU="
   "resolved" "https://registry.npm.taobao.org/esquery/download/esquery-1.4.0.tgz?cache=0&sync_timestamp=1612565616129&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fesquery%2Fdownload%2Fesquery-1.4.0.tgz"
@@ -865,6 +1198,11 @@
   "resolved" "https://registry.npmmirror.com/estraverse/download/estraverse-4.3.0.tgz?cache=0&sync_timestamp=1635237706876&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Festraverse%2Fdownload%2Festraverse-4.3.0.tgz"
   "version" "4.3.0"
 
+"estraverse@^4.2.0":
+  "integrity" "sha512-39nnKffWz8xN1BU/2c79n9nB9HDzo0niYUqx6xyqUnyoAnQyyWpOTdZEeiCch8BBu515t4wp9ZmgVfVhn9EBpw=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/estraverse/-/estraverse-4.3.0.tgz"
+  "version" "4.3.0"
+
 "estraverse@^5.1.0", "estraverse@^5.2.0":
   "integrity" "sha1-LupSkHAvJquP5TcDcP+GyWXSESM="
   "resolved" "https://registry.npmmirror.com/estraverse/download/estraverse-5.3.0.tgz?cache=0&sync_timestamp=1635237706876&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Festraverse%2Fdownload%2Festraverse-5.3.0.tgz"
@@ -874,6 +1212,26 @@
   "integrity" "sha1-dNLrTeC42hKTcRkQ1Qd1ubcQ72Q="
   "resolved" "https://registry.npm.taobao.org/esutils/download/esutils-2.0.3.tgz"
   "version" "2.0.3"
+
+"eventemitter2@^6.3.1":
+  "integrity" "sha1-lzgPdYriSsFd+DU+DMJ/i5VkRlU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/eventemitter2/-/eventemitter2-6.4.5.tgz"
+  "version" "6.4.5"
+
+"eventemitter2@~0.4.14":
+  "integrity" "sha1-j2G3XN4BKy6esoTUVFWDtWQ7Yas="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/eventemitter2/-/eventemitter2-0.4.14.tgz"
+  "version" "0.4.14"
+
+"eventemitter2@~5.0.1", "eventemitter2@5.0.1":
+  "integrity" "sha1-YZegldX7a1folC9v1+qtY6CclFI="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/eventemitter2/-/eventemitter2-5.0.1.tgz"
+  "version" "5.0.1"
+
+"eventemitter3@^4.0.0":
+  "integrity" "sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw=="
+  "resolved" "https://registry.npmjs.org/eventemitter3/-/eventemitter3-4.0.7.tgz"
+  "version" "4.0.7"
 
 "fast-deep-equal@^3.1.1", "fast-deep-equal@^3.1.3":
   "integrity" "sha1-On1WtVnWy8PrUSMlJE5hmmXGxSU="
@@ -891,12 +1249,17 @@
     "merge2" "^1.3.0"
     "micromatch" "^4.0.4"
 
+"fast-json-patch@^3.0.0-1":
+  "integrity" "sha1-7IzZucTFZCUOyLkUDvelX3CsruY="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/fast-json-patch/-/fast-json-patch-3.1.0.tgz"
+  "version" "3.1.0"
+
 "fast-json-stable-stringify@^2.0.0":
   "integrity" "sha1-h0v2nG9ATCtdmcSBNBOZ/VWJJjM="
   "resolved" "https://registry.npm.taobao.org/fast-json-stable-stringify/download/fast-json-stable-stringify-2.1.0.tgz"
   "version" "2.1.0"
 
-"fast-levenshtein@^2.0.6":
+"fast-levenshtein@^2.0.6", "fast-levenshtein@~2.0.6":
   "integrity" "sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc="
   "resolved" "https://registry.npm.taobao.org/fast-levenshtein/download/fast-levenshtein-2.0.6.tgz"
   "version" "2.0.6"
@@ -908,12 +1271,22 @@
   dependencies:
     "reusify" "^1.0.4"
 
+"fclone@~1.0.11", "fclone@1.0.11":
+  "integrity" "sha1-EOhdo4v+p/xZk0HClu4ddyZu5kA="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/fclone/-/fclone-1.0.11.tgz"
+  "version" "1.0.11"
+
 "file-entry-cache@^6.0.1":
   "integrity" "sha1-IRst2WWcsDlLBz5zI6w8kz1SICc="
   "resolved" "https://registry.npm.taobao.org/file-entry-cache/download/file-entry-cache-6.0.1.tgz?cache=0&sync_timestamp=1613794357372&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ffile-entry-cache%2Fdownload%2Ffile-entry-cache-6.0.1.tgz"
   "version" "6.0.1"
   dependencies:
     "flat-cache" "^3.0.4"
+
+"file-uri-to-path@2":
+  "integrity" "sha512-hjPFI8oE/2iQPVe4gbrJ73Pp+Xfub2+WI2LlXDbsaJBwT5wuMh35WNWVYYTpnz895shtwfyutMFLFywpQAFdLg=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/file-uri-to-path/-/file-uri-to-path-2.0.0.tgz"
+  "version" "2.0.0"
 
 "fill-range@^7.0.1":
   "integrity" "sha1-GRmmp8df44ssfHflGYU12prN2kA="
@@ -935,7 +1308,7 @@
   "resolved" "https://registry.npmmirror.com/flatted/download/flatted-3.2.4.tgz?cache=0&sync_timestamp=1636473925233&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fflatted%2Fdownload%2Fflatted-3.2.4.tgz"
   "version" "3.2.4"
 
-"follow-redirects@^1.14.4":
+"follow-redirects@^1.0.0", "follow-redirects@^1.14.0", "follow-redirects@^1.14.4":
   "integrity" "sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ=="
   "resolved" "http://f2e02.wmcloud-dev.com:4873/follow-redirects/-/follow-redirects-1.14.7.tgz"
   "version" "1.14.7"
@@ -944,6 +1317,15 @@
   "integrity" "sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac="
   "resolved" "https://registry.npm.taobao.org/fresh/download/fresh-0.5.2.tgz"
   "version" "0.5.2"
+
+"fs-extra@^8.1.0":
+  "integrity" "sha512-yhlQgA6mnOJUKOsRUFsgJdQCvkKhcz8tlZG5HBQfReYZy46OwLcY+Zia0mtdHsOo9y/hP+CxMN0TU9QxoOtG4g=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/fs-extra/-/fs-extra-8.1.0.tgz"
+  "version" "8.1.0"
+  dependencies:
+    "graceful-fs" "^4.2.0"
+    "jsonfile" "^4.0.0"
+    "universalify" "^0.1.0"
 
 "fs.realpath@^1.0.0":
   "integrity" "sha1-FQStJSMVjKpA20onh8sBQRmU6k8="
@@ -954,6 +1336,19 @@
   "integrity" "sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro="
   "resolved" "https://registry.npmmirror.com/fsevents/download/fsevents-2.3.2.tgz"
   "version" "2.3.2"
+
+"ftp@^0.3.10":
+  "integrity" "sha1-kZfYYa2BQvPmPVqDv+TFn3MwiF0="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/ftp/-/ftp-0.3.10.tgz"
+  "version" "0.3.10"
+  dependencies:
+    "readable-stream" "1.1.x"
+    "xregexp" "2.0.0"
+
+"function-bind@^1.1.1":
+  "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/function-bind/-/function-bind-1.1.1.tgz"
+  "version" "1.1.1"
 
 "functional-red-black-tree@^1.0.1":
   "integrity" "sha1-GwqzvVU7Kg1jmdKcDj6gslIHgyc="
@@ -974,6 +1369,28 @@
   dependencies:
     "pump" "^3.0.0"
 
+"get-uri@3":
+  "integrity" "sha1-8O8TVvqrxw4flAT6O2ayupv8clw="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/get-uri/-/get-uri-3.0.2.tgz"
+  "version" "3.0.2"
+  dependencies:
+    "@tootallnate/once" "1"
+    "data-uri-to-buffer" "3"
+    "debug" "4"
+    "file-uri-to-path" "2"
+    "fs-extra" "^8.1.0"
+    "ftp" "^0.3.10"
+
+"git-node-fs@^1.0.0":
+  "integrity" "sha1-SbIV4kLr5Dqkx1Ybu6SZUhdSCA8="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/git-node-fs/-/git-node-fs-1.0.0.tgz"
+  "version" "1.0.0"
+
+"git-sha1@^0.1.2":
+  "integrity" "sha1-WZrBkrcYdYJeE6RF86bgURjC90U="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/git-sha1/-/git-sha1-0.1.2.tgz"
+  "version" "0.1.2"
+
 "glob-parent@^5.1.2", "glob-parent@~5.1.2":
   "integrity" "sha1-hpgyxYA0/mikCTwX3BXoNA2EAcQ="
   "resolved" "https://registry.npmmirror.com/glob-parent/download/glob-parent-5.1.2.tgz?cache=0&sync_timestamp=1632953697891&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fglob-parent%2Fdownload%2Fglob-parent-5.1.2.tgz"
@@ -988,7 +1405,7 @@
   dependencies:
     "is-glob" "^4.0.3"
 
-"glob@^7.1.3":
+"glob@^7.0.5", "glob@^7.1.3":
   "integrity" "sha1-0VU1r3cy4C6Uj0xBYovZECk/YCM="
   "resolved" "https://registry.npmmirror.com/glob/download/glob-7.2.0.tgz"
   "version" "7.2.0"
@@ -1043,7 +1460,7 @@
     "to-readable-stream" "^1.0.0"
     "url-parse-lax" "^3.0.0"
 
-"graceful-fs@^4.1.2":
+"graceful-fs@^4.1.2", "graceful-fs@^4.1.6", "graceful-fs@^4.2.0":
   "integrity" "sha1-5BK40z9eAGWTy9PO5t+fLOu+gCo="
   "resolved" "https://registry.npmmirror.com/graceful-fs/download/graceful-fs-4.2.8.tgz"
   "version" "4.2.8"
@@ -1054,14 +1471,21 @@
   "version" "3.0.0"
 
 "has-flag@^4.0.0":
-  "integrity" "sha1-lEdx/ZyByBJlxNaUGGDaBrtZR5s="
-  "resolved" "https://registry.nlark.com/has-flag/download/has-flag-4.0.0.tgz"
+  "integrity" "sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ=="
+  "resolved" "http://mirrors.cloud.tencent.com/npm/has-flag/-/has-flag-4.0.0.tgz"
   "version" "4.0.0"
 
 "has-yarn@^2.1.0":
   "integrity" "sha1-E34RNUp7W/EapctknPDG8/8rLnc="
   "resolved" "https://registry.nlark.com/has-yarn/download/has-yarn-2.1.0.tgz?cache=0&sync_timestamp=1631298711761&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fhas-yarn%2Fdownload%2Fhas-yarn-2.1.0.tgz"
   "version" "2.1.0"
+
+"has@^1.0.3":
+  "integrity" "sha512-f2dvO0VU6Oej7RkWJGrehjbzMAjFp5/VKPp5tTpWIV4JHHZK1/BxbFRtf/siA2SWTe09caDmVtYYzWEIbBS4zw=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/has/-/has-1.0.3.tgz"
+  "version" "1.0.3"
+  dependencies:
+    "function-bind" "^1.1.1"
 
 "http-assert@^1.3.0":
   "integrity" "sha1-xfcl1neqfoc+9zYZm4lobM6zeHg="
@@ -1076,16 +1500,16 @@
   "resolved" "https://registry.npm.taobao.org/http-cache-semantics/download/http-cache-semantics-4.1.0.tgz"
   "version" "4.1.0"
 
-"http-errors@^1.6.3":
-  "integrity" "sha1-ddG75JfhBE9R5O6ecEpi8o0zZQc="
-  "resolved" "https://registry.npm.taobao.org/http-errors/download/http-errors-1.8.0.tgz?cache=0&sync_timestamp=1593407676273&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhttp-errors%2Fdownload%2Fhttp-errors-1.8.0.tgz"
-  "version" "1.8.0"
+"http-errors@^1.6.3", "http-errors@1.8.1":
+  "integrity" "sha1-fD8oV3y8iiBziEVdvWIpXtB71ow="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/http-errors/-/http-errors-1.8.1.tgz"
+  "version" "1.8.1"
   dependencies:
     "depd" "~1.1.2"
     "inherits" "2.0.4"
     "setprototypeof" "1.2.0"
     "statuses" ">= 1.5.0 < 2"
-    "toidentifier" "1.0.0"
+    "toidentifier" "1.0.1"
 
 "http-errors@~1.7.2":
   "integrity" "sha1-bGGeT5xgMIw4UZSYwU+7EKrOuwY="
@@ -1097,6 +1521,50 @@
     "setprototypeof" "1.1.1"
     "statuses" ">= 1.5.0 < 2"
     "toidentifier" "1.0.0"
+
+"http-proxy-agent@^4.0.0", "http-proxy-agent@^4.0.1":
+  "integrity" "sha1-ioyO9/WTLM+VPClsqCkblap0qjo="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/http-proxy-agent/-/http-proxy-agent-4.0.1.tgz"
+  "version" "4.0.1"
+  dependencies:
+    "@tootallnate/once" "1"
+    "agent-base" "6"
+    "debug" "4"
+
+"http-proxy-middleware@^2.0.2":
+  "integrity" "sha512-XtmDN5w+vdFTBZaYhdJAbMqn0DP/EhkUaAeo963mojwpKMMbw6nivtFKw07D7DDOH745L5k0VL0P8KRYNEVF/g=="
+  "resolved" "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-2.0.2.tgz"
+  "version" "2.0.2"
+  dependencies:
+    "@types/http-proxy" "^1.17.8"
+    "http-proxy" "^1.18.1"
+    "is-glob" "^4.0.1"
+    "is-plain-obj" "^3.0.0"
+    "micromatch" "^4.0.2"
+
+"http-proxy@^1.18.1":
+  "integrity" "sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ=="
+  "resolved" "https://registry.npmjs.org/http-proxy/-/http-proxy-1.18.1.tgz"
+  "version" "1.18.1"
+  dependencies:
+    "eventemitter3" "^4.0.0"
+    "follow-redirects" "^1.0.0"
+    "requires-port" "^1.0.0"
+
+"https-proxy-agent@^5.0.0", "https-proxy-agent@5":
+  "integrity" "sha1-4qkFQqu2inYuCghQ9sntrf2FBrI="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/https-proxy-agent/-/https-proxy-agent-5.0.0.tgz"
+  "version" "5.0.0"
+  dependencies:
+    "agent-base" "6"
+    "debug" "4"
+
+"iconv-lite@^0.4.4", "iconv-lite@0.4.24":
+  "integrity" "sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/iconv-lite/-/iconv-lite-0.4.24.tgz"
+  "version" "0.4.24"
+  dependencies:
+    "safer-buffer" ">= 2.1.2 < 3"
 
 "iconv-lite@0.4.13":
   "integrity" "sha1-H4irpKsLFQjoMSrMOTRfNumS4vI="
@@ -1154,10 +1622,15 @@
     "once" "^1.3.0"
     "wrappy" "1"
 
-"inherits@2", "inherits@2.0.4":
+"inherits@~2.0.1", "inherits@2", "inherits@2.0.4":
   "integrity" "sha1-D6LGT5MpF8NDOg3tVTY6rjdBa3w="
   "resolved" "https://registry.npm.taobao.org/inherits/download/inherits-2.0.4.tgz"
   "version" "2.0.4"
+
+"ini@^1.3.5":
+  "integrity" "sha1-op2kJbSIBvNHZ6Tvzjlyaa8oQyw="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/ini/-/ini-1.3.8.tgz"
+  "version" "1.3.8"
 
 "ini@~1.3.0":
   "integrity" "sha1-op2kJbSIBvNHZ6Tvzjlyaa8oQyw="
@@ -1168,6 +1641,11 @@
   "integrity" "sha1-5f1Vbs3VcmvpePoQAYYurLCpS8U="
   "resolved" "https://registry.npm.taobao.org/ini/download/ini-2.0.0.tgz?cache=0&sync_timestamp=1607907842483&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fini%2Fdownload%2Fini-2.0.0.tgz"
   "version" "2.0.0"
+
+"ip@^1.1.5":
+  "integrity" "sha1-vd7XARQpCCjAoDnnLvJfWq7ENUo="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/ip/-/ip-1.1.5.tgz"
+  "version" "1.1.5"
 
 "is-binary-path@~2.1.0":
   "integrity" "sha1-6h9/O4DwZCNug0cPhsCcJU+0Wwk="
@@ -1182,6 +1660,13 @@
   "version" "2.0.0"
   dependencies:
     "ci-info" "^2.0.0"
+
+"is-core-module@^2.8.1":
+  "integrity" "sha512-SdNCUs284hr40hFTFP6l0IfZ/RSrMXF3qgoRHd3/79unUTvrFO/JoXwkGm+5J/Oe3E/b5GsnG330uUNgRpu1PA=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/is-core-module/-/is-core-module-2.8.1.tgz"
+  "version" "2.8.1"
+  dependencies:
+    "has" "^1.0.3"
 
 "is-extglob@^2.1.1":
   "integrity" "sha1-qIwCU1eR8C7TfHahueqXc8gz+MI="
@@ -1233,6 +1718,11 @@
   "resolved" "https://registry.nlark.com/is-path-inside/download/is-path-inside-3.0.3.tgz?cache=0&sync_timestamp=1620046845369&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fis-path-inside%2Fdownload%2Fis-path-inside-3.0.3.tgz"
   "version" "3.0.3"
 
+"is-plain-obj@^3.0.0":
+  "integrity" "sha512-gwsOE28k+23GP1B6vFl1oVh/WOzmawBrKwo5Ev6wMKzPkaXaCDIQKzLnvsA42DRlbVTWorkgTKIviAKCWkfUwA=="
+  "resolved" "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-3.0.0.tgz"
+  "version" "3.0.0"
+
 "is-typedarray@^1.0.0":
   "integrity" "sha1-5HnICFjfDBsR3dppQPlgEfzaSpo="
   "resolved" "https://registry.npm.taobao.org/is-typedarray/download/is-typedarray-1.0.0.tgz"
@@ -1243,10 +1733,25 @@
   "resolved" "https://registry.nlark.com/is-yarn-global/download/is-yarn-global-0.3.0.tgz?cache=0&sync_timestamp=1619356554445&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fis-yarn-global%2Fdownload%2Fis-yarn-global-0.3.0.tgz"
   "version" "0.3.0"
 
+"isarray@0.0.1":
+  "integrity" "sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/isarray/-/isarray-0.0.1.tgz"
+  "version" "0.0.1"
+
 "isexe@^2.0.0":
   "integrity" "sha1-6PvzdNxVb/iUehDcsFctYz8s+hA="
   "resolved" "https://registry.npm.taobao.org/isexe/download/isexe-2.0.0.tgz"
   "version" "2.0.0"
+
+"js-git@^0.7.8":
+  "integrity" "sha1-UvplWrYYd9bxB578ZTS1VPMeVEQ="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/js-git/-/js-git-0.7.8.tgz"
+  "version" "0.7.8"
+  dependencies:
+    "bodec" "^0.1.0"
+    "culvert" "^0.1.2"
+    "git-sha1" "^0.1.2"
+    "pako" "^0.2.5"
 
 "js-yaml@^4.1.0":
   "integrity" "sha1-wftl+PUBeQHN0slRhkuhhFihBgI="
@@ -1269,6 +1774,18 @@
   "integrity" "sha1-nbe1lJatPzz+8wp1FC0tkwrXJlE="
   "resolved" "https://registry.npm.taobao.org/json-stable-stringify-without-jsonify/download/json-stable-stringify-without-jsonify-1.0.1.tgz"
   "version" "1.0.1"
+
+"json-stringify-safe@^5.0.1":
+  "integrity" "sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz"
+  "version" "5.0.1"
+
+"jsonfile@^4.0.0":
+  "integrity" "sha1-h3Gq4HmbZAdrdmQPygWPnBDjPss="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/jsonfile/-/jsonfile-4.0.0.tgz"
+  "version" "4.0.0"
+  optionalDependencies:
+    "graceful-fs" "^4.1.6"
 
 "keygrip@~1.1.0":
   "integrity" "sha1-hxsWgdXhWcYqRFsMdLYV4JF+ciY="
@@ -1352,6 +1869,11 @@
   dependencies:
     "package-json" "^6.3.0"
 
+"lazy@~1.0.11":
+  "integrity" "sha1-2qBoIGKCVCwIgojpdcKXwa53tpA="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/lazy/-/lazy-1.0.11.tgz"
+  "version" "1.0.11"
+
 "levn@^0.4.1":
   "integrity" "sha1-rkViwAdHO5MqYgDUAyaN0v/8at4="
   "resolved" "https://registry.npm.taobao.org/levn/download/levn-0.4.1.tgz"
@@ -1360,15 +1882,28 @@
     "prelude-ls" "^1.2.1"
     "type-check" "~0.4.0"
 
+"levn@~0.3.0":
+  "integrity" "sha1-OwmSTt+fCDwEkP3UwLxEIeBHZO4="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/levn/-/levn-0.3.0.tgz"
+  "version" "0.3.0"
+  dependencies:
+    "prelude-ls" "~1.1.2"
+    "type-check" "~0.3.2"
+
 "lodash.merge@^4.6.2":
   "integrity" "sha1-VYqlO0O2YeGSWgr9+japoQhf5Xo="
   "resolved" "https://registry.npm.taobao.org/lodash.merge/download/lodash.merge-4.6.2.tgz"
   "version" "4.6.2"
 
-"lodash@^4.17.21":
+"lodash@^4.17.14", "lodash@^4.17.21":
   "integrity" "sha1-Z5WRxWTDv/quhFTPCz3zcMPWkRw="
   "resolved" "http://f2e02.wmcloud-dev.com:4873/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
+
+"log-driver@^1.2.7":
+  "integrity" "sha1-Y7lQIfBwL+36LJuwok53l9cYcdg="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/log-driver/-/log-driver-1.2.7.tgz"
+  "version" "1.2.7"
 
 "lowercase-keys@^1.0.0", "lowercase-keys@^1.0.1":
   "integrity" "sha1-b54wtHCE2XGnyCD/FabFFnt0wm8="
@@ -1379,6 +1914,13 @@
   "integrity" "sha1-JgPni3tLAAbLyi+8yKMgJVislHk="
   "resolved" "https://registry.npmmirror.com/lowercase-keys/download/lowercase-keys-2.0.0.tgz?cache=0&sync_timestamp=1634551715073&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Flowercase-keys%2Fdownload%2Flowercase-keys-2.0.0.tgz"
   "version" "2.0.0"
+
+"lru-cache@^5.1.1":
+  "integrity" "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/lru-cache/-/lru-cache-5.1.1.tgz"
+  "version" "5.1.1"
+  dependencies:
+    "yallist" "^3.0.2"
 
 "lru-cache@^6.0.0":
   "integrity" "sha1-bW/mVw69lqr5D8rR2vo7JWbbOpQ="
@@ -1409,7 +1951,7 @@
   "resolved" "https://registry.npm.taobao.org/merge2/download/merge2-1.4.1.tgz"
   "version" "1.4.1"
 
-"micromatch@^4.0.4":
+"micromatch@^4.0.2", "micromatch@^4.0.4":
   "integrity" "sha1-iW1Rnf6dsl/OlM63pQCRm/iB6/k="
   "resolved" "https://registry.npm.taobao.org/micromatch/download/micromatch-4.0.4.tgz?cache=0&sync_timestamp=1618054842871&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmicromatch%2Fdownload%2Fmicromatch-4.0.4.tgz"
   "version" "4.0.4"
@@ -1446,6 +1988,28 @@
   "resolved" "https://registry.npm.taobao.org/minimist/download/minimist-1.2.5.tgz"
   "version" "1.2.5"
 
+"mkdirp@1.0.4":
+  "integrity" "sha1-PrXtYmInVteaXw4qIh3+utdcL34="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/mkdirp/-/mkdirp-1.0.4.tgz"
+  "version" "1.0.4"
+
+"module-details-from-path@^1.0.3":
+  "integrity" "sha1-EUyUlnPiqKNenTV4hSeqN7Z52is="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/module-details-from-path/-/module-details-from-path-1.0.3.tgz"
+  "version" "1.0.3"
+
+"moment-timezone@^0.5.x":
+  "integrity" "sha1-p1k490driPFV01BKk0P3UZ2aQFw="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/moment-timezone/-/moment-timezone-0.5.34.tgz"
+  "version" "0.5.34"
+  dependencies:
+    "moment" ">= 2.9.0"
+
+"moment@>= 2.9.0":
+  "integrity" "sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/moment/-/moment-2.29.1.tgz"
+  "version" "2.29.1"
+
 "ms@^2.1.1":
   "integrity" "sha1-V0yBOM4dK1hh8LRFedut1gxmFbI="
   "resolved" "https://registry.npmmirror.com/ms/download/ms-2.1.3.tgz"
@@ -1461,15 +2025,34 @@
   "resolved" "https://registry.npmmirror.com/ms/download/ms-2.1.2.tgz"
   "version" "2.1.2"
 
+"mute-stream@~0.0.4":
+  "integrity" "sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/mute-stream/-/mute-stream-0.0.8.tgz"
+  "version" "0.0.8"
+
 "natural-compare@^1.4.0":
   "integrity" "sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc="
   "resolved" "https://registry.npm.taobao.org/natural-compare/download/natural-compare-1.4.0.tgz"
   "version" "1.4.0"
 
+"needle@2.4.0":
+  "integrity" "sha512-4Hnwzr3mi5L97hMYeNl8wRW/Onhy4nUKR/lVemJ8gJedxxUyBLm9kkrDColJvoSfwi0jCNhD+xCdOtiGDQiRZg=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/needle/-/needle-2.4.0.tgz"
+  "version" "2.4.0"
+  dependencies:
+    "debug" "^3.2.6"
+    "iconv-lite" "^0.4.4"
+    "sax" "^1.2.4"
+
 "negotiator@0.6.2":
   "integrity" "sha1-/qz3zPUlp3rpY0Q2pkiD/+yjRvs="
   "resolved" "https://registry.npm.taobao.org/negotiator/download/negotiator-0.6.2.tgz"
   "version" "0.6.2"
+
+"netmask@^2.0.1":
+  "integrity" "sha1-iwGgdkQGXVNjg4NYI7xSAE66xec="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/netmask/-/netmask-2.0.2.tgz"
+  "version" "2.0.2"
 
 "nodemon@^2.0.15":
   "integrity" "sha512-gdHMNx47Gw7b3kWxJV64NI+Q5nfl0y5DgDbiVtShiwa7Z0IZ07Ll4RLFo6AjrhzMtoEZn5PDE3/c2AbVsiCkpA=="
@@ -1504,6 +2087,14 @@
   "resolved" "https://registry.nlark.com/normalize-url/download/normalize-url-4.5.1.tgz"
   "version" "4.5.1"
 
+"nssocket@0.6.0":
+  "integrity" "sha1-Wflvb/MhVm8zxw99vu7N/cBxVPo="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/nssocket/-/nssocket-0.6.0.tgz"
+  "version" "0.6.0"
+  dependencies:
+    "eventemitter2" "~0.4.14"
+    "lazy" "~1.0.11"
+
 "on-finished@^2.3.0":
   "integrity" "sha1-IPEzZIGwg811M3mSoWlxqi2QaUc="
   "resolved" "https://registry.npm.taobao.org/on-finished/download/on-finished-2.3.0.tgz"
@@ -1523,6 +2114,18 @@
   "resolved" "https://registry.npm.taobao.org/only/download/only-0.0.2.tgz"
   "version" "0.0.2"
 
+"optionator@^0.8.1":
+  "integrity" "sha1-hPodA2/p08fiHZmIS2ARZ+yPtJU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/optionator/-/optionator-0.8.3.tgz"
+  "version" "0.8.3"
+  dependencies:
+    "deep-is" "~0.1.3"
+    "fast-levenshtein" "~2.0.6"
+    "levn" "~0.3.0"
+    "prelude-ls" "~1.1.2"
+    "type-check" "~0.3.2"
+    "word-wrap" "~1.2.3"
+
 "optionator@^0.9.1":
   "integrity" "sha1-TyNqY3Pa4FZqbUPhMmZ09QwpFJk="
   "resolved" "https://registry.npm.taobao.org/optionator/download/optionator-0.9.1.tgz"
@@ -1540,6 +2143,30 @@
   "resolved" "https://registry.nlark.com/p-cancelable/download/p-cancelable-1.1.0.tgz"
   "version" "1.1.0"
 
+"pac-proxy-agent@^5.0.0":
+  "integrity" "sha1-txj3ZHWmpUFcLvviVsHJcchPY14="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pac-proxy-agent/-/pac-proxy-agent-5.0.0.tgz"
+  "version" "5.0.0"
+  dependencies:
+    "@tootallnate/once" "1"
+    "agent-base" "6"
+    "debug" "4"
+    "get-uri" "3"
+    "http-proxy-agent" "^4.0.1"
+    "https-proxy-agent" "5"
+    "pac-resolver" "^5.0.0"
+    "raw-body" "^2.2.0"
+    "socks-proxy-agent" "5"
+
+"pac-resolver@^5.0.0":
+  "integrity" "sha1-HXF6Ens9epQHoW1uGwErE7m6jcA="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pac-resolver/-/pac-resolver-5.0.0.tgz"
+  "version" "5.0.0"
+  dependencies:
+    "degenerator" "^3.0.1"
+    "ip" "^1.1.5"
+    "netmask" "^2.0.1"
+
 "package-json@^6.3.0":
   "integrity" "sha1-b+7ayjXnVyWHbQsOZJdGl/7RRbA="
   "resolved" "https://registry.nlark.com/package-json/download/package-json-6.5.0.tgz"
@@ -1549,6 +2176,11 @@
     "registry-auth-token" "^4.0.0"
     "registry-url" "^5.0.0"
     "semver" "^6.2.0"
+
+"pako@^0.2.5":
+  "integrity" "sha1-8/dSL073gjSNqBYbrZ7P1Rv4OnU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pako/-/pako-0.2.9.tgz"
+  "version" "0.2.9"
 
 "parent-module@^1.0.0":
   "integrity" "sha1-aR0nCeeMefrjoVZiJFLQB2LKqqI="
@@ -1572,6 +2204,11 @@
   "resolved" "https://registry.npm.taobao.org/path-key/download/path-key-3.1.1.tgz"
   "version" "3.1.1"
 
+"path-parse@^1.0.7":
+  "integrity" "sha1-+8EUtgykKzDZ2vWFjkvWi77bZzU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/path-parse/-/path-parse-1.0.7.tgz"
+  "version" "1.0.7"
+
 "path-type@^4.0.0":
   "integrity" "sha1-hO0BwKe6OAr+CdkKjBgNzZ0DBDs="
   "resolved" "https://registry.npm.taobao.org/path-type/download/path-type-4.0.0.tgz?cache=0&sync_timestamp=1611752015315&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpath-type%2Fdownload%2Fpath-type-4.0.0.tgz"
@@ -1582,10 +2219,102 @@
   "resolved" "https://registry.nlark.com/picomatch/download/picomatch-2.3.0.tgz?cache=0&sync_timestamp=1621648246651&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fpicomatch%2Fdownload%2Fpicomatch-2.3.0.tgz"
   "version" "2.3.0"
 
+"pidusage@^2.0.21", "pidusage@2.0.21":
+  "integrity" "sha1-cGiWez2VK66nPldmjJi56qh2iU4="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pidusage/-/pidusage-2.0.21.tgz"
+  "version" "2.0.21"
+  dependencies:
+    "safe-buffer" "^5.2.1"
+
+"pm2-axon-rpc@~0.7.0", "pm2-axon-rpc@~0.7.1":
+  "integrity" "sha1-La7FODpjE1s/GLq7cCZtrNy8Qpo="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pm2-axon-rpc/-/pm2-axon-rpc-0.7.1.tgz"
+  "version" "0.7.1"
+  dependencies:
+    "debug" "^4.3.1"
+
+"pm2-axon@~4.0.1":
+  "integrity" "sha1-p7S7WG6a6zWxBCtIjN4Vtgyrr9I="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pm2-axon/-/pm2-axon-4.0.1.tgz"
+  "version" "4.0.1"
+  dependencies:
+    "amp" "~0.3.1"
+    "amp-message" "~0.1.1"
+    "debug" "^4.3.1"
+    "escape-string-regexp" "^4.0.0"
+
+"pm2-deploy@~1.0.2":
+  "integrity" "sha1-mNg4VVOjpNyhHHsxFt61GbxZYac="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pm2-deploy/-/pm2-deploy-1.0.2.tgz"
+  "version" "1.0.2"
+  dependencies:
+    "run-series" "^1.1.8"
+    "tv4" "^1.3.0"
+
+"pm2-multimeter@^0.1.2":
+  "integrity" "sha1-Gh5VFT1BoFU0zqI8/oYKuqDrSs4="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pm2-multimeter/-/pm2-multimeter-0.1.2.tgz"
+  "version" "0.1.2"
+  dependencies:
+    "charm" "~0.1.1"
+
+"pm2-sysmonit@^1.2.8":
+  "integrity" "sha1-7d6jSlP9jI18PvtzuXo8VIaG4k0="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pm2-sysmonit/-/pm2-sysmonit-1.2.8.tgz"
+  "version" "1.2.8"
+  dependencies:
+    "async" "^3.2.0"
+    "debug" "^4.3.1"
+    "pidusage" "^2.0.21"
+    "systeminformation" "^5.7"
+    "tx2" "~1.0.4"
+
+"pm2@^5.1.2":
+  "integrity" "sha1-v/5OmoTuATNicX6q0bObTXPw/NA="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/pm2/-/pm2-5.1.2.tgz"
+  "version" "5.1.2"
+  dependencies:
+    "@pm2/agent" "~2.0.0"
+    "@pm2/io" "~5.0.0"
+    "@pm2/js-api" "~0.6.7"
+    "@pm2/pm2-version-check" "latest"
+    "async" "~3.2.0"
+    "blessed" "0.1.81"
+    "chalk" "3.0.0"
+    "chokidar" "^3.5.1"
+    "cli-tableau" "^2.0.0"
+    "commander" "2.15.1"
+    "cron" "1.8.2"
+    "dayjs" "~1.8.25"
+    "debug" "^4.3.1"
+    "enquirer" "2.3.6"
+    "eventemitter2" "5.0.1"
+    "fclone" "1.0.11"
+    "mkdirp" "1.0.4"
+    "needle" "2.4.0"
+    "pidusage" "2.0.21"
+    "pm2-axon" "~4.0.1"
+    "pm2-axon-rpc" "~0.7.1"
+    "pm2-deploy" "~1.0.2"
+    "pm2-multimeter" "^0.1.2"
+    "promptly" "^2"
+    "semver" "^7.2"
+    "source-map-support" "0.5.19"
+    "sprintf-js" "1.1.2"
+    "vizion" "~2.2.1"
+    "yamljs" "0.3.0"
+  optionalDependencies:
+    "pm2-sysmonit" "^1.2.8"
+
 "prelude-ls@^1.2.1":
   "integrity" "sha1-3rxkidem5rDnYRiIzsiAM30xY5Y="
   "resolved" "https://registry.npm.taobao.org/prelude-ls/download/prelude-ls-1.2.1.tgz"
   "version" "1.2.1"
+
+"prelude-ls@~1.1.2":
+  "integrity" "sha1-IZMqVJ9eUv/ZqCf1cOBL5iqX2lQ="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/prelude-ls/-/prelude-ls-1.1.2.tgz"
+  "version" "1.1.2"
 
 "prepend-http@^2.0.0":
   "integrity" "sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc="
@@ -1596,6 +2325,32 @@
   "integrity" "sha1-foz42PW48jnBvGi+tOt4Vn1XLvg="
   "resolved" "https://registry.npm.taobao.org/progress/download/progress-2.0.3.tgz"
   "version" "2.0.3"
+
+"promptly@^2":
+  "integrity" "sha1-KhP6BjaIoqWYOxYf/wEIoH0m/HQ="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/promptly/-/promptly-2.2.0.tgz"
+  "version" "2.2.0"
+  dependencies:
+    "read" "^1.0.4"
+
+"proxy-agent@~5.0.0":
+  "integrity" "sha1-0xQFwQ1uhDH96Wy6egwCfOAdYzs="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/proxy-agent/-/proxy-agent-5.0.0.tgz"
+  "version" "5.0.0"
+  dependencies:
+    "agent-base" "^6.0.0"
+    "debug" "4"
+    "http-proxy-agent" "^4.0.0"
+    "https-proxy-agent" "^5.0.0"
+    "lru-cache" "^5.1.1"
+    "pac-proxy-agent" "^5.0.0"
+    "proxy-from-env" "^1.0.0"
+    "socks-proxy-agent" "^5.0.0"
+
+"proxy-from-env@^1.0.0":
+  "integrity" "sha1-4QLxbKNVQkhldV0sno6k8k1Yw+I="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/proxy-from-env/-/proxy-from-env-1.1.0.tgz"
+  "version" "1.1.0"
 
 "pstree.remy@^1.1.8":
   "integrity" "sha1-wkIiT0pnwh9oaDm720rCgrg3PTo="
@@ -1632,6 +2387,16 @@
   "resolved" "https://registry.nlark.com/queue-microtask/download/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
+"raw-body@^2.2.0":
+  "integrity" "sha1-uvPpwh7rztWd1lM6yHK3H3thyzI="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/raw-body/-/raw-body-2.4.2.tgz"
+  "version" "2.4.2"
+  dependencies:
+    "bytes" "3.1.1"
+    "http-errors" "1.8.1"
+    "iconv-lite" "0.4.24"
+    "unpipe" "1.0.0"
+
 "raw-body@~2.1.2":
   "integrity" "sha1-rf6s4uT7MJgFgBTQjActzFl1h3Q="
   "resolved" "https://registry.npm.taobao.org/raw-body/download/raw-body-2.1.7.tgz"
@@ -1650,6 +2415,23 @@
     "ini" "~1.3.0"
     "minimist" "^1.2.0"
     "strip-json-comments" "~2.0.1"
+
+"read@^1.0.4":
+  "integrity" "sha1-s9oZvQUkMal2cdRKQmNK33ELQMQ="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/read/-/read-1.0.7.tgz"
+  "version" "1.0.7"
+  dependencies:
+    "mute-stream" "~0.0.4"
+
+"readable-stream@1.1.x":
+  "integrity" "sha1-fPTFTvZI44EwhMY23SB54WbAgdk="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/readable-stream/-/readable-stream-1.1.14.tgz"
+  "version" "1.1.14"
+  dependencies:
+    "core-util-is" "~1.0.0"
+    "inherits" "~2.0.1"
+    "isarray" "0.0.1"
+    "string_decoder" "~0.10.x"
 
 "readdirp@~3.6.0":
   "integrity" "sha1-dKNwvYVxFuJFspzJc0DNQxoCpsc="
@@ -1677,10 +2459,33 @@
   dependencies:
     "rc" "^1.2.8"
 
+"require-in-the-middle@^5.0.0":
+  "integrity" "sha1-t2j4ADd7R1JtAmu/Wn9yfxbrQS8="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/require-in-the-middle/-/require-in-the-middle-5.1.0.tgz"
+  "version" "5.1.0"
+  dependencies:
+    "debug" "^4.1.1"
+    "module-details-from-path" "^1.0.3"
+    "resolve" "^1.12.0"
+
+"requires-port@^1.0.0":
+  "integrity" "sha1-kl0mAdOaxIXgkc8NpcbmlNw9yv8="
+  "resolved" "https://registry.npmjs.org/requires-port/-/requires-port-1.0.0.tgz"
+  "version" "1.0.0"
+
 "resolve-from@^4.0.0":
   "integrity" "sha1-SrzYUq0y3Xuqv+m0DgCjbbXzkuY="
   "resolved" "https://registry.npm.taobao.org/resolve-from/download/resolve-from-4.0.0.tgz"
   "version" "4.0.0"
+
+"resolve@^1.12.0":
+  "integrity" "sha512-Hhtrw0nLeSrFQ7phPp4OOcVjLPIeMnRlr5mcnVuMe7M/7eBn98A3hmFRLoFo3DLZkivSYwhRUJTyPyWAk56WLw=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/resolve/-/resolve-1.22.0.tgz"
+  "version" "1.22.0"
+  dependencies:
+    "is-core-module" "^2.8.1"
+    "path-parse" "^1.0.7"
+    "supports-preserve-symlinks-flag" "^1.0.0"
 
 "responselike@^1.0.2":
   "integrity" "sha1-kYcg7ztjHFZCvgaPFa3lpG9Loec="
@@ -1708,10 +2513,30 @@
   dependencies:
     "queue-microtask" "^1.2.2"
 
+"run-series@^1.1.8":
+  "integrity" "sha1-FbqcuQ5qbAVOZ8mOHcBj3w7METo="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/run-series/-/run-series-1.1.9.tgz"
+  "version" "1.1.9"
+
+"safe-buffer@^5.2.1":
+  "integrity" "sha1-Hq+fqb2x/dTsdfWPnNtOa3gn7sY="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/safe-buffer/-/safe-buffer-5.2.1.tgz"
+  "version" "5.2.1"
+
 "safe-buffer@5.1.2":
   "integrity" "sha1-mR7GnSluAxN0fVm9/St0XDX4go0="
   "resolved" "https://registry.npm.taobao.org/safe-buffer/download/safe-buffer-5.1.2.tgz"
   "version" "5.1.2"
+
+"safer-buffer@>= 2.1.2 < 3":
+  "integrity" "sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/safer-buffer/-/safer-buffer-2.1.2.tgz"
+  "version" "2.1.2"
+
+"sax@^1.2.4":
+  "integrity" "sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/sax/-/sax-1.2.4.tgz"
+  "version" "1.2.4"
 
 "semver-diff@^3.1.1":
   "integrity" "sha1-Bfd85Z8yXgDicGr9Z7tQbdscoys="
@@ -1720,7 +2545,7 @@
   dependencies:
     "semver" "^6.3.0"
 
-"semver@^5.7.1":
+"semver@^5.3.0", "semver@^5.5.0", "semver@^5.7.1":
   "integrity" "sha1-qVT5Ma66UI0we78Gnv8MAclhFvc="
   "resolved" "https://registry.npm.taobao.org/semver/download/semver-5.7.1.tgz?cache=0&sync_timestamp=1616463603361&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsemver%2Fdownload%2Fsemver-5.7.1.tgz"
   "version" "5.7.1"
@@ -1747,6 +2572,13 @@
   dependencies:
     "lru-cache" "^6.0.0"
 
+"semver@^7.2":
+  "integrity" "sha1-C2Ich5NI2JmOSw5L6Us/EuYBjvc="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/semver/-/semver-7.3.5.tgz"
+  "version" "7.3.5"
+  dependencies:
+    "lru-cache" "^6.0.0"
+
 "semver@^7.3.4":
   "integrity" "sha1-C2Ich5NI2JmOSw5L6Us/EuYBjvc="
   "resolved" "https://registry.npm.taobao.org/semver/download/semver-7.3.5.tgz?cache=0&sync_timestamp=1616463603361&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fsemver%2Fdownload%2Fsemver-7.3.5.tgz"
@@ -1760,6 +2592,16 @@
   "version" "7.3.5"
   dependencies:
     "lru-cache" "^6.0.0"
+
+"semver@~7.2.0":
+  "integrity" "sha1-NkEhcjPGOCFzx2vyx+zR4cFrDYo="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/semver/-/semver-7.2.3.tgz"
+  "version" "7.2.3"
+
+"semver@6.3.0":
+  "integrity" "sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/semver/-/semver-6.3.0.tgz"
+  "version" "6.3.0"
 
 "setprototypeof@1.1.1":
   "integrity" "sha1-fpWsskqpL1iF4KvvW6ExMw1K5oM="
@@ -1783,7 +2625,12 @@
   "resolved" "https://registry.nlark.com/shebang-regex/download/shebang-regex-3.0.0.tgz"
   "version" "3.0.0"
 
-"signal-exit@^3.0.2":
+"shimmer@^1.1.0", "shimmer@^1.2.0":
+  "integrity" "sha1-YQhZ994ye1h+/r9QH7QxF/mv8zc="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/shimmer/-/shimmer-1.2.1.tgz"
+  "version" "1.2.1"
+
+"signal-exit@^3.0.2", "signal-exit@^3.0.3":
   "integrity" "sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ=="
   "resolved" "https://registry.npmmirror.com/signal-exit/download/signal-exit-3.0.6.tgz?cache=0&sync_timestamp=1637255687504&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fsignal-exit%2Fdownload%2Fsignal-exit-3.0.6.tgz"
   "version" "3.0.6"
@@ -1793,10 +2640,60 @@
   "resolved" "https://registry.nlark.com/slash/download/slash-3.0.0.tgz"
   "version" "3.0.0"
 
+"smart-buffer@^4.1.0":
+  "integrity" "sha1-bh1x+k8YwF99D/IW3RakgdDo2a4="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/smart-buffer/-/smart-buffer-4.2.0.tgz"
+  "version" "4.2.0"
+
+"socks-proxy-agent@^5.0.0", "socks-proxy-agent@5":
+  "integrity" "sha1-Ay+1gwSKKev/7C5qc/ygdh9IF34="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/socks-proxy-agent/-/socks-proxy-agent-5.0.1.tgz"
+  "version" "5.0.1"
+  dependencies:
+    "agent-base" "^6.0.2"
+    "debug" "4"
+    "socks" "^2.3.3"
+
+"socks@^2.3.3":
+  "integrity" "sha1-mJ5lNKB88zfesbHJSqpEKWUg0w4="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/socks/-/socks-2.6.1.tgz"
+  "version" "2.6.1"
+  dependencies:
+    "ip" "^1.1.5"
+    "smart-buffer" "^4.1.0"
+
+"source-map-support@0.5.19":
+  "integrity" "sha1-qYti+G3K9PZzmWSMCFKRq56P7WE="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/source-map-support/-/source-map-support-0.5.19.tgz"
+  "version" "0.5.19"
+  dependencies:
+    "buffer-from" "^1.0.0"
+    "source-map" "^0.6.0"
+
+"source-map@^0.6.0", "source-map@~0.6.1":
+  "integrity" "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/source-map/-/source-map-0.6.1.tgz"
+  "version" "0.6.1"
+
+"sprintf-js@~1.0.2":
+  "integrity" "sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/sprintf-js/-/sprintf-js-1.0.3.tgz"
+  "version" "1.0.3"
+
+"sprintf-js@1.1.2":
+  "integrity" "sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/sprintf-js/-/sprintf-js-1.1.2.tgz"
+  "version" "1.1.2"
+
 "statuses@^1.5.0", "statuses@>= 1.5.0 < 2":
   "integrity" "sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow="
   "resolved" "https://registry.npm.taobao.org/statuses/download/statuses-1.5.0.tgz?cache=0&sync_timestamp=1609653993999&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fstatuses%2Fdownload%2Fstatuses-1.5.0.tgz"
   "version" "1.5.0"
+
+"string_decoder@~0.10.x":
+  "integrity" "sha1-YuIDvEF2bGwoyfyEMB2rHFMQ+pQ="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/string_decoder/-/string_decoder-0.10.31.tgz"
+  "version" "0.10.31"
 
 "string-width@^4.0.0", "string-width@^4.1.0", "string-width@^4.2.2":
   "integrity" "sha1-JpxxF9J7Ba0uU2gwqOyJXvnG0BA="
@@ -1838,10 +2735,20 @@
 
 "supports-color@^7.1.0":
   "integrity" "sha1-G33NyzK4E4gBs+R4umpRyqiWSNo="
-  "resolved" "https://registry.npmmirror.com/supports-color/download/supports-color-7.2.0.tgz"
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/supports-color/-/supports-color-7.2.0.tgz"
   "version" "7.2.0"
   dependencies:
     "has-flag" "^4.0.0"
+
+"supports-preserve-symlinks-flag@^1.0.0":
+  "integrity" "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz"
+  "version" "1.0.0"
+
+"systeminformation@^5.7":
+  "integrity" "sha512-elAv0h67BDuafy+zuS/yF9QCgQcROXaK9AXMnLz+NHq/LRv7p2/k5qWIwaVxwsSZE8r+dVyIw0BtFO/FoHtZaw=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/systeminformation/-/systeminformation-5.10.7.tgz"
+  "version" "5.10.7"
 
 "text-table@^0.2.0":
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
@@ -1864,6 +2771,11 @@
   "integrity" "sha1-fhvjRw8ed5SLxD2Uo8j013UrpVM="
   "resolved" "https://registry.npm.taobao.org/toidentifier/download/toidentifier-1.0.0.tgz"
   "version" "1.0.0"
+
+"toidentifier@1.0.1":
+  "integrity" "sha1-O+NDIaiKgg7RvYDfqjPkefu43TU="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/toidentifier/-/toidentifier-1.0.1.tgz"
+  "version" "1.0.1"
 
 "touch@^3.1.0":
   "integrity" "sha1-/jZfX3XsntTlaCXgu3bSSrdK+Ds="
@@ -1895,10 +2807,15 @@
   "resolved" "https://registry.nlark.com/tslib/download/tslib-1.14.1.tgz"
   "version" "1.14.1"
 
-"tslib@^2.3.1":
+"tslib@^2.0.1", "tslib@^2.3.1":
   "integrity" "sha1-6KM1rdXOrlGqJh0ypJAVjvBC7wE="
   "resolved" "https://registry.nlark.com/tslib/download/tslib-2.3.1.tgz"
   "version" "2.3.1"
+
+"tslib@1.9.3":
+  "integrity" "sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/tslib/-/tslib-1.9.3.tgz"
+  "version" "1.9.3"
 
 "tsscmp@1.0.6":
   "integrity" "sha1-hbmVg6w1iexL/vgltQAKqRHWBes="
@@ -1912,12 +2829,31 @@
   dependencies:
     "tslib" "^1.8.1"
 
+"tv4@^1.3.0":
+  "integrity" "sha1-0CDIRvrdUMhVq7JeuuzGj8EPeWM="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/tv4/-/tv4-1.3.0.tgz"
+  "version" "1.3.0"
+
+"tx2@~1.0.4":
+  "integrity" "sha1-7gsOXiw1H40j5UvfRt1gr6O7xz0="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/tx2/-/tx2-1.0.5.tgz"
+  "version" "1.0.5"
+  dependencies:
+    "json-stringify-safe" "^5.0.1"
+
 "type-check@^0.4.0", "type-check@~0.4.0":
   "integrity" "sha1-B7ggO/pwVsBlcFDjzNLDdzC6uPE="
   "resolved" "https://registry.npm.taobao.org/type-check/download/type-check-0.4.0.tgz"
   "version" "0.4.0"
   dependencies:
     "prelude-ls" "^1.2.1"
+
+"type-check@~0.3.2":
+  "integrity" "sha1-WITKtRLPHTVeP7eE8wgEsrUg23I="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/type-check/-/type-check-0.3.2.tgz"
+  "version" "0.3.2"
+  dependencies:
+    "prelude-ls" "~1.1.2"
 
 "type-fest@^0.20.2":
   "integrity" "sha1-G/IH9LKPkVg2ZstfvTJ4hzAc1fQ="
@@ -1939,11 +2875,6 @@
   dependencies:
     "is-typedarray" "^1.0.0"
 
-"typescript@>=2.7", "typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
-  "integrity" "sha512-VgYs2A2QIRuGphtzFV7aQJduJ2gyfTljngLzjpfW9FoYZF6xuw1W0vW9ghCKLfcWrCFxK81CSGRAvS1pn4fIUg=="
-  "resolved" "https://registry.npmmirror.com/typescript/download/typescript-4.5.4.tgz"
-  "version" "4.5.4"
-
 "undefsafe@^2.0.5":
   "integrity" "sha1-OHM7kye9zSJtuIn7cjpu/RYubiw="
   "resolved" "https://registry.npmmirror.com/undefsafe/download/undefsafe-2.0.5.tgz"
@@ -1955,6 +2886,11 @@
   "version" "2.0.0"
   dependencies:
     "crypto-random-string" "^2.0.0"
+
+"universalify@^0.1.0":
+  "integrity" "sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/universalify/-/universalify-0.1.2.tgz"
+  "version" "0.1.2"
 
 "unpipe@1.0.0":
   "integrity" "sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw="
@@ -2000,6 +2936,11 @@
   dependencies:
     "prepend-http" "^2.0.0"
 
+"uuid@^3.2.1":
+  "integrity" "sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/uuid/-/uuid-3.4.0.tgz"
+  "version" "3.4.0"
+
 "v8-compile-cache@^2.0.3":
   "integrity" "sha1-LeGWGMZtwkfc+2+ZM4A12CRaLO4="
   "resolved" "https://registry.npm.taobao.org/v8-compile-cache/download/v8-compile-cache-2.3.0.tgz?cache=0&sync_timestamp=1614993639567&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fv8-compile-cache%2Fdownload%2Fv8-compile-cache-2.3.0.tgz"
@@ -2009,6 +2950,21 @@
   "integrity" "sha1-IpnwLG3tMNSllhsLn3RSShj2NPw="
   "resolved" "https://registry.npm.taobao.org/vary/download/vary-1.1.2.tgz"
   "version" "1.1.2"
+
+"vizion@~2.2.1":
+  "integrity" "sha1-BCAepF/9FF1bUhDjhajzUXA4f7I="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/vizion/-/vizion-2.2.1.tgz"
+  "version" "2.2.1"
+  dependencies:
+    "async" "^2.6.3"
+    "git-node-fs" "^1.0.0"
+    "ini" "^1.3.5"
+    "js-git" "^0.7.8"
+
+"vm2@^3.9.3":
+  "integrity" "sha1-UogESGC0u6zkQxAfzTvdsqCqJJY="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/vm2/-/vm2-3.9.5.tgz"
+  "version" "3.9.5"
 
 "which@^2.0.1":
   "integrity" "sha1-fGqN0KY2oDJ+ELWckobu6T8/UbE="
@@ -2024,7 +2980,7 @@
   dependencies:
     "string-width" "^4.0.0"
 
-"word-wrap@^1.2.3":
+"word-wrap@^1.2.3", "word-wrap@~1.2.3":
   "integrity" "sha1-YQY29rH3A4kb00dxzLF/uTtHB5w="
   "resolved" "https://registry.npm.taobao.org/word-wrap/download/word-wrap-1.2.3.tgz"
   "version" "1.2.3"
@@ -2053,15 +3009,38 @@
     "signal-exit" "^3.0.2"
     "typedarray-to-buffer" "^3.1.5"
 
+"ws@^7.0.0", "ws@~7.4.0":
+  "integrity" "sha1-VlTKjs3u5HwzqaS/bSjivimAN3w="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/ws/-/ws-7.4.6.tgz"
+  "version" "7.4.6"
+
 "xdg-basedir@^4.0.0":
   "integrity" "sha1-S8jZmEQDaWIl74OhVzy7y0552xM="
   "resolved" "https://registry.nlark.com/xdg-basedir/download/xdg-basedir-4.0.0.tgz"
   "version" "4.0.0"
 
+"xregexp@2.0.0":
+  "integrity" "sha1-UqY+VsoLhKfzpfPWGHLxJq16WUM="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/xregexp/-/xregexp-2.0.0.tgz"
+  "version" "2.0.0"
+
+"yallist@^3.0.2":
+  "integrity" "sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g=="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/yallist/-/yallist-3.1.1.tgz"
+  "version" "3.1.1"
+
 "yallist@^4.0.0":
   "integrity" "sha1-m7knkNnA7/7GO+c1GeEaNQGaOnI="
   "resolved" "https://registry.npm.taobao.org/yallist/download/yallist-4.0.0.tgz"
   "version" "4.0.0"
+
+"yamljs@0.3.0":
+  "integrity" "sha1-3AYL8mdEezn3ME6bK/votafdsDs="
+  "resolved" "http://f2e02.wmcloud-dev.com:4873/yamljs/-/yamljs-0.3.0.tgz"
+  "version" "0.3.0"
+  dependencies:
+    "argparse" "^1.0.7"
+    "glob" "^7.0.5"
 
 "ylru@^1.2.0":
   "integrity" "sha1-9Xa2M0FUeYnB3nuiiHYJI7J/6E8="

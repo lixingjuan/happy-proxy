@@ -8,8 +8,7 @@ const app = new Koa();
 
 /* 允许跨域 */
 const corsMiddleware = cors({
-  // TODO: 奇怪？为什么是null, 是chrome转发的时候丢失了么？
-  origin: "null",
+  origin: (res) => res.request.header.origin || "null",
   credentials: true,
 });
 

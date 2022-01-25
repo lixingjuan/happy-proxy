@@ -9,8 +9,6 @@ import join from "url-join";
 import log from "../utils/log";
 import { pathToFileMapPath, responseBasePath } from "../utils/constant";
 
-const { cookie = "", targetBaseUrl = "" } = process.env;
-
 /**
  * 根据请求路由去寻找对应的文件路径
  */
@@ -96,10 +94,8 @@ const queryRealData = (props: {
   const queryParams = {
     url,
     method,
+    headers,
     data: body,
-    headers: {
-      cookie,
-    },
   };
 
   return axios(queryParams)
@@ -118,20 +114,9 @@ const queryRealData = (props: {
     .catch((err) => {
       const errMsg = `请求出错, \n 错误原因=> ${err.message} \n URL=> ${url}`;
       log.error(errMsg);
+      console.log(chalk.hex("yellow").bold(errMsg));
       return Promise.reject(errMsg);
     });
-};
-
-const checkEnv = () => {
-  if (!cookie || !targetBaseUrl) {
-    console.log(
-      chalk
-        .hex("#DEADED")
-        .bold("请到根目录下文件 .env 中配置 cookie & targetBaseUrl")
-    );
-    return false;
-  }
-  return true;
 };
 
 /**
@@ -145,15 +130,14 @@ const checkEnv = () => {
  *         3-2-2. 将响应内容写入该地址
  */
 const routeMiddleWare = async (ctx: Koa.Context) => {
-  if (!checkEnv()) {
-    return;
-  }
-
   log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
   const { url, method, headers, body } = ctx.request;
+  const { domain = "" } = headers;
 
-  const completeUrl = join(targetBaseUrl, url);
+  const completeUrl = join(domain as string, url);
+
+  log(JSON.stringify(headers, undefined, 4));
 
   return queryLocalJson(completeUrl)
     .then((localContent) => (ctx.body = localContent))

@@ -47,7 +47,9 @@ xSwitch的使用示例
 11. [x] 更新fs为fs/promises
 12. [x] 增加launch.json文件支持调试
 13. [x] 项目 `npm run start`检查本地是否有settting、responseData、path_map 等文件[夹]
-14. [x] 或许？可以把 targetBaseUrl 和 cookie做为环境变量存储？配置与逻辑分离
+14. [x] <del>或许？可以把 targetBaseUrl 和 cookie做为环境变量存储？配置与逻辑分离</del>
+    1.  已配置在插件中
+    2.  实现环境变量使用的包: dotenv
 15. [ ] ？？307-warterfall-Stalled 时间较久
 
 

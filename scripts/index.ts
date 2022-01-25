@@ -1,32 +1,5 @@
 const chalk = require("chalk");
-const env = require("dotenv/config");
 const fsPromises = require("fs/promises");
-
-const { exit } = require("process");
-
-const { cookie = "", targetBaseUrl = "" } = process.env;
-
-if (!cookie) {
-  console.log(
-    chalk.hex("#DEADED").bold(`
-\n\n***********************************************************\n
-*    请到根目录下文件 .env 中配置 cookie, 否则项目无法使用    *\n
-***************************************************************\n
-    `)
-  );
-  exit(1);
-}
-
-if (!targetBaseUrl) {
-  console.log(
-    chalk.hex("#DEADED").bold(`
-\n\n***********************************************************\n
-*    请到根目录下文件 .env 中配置 targetBaseUrl, 否则项目无法使用   *\n
-***************************************************************\n
-`)
-  );
-  exit(1);
-}
 
 /**
  * 依次检查以下 文件/文件夹是否存在，若不存在，则创建
