@@ -1,65 +1,112 @@
-const sourceUrl =
-  "https://gw.datayes-stg.com/ams_monitor_qa/web/industry/prosperity/comparison-chart/selection";
-const targetUrl =
-  "http://127.0.0.1:4000/ams_monitor_qa/web/industry/prosperity/comparison-chart/selection";
+/** 本地存储的urls的key */
+const localUrlKey = "LOCAL_URLS";
+const targetDomain = "http://127.0.0.1:4000";
 
-// chrome.webRequest.onBeforeRequest.addListener(
-//   (details) => {
-//     console.log("onBeforeRequest", details);
+function initBackground() {
+  chrome.storage.sync.get(localUrlKey, function (val) {
+    // TODO 这两个变量应该可以在页面配置
+    let originalDomain = "https://gw.datayes-stg.com";
+    const localUrls = val[localUrlKey];
 
-//     return {
-//       redirectUrl: targetUrl,
-//     };
-//   },
-//   {
-//     urls: [sourceUrl],
-//   },
-//   ["blocking", "requestBody"]
-// );
+    // 需要拦截的Urls列表
+    const filterUrls = JSON.parse(localUrls);
 
-// chrome.webRequest.onBeforeSendHeaders.addListener(
-//   (details) => {
-//     console.log("onBeforeSendHeaders", details);
-//     details.headers.push({
-//       name: "cookie",
-//       value: cookie,
-//     });
+    // 重定向后的urls列表
+    const targetUrls = filterUrls.map((it) => {
+      const { origin } = new URL(it);
+      originalDomain = origin;
+      return it.replace(origin, targetDomain);
+    });
 
-//     return {
-//       requestHeaders: details.requestHeaders,
-//     };
-//   },
-//   {
-//     urls: [targetUrl],
-//   },
-//   ["blocking", "requestHeaders", "extraHeaders"]
-// );
+    console.log({
+      filterUrls,
+      targetUrls,
+      originalDomain,
+    });
 
-//   .addListener(
-//   (details) => {
-//     console.log("onBeforeSendHeaders", details);
-//     details.headers.push({
-//       name: "cookie",
-//       value: cookie,
-//     });
+    getCookie({
+      filterUrls,
+      targetUrls,
+      originalDomain,
+    });
+  });
+}
 
-//     return {
-//       requestHeaders: details.requestHeaders,
-//     };
-//   },
-//   {
-//     urls: [targetUrl],
-//   },
-//   ["blocking", "requestHeaders", "extraHeaders"]
-// );
+function getCookie({ filterUrls, targetUrls, originalDomain }) {
+  chrome.cookies.getAll(
+    {
+      domain: ".datayes-stg.com",
+      name: "cloud-sso-token",
+    },
+    (res) => {
+      console.log({ res });
+      cookie = res.find((it) => it.name === "cloud-sso-token")?.value;
+      console.log({ cookie });
+      initWebrequest({ filterUrls, targetUrls, originalDomain, cookie });
+    }
+  );
+}
 
-console.log("222");
+function initWebrequest({ filterUrls, targetUrls, originalDomain, cookie }) {
+  chrome.webRequest.onBeforeRequest.addListener(
+    (details) => {
+      console.log("onBeforeRequest", details);
+      const { pathname } = new URL(details.url);
+      const targetUrl = `${targetDomain}${pathname}`;
 
-const domain = new URL("http://roboams-ci.respool2.wmcloud-qa.com").hostname;
+      return {
+        redirectUrl: targetUrl,
+      };
+    },
+    {
+      urls: filterUrls,
+    },
+    ["blocking", "requestBody"]
+  );
 
-// const res = chrome.cookies.getAll({ domain });
+  chrome.webRequest.onBeforeSendHeaders.addListener(
+    (details) => {
+      console.log("收到 onBeforeSendHeaders", details);
 
-// chrome.cookies.get({}, (res) => console.log({ res }));
-// chrome.cookies.get({}, (res) => console.log({ res }));
+      const { requestHeaders = [] } = details;
 
-chrome.cookies.getAllCookieStores((res) => console.log({ res }));
+      const filteredHeader = requestHeaders.filter(
+        (it) => !["cookie"].includes(it.name.toLocaleLowerCase())
+      );
+
+      const customHeaders = [
+        {
+          name: "Domain",
+          value: originalDomain,
+        },
+        {
+          name: "Cookie",
+          value: cookie,
+        },
+      ];
+
+      const headers = [...filteredHeader, ...customHeaders];
+
+      console.log("返回 onBeforeSendHeaders", details);
+
+      return {
+        requestHeaders: headers,
+      };
+    },
+    {
+      urls: targetUrls,
+    },
+    ["blocking", "requestHeaders", "extraHeaders"]
+  );
+}
+
+initBackground();
+
+chrome.storage.onChanged.addListener(function (changes, namespace) {
+  for (let [key, { oldValue, newValue }] of Object.entries(changes)) {
+    console.log(
+      `Storage key "${key}" in namespace "${namespace}" changed.`,
+      `Old value was "${oldValue}", new value is "${newValue}".`
+    );
+  }
+});

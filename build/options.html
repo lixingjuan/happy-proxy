@@ -6,13 +6,42 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>React App</title>
     <link rel="shortcut icon" href="images/icon.png" />
+    <style>
+      #input,
+      #textarea {
+        width: 80vw;
+        padding: 10px;
+        margin-top: 10px;
+        border: 1px solid #d9d9d9;
+      }
+
+      #textarea {
+        height: 80vh;
+      }
+
+      #error-message {
+        color: #f92d4f;
+      }
+    </style>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
     <div>
-      <h2>Hello, 这里是Option</h2>
+      <span>目标域名:</span>
+      <input id="input" disabled />
     </div>
-    <div id="root"></div>
-    <script src="js/options.js"></script>
+
+    <h2>
+      <span>需要转发的接口, 请按照模式进行配置=></span>
+      <a
+        id="link"
+        href="https://developer.chrome.com/docs/extensions/mv3/match_patterns/"
+      >
+        url match patterns
+      </a>
+    </h2>
+
+    <textarea id="textarea"></textarea>
+    <span id="error-message"></span>
+    <script src="js/options.js" type="module"></script>
   </body>
 </html>

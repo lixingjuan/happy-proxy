@@ -1,74 +1,43 @@
-// TODO 这两个变量应该可以在页面配置
-const originalDomain = "https://gw.datayes-stg.com";
-const targetDomain = "http://127.0.0.1:4000";
+import { targetDomain, localUrlKey } from "./constant.js";
 
-chrome.cookies.getAll(
-  {
-    domain: ".datayes-stg.com",
-    name: "cloud-sso-token",
-  },
-  (res) => {
-    console.log({ res });
-    cookie = res.find((it) => it.name === "cloud-sso-token")?.value;
-    console.log({ cookie });
-    demo(cookie);
-  }
-);
+const input = document.getElementById("input");
+const textarea = document.getElementById("textarea");
+const errorMessage = document.getElementById("error-message");
 
-const demo = async function (cookie) {
-  const sourceUrl =
-    "https://gw.datayes-stg.com/ams_monitor_qa/web/industry/prosperity/comparison-chart/selection";
-  const targetUrl =
-    "http://127.0.0.1:4000/ams_monitor_qa/web/industry/prosperity/comparison-chart/selection";
+input.value = targetDomain;
 
-  chrome.webRequest.onBeforeRequest.addListener(
-    (details) => {
-      console.log("onBeforeRequest", details);
-      const { pathname } = new URL(details.url);
-      const targetUrl = `${targetDomain}${pathname}`;
+const reg = /\n/g;
 
-      return {
-        redirectUrl: targetUrl,
-      };
-    },
-    {
-      urls: [sourceUrl],
-    },
-    ["blocking", "requestBody"]
-  );
+/**获取本地存储的urls */
+chrome.storage.sync.get(localUrlKey, function (val) {
+  const urls = val[localUrlKey] || "[]";
 
-  chrome.webRequest.onBeforeSendHeaders.addListener(
-    (details) => {
-      console.log("收到 onBeforeSendHeaders", details);
+  const urlsString = JSON.parse(urls).join("\n");
 
-      const { requestHeaders = [], initiator = "" } = details;
+  textarea.value = urlsString;
+});
 
-      const filteredHeader = requestHeaders.filter(
-        (it) => !["cookie"].includes(it.name.toLocaleLowerCase())
-      );
-
-      const customHeaders = [
-        {
-          name: "Domain",
-          value: originalDomain,
-        },
-        {
-          name: "Cookie",
-          value: cookie,
-        },
-      ];
-
-      const headers = [...filteredHeader, ...customHeaders];
-
-      console.log("返回 onBeforeSendHeaders", details);
-
-      return {
-        requestHeaders: headers,
-      };
-    },
-    {
-      urls: [targetUrl],
-    },
-    ["blocking", "requestHeaders", "extraHeaders"]
-  );
+const errorDom = (text) => {
+  errorMessage.innerText = text;
 };
+
+const keyupEvent = (val) => {
+  const value = val.target.value;
+  console.log(value);
+
+  const urlsArr = value.split(reg);
+
+  if (!Array.isArray(urlsArr)) {
+    errorDom("输入有误");
+    return;
+  }
+
+  errorDom("");
+  const urlsStr = JSON.stringify(urlsArr);
+
+  chrome.storage.sync.set({ [localUrlKey]: urlsStr }, () => {
+    console.log("更新本地", urlsArr);
+  });
+};
+
+textarea.addEventListener("keyup", keyupEvent);
