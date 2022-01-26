@@ -7,30 +7,47 @@
     <title>React App</title>
     <link rel="shortcut icon" href="images/icon.png" />
     <style>
-      #input,
-      #textarea {
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      #input {
         width: 80vw;
         padding: 10px;
         margin-top: 10px;
         border: 1px solid #d9d9d9;
       }
 
-      #textarea {
-        height: 80vh;
+      textarea {
+        width: 100%;
+        height: 60vh;
+        border: 1px solid #d9d9d9;
       }
 
       #error-message {
         color: #f92d4f;
       }
+
+      #content {
+        display: grid;
+        width: 100vw;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 30px;
+        justify-content: space-around;
+      }
+
+      .text-align-center {
+        text-align: center;
+      }
     </style>
   </head>
   <body>
-    <div>
+    <div id="section-first">
       <span>目标域名:</span>
       <input id="input" disabled />
     </div>
 
-    <h2>
+    <div id="header">
       <span>需要转发的接口, 请按照模式进行配置=></span>
       <a
         id="link"
@@ -38,10 +55,22 @@
       >
         url match patterns
       </a>
-    </h2>
+    </div>
 
-    <textarea id="textarea"></textarea>
+    <div id="content">
+      <div class="text-list">
+        <h2 class="text-align-center">原地址</h2>
+        <textarea id="original-textarea"></textarea>
+      </div>
+
+      <div class="text-list">
+        <h2 class="text-align-center">目标地址</h2>
+        <textarea id="target-textarea" disabled></textarea>
+      </div>
+    </div>
+
     <span id="error-message"></span>
+    <script src="js/constant.js" type="module"></script>
     <script src="js/options.js" type="module"></script>
   </body>
 </html>

@@ -1,31 +1,63 @@
-import { targetDomain, localUrlKey } from "./constant.js";
+// https://gw.datayes-stg.com/ams_monitor_qa/web/industry/prosperity/comparison-chart/selection
+
+const localOriginalUrlKey = "LOCAL_ORIGINAL_URLS";
+
+const localTargetUrlKey = "LOCAL_TARGET_URLS";
+
+const targetDomain = "http://127.0.0.1:4000";
+
+const originalDomain = "https://gw.datayes-stg.com";
+
+const nReg = /\n/g;
+
+const hostReg = /^http(s)?:\/\/(.*?)\//;
 
 const input = document.getElementById("input");
-const textarea = document.getElementById("textarea");
+const originalTextarea = document.getElementById("original-textarea");
+const targetTextarea = document.getElementById("target-textarea");
 const errorMessage = document.getElementById("error-message");
 
 input.value = targetDomain;
 
-const reg = /\n/g;
+/**
+ * @desc 更新目标 textarea
+ * @param {*} val
+ */
+const updateTargetTextarea = (originalUrlArr) => {
+  const result = originalUrlArr.map((it) =>
+    it.replace(hostReg, `${targetDomain}/`)
+  );
 
-/**获取本地存储的urls */
-chrome.storage.sync.get(localUrlKey, function (val) {
-  const urls = val[localUrlKey] || "[]";
+  const urlsString = result.join("\n");
 
-  const urlsString = JSON.parse(urls).join("\n");
+  targetTextarea.value = urlsString;
+};
 
-  textarea.value = urlsString;
+/**
+ * 获取本地存储的用户上次输入的urls
+ */
+chrome.storage.sync.get(localOriginalUrlKey, function (val) {
+  const urls = val[localOriginalUrlKey] || "[]";
+
+  const urlsArr = JSON.parse(urls);
+  const urlsStr = urlsArr.join("\n");
+
+  originalTextarea.value = urlsStr;
+  updateTargetTextarea(urlsArr);
 });
 
 const errorDom = (text) => {
   errorMessage.innerText = text;
 };
 
-const keyupEvent = (val) => {
+/* ****************************************************************************************************
+ *                                    被代理地址
+ ************************************************************************************************* */
+const originalKeyupEvent = (val) => {
   const value = val.target.value;
   console.log(value);
 
-  const urlsArr = value.split(reg);
+  const urlsArr = value.split(nReg);
 
   if (!Array.isArray(urlsArr)) {
     errorDom("输入有误");
@@ -35,9 +67,11 @@ const keyupEvent = (val) => {
   errorDom("");
   const urlsStr = JSON.stringify(urlsArr);
 
-  chrome.storage.sync.set({ [localUrlKey]: urlsStr }, () => {
+  updateTargetTextarea(urlsArr);
+
+  chrome.storage.sync.set({ [localOriginalUrlKey]: urlsStr }, () => {
     console.log("更新本地", urlsArr);
   });
 };
 
-textarea.addEventListener("keyup", keyupEvent);
+originalTextarea.addEventListener("keyup", originalKeyupEvent);
