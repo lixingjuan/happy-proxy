@@ -1,7 +1,8 @@
 {
   "apps": {
-    "name": "my-server",
-    "script": "src/index.ts",
+    "name": "sun-service",
+    "script": "ts-node",
+    "args": "-P ./tsconfig.json ./src/index.ts",
     "cwd": "./",
     "watch": true,
     "ignore_watch": ["node_modules", "logs"],

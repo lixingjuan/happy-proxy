@@ -114,7 +114,7 @@ const queryRealData = (props: {
     .catch((err) => {
       const errMsg = `请求出错, \n 错误原因=> ${err.message} \n URL=> ${url}`;
       log.error(errMsg);
-      console.log(chalk.hex("yellow").bold(errMsg));
+      console.log(errMsg);
       return Promise.reject(errMsg);
     });
 };
@@ -132,8 +132,14 @@ const queryRealData = (props: {
 const routeMiddleWare = async (ctx: Koa.Context) => {
   log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
 
-  const { url, method, headers, body } = ctx.request;
-  const { domain = "" } = headers;
+  const { url, method, headers: reqHeaders, body } = ctx.request;
+  const domain = reqHeaders["b-domain"];
+  const cookie = reqHeaders["b-cookie"];
+  const headers = { ...reqHeaders, cookie, domain };
+
+  if (headers.host) {
+    delete headers.host;
+  }
 
   const completeUrl = join(domain as string, url);
 

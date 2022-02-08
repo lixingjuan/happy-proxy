@@ -2,3 +2,4 @@ logs
 node_modules
 response
 path_map
+.DS_Store

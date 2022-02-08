@@ -1,33 +1,22 @@
-# 使用说明
+# sun-service
 
-1. `npm run install`
-2. `npm run start`
-3. 需要搭配 xswitch将接口转发到`http://127.0.0.1:4000`
-4. 在 `env` 配置
-   1. targetBaseUrl: 真实的目标domain
-   2. cookie
+一个启动在本地的服务，接收到响应优先返回本地缓存数据
+
+## 使用说明
+
+1. 请安装目录`./chrome` 指定的谷歌插件
+2. 项目安装依赖 `npm run install`
+
+## 项目启动
+
+有两种启动方式
+
+1. node启动：`npm run start`
+2. pm2启动： `npm run pm2`
 
 
 
-# 搭配xswitch使用
-
-xSwitch的使用示例
-
-```js
-{
-   "proxy": [
-      [
-         // 需要被代理的地址
-         "https://gw.datayes-stg.com/ams_monitor_qa/(.*)",
-         // 目标地址
-         "http://localhost:4000/ams_monitor_qa/$1",
-      ],
-   ]
-}
-
-```
-
-# TODO
+## TODO
 
 1. [ ] 需要一个项目初始化/清理的脚本, 帮忙删除
    1. [x] 所有的接口数据
