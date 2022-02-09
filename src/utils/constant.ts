@@ -9,3 +9,6 @@ export const pathToFileMapPath = `${rootPath}/page/map.json`;
 
 /** respnse json base file path */
 export const responseBasePath = `${rootPath}/response`;
+
+/** happy-service 自己的请求 */
+export const happyServiceFlag = "happy-service";

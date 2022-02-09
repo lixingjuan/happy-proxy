@@ -6,7 +6,25 @@ import axios from "axios";
 import join from "url-join";
 import fsPromises from "fs/promises";
 
-import { pathToFileMapPath, responseBasePath } from "../utils/constant";
+import {
+  pathToFileMapPath,
+  responseBasePath,
+  happyServiceFlag,
+} from "../utils/constant";
+
+/** 获取本地映射文件内容 */
+const queryPathMap = () => {
+  return fsPromises
+    .readFile(pathToFileMapPath, "utf-8")
+    .then((res) => {
+      console.log({ res });
+      return JSON.parse(res);
+    })
+    .catch((err) => {
+      console.log(err);
+      return {};
+    });
+};
 
 /**
  * 根据请求路由去寻找对应的文件路径
@@ -124,6 +142,13 @@ const queryRealData = (props: {
  */
 const routeMiddleWare = async (ctx: Koa.Context) => {
   const { url, method, headers: reqHeaders, body } = ctx.request;
+
+  if (url.includes(happyServiceFlag)) {
+    return queryPathMap().then((res) => {
+      ctx.body = res;
+    });
+  }
+
   const domain = reqHeaders["b-domain"];
   const cookie = reqHeaders["b-cookie"];
   const headers = omit({ ...reqHeaders, cookie, domain }, "host");

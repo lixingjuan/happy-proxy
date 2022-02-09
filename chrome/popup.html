@@ -4,23 +4,74 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <link rel="stylesheet" href="web.css" />
+    <link rel="stylesheet" href="table.css" />
+    <style>
+      .tab-pane {
+        display: none;
+      }
+      .tab-pane.active {
+        display: block;
+      }
+
+      .tab-list {
+        height: 40px;
+        font-size: 16px;
+      }
+
+      .tab-list .tab-button {
+        cursor: pointer;
+        height: 40px;
+        padding: 8px;
+      }
+
+      .tab-list .tab-button.active {
+        color: goldenrod;
+      }
+
+      #path-map-container {
+        min-width: 644px;
+        min-height: 500px;
+      }
+    </style>
   </head>
   <body>
-    <div id="J_SwitchArea" class="switch-area" title="control">
-      <span class="ant-switch" id="J_Switch">
-        <span class="ant-switch-inner" id="J_SwitchInner">Off</span>
-      </span>
+    <!-- buttons -->
+    <div class="button-wrapper">
+      <div id="J_SwitchArea" class="switch-area" title="control">
+        <span class="ant-switch" id="J_Switch">
+          <span class="ant-switch-inner" id="J_SwitchInner">Off</span>
+        </span>
+      </div>
+
+      <a id="J_OpenInNewTab" class="new-tab-control" title="Open in new tab">
+        <img class="new-tab-icon" src="images/new-tab.png" />
+      </a>
     </div>
 
-    <a id="J_OpenInNewTab" class="new-tab-control" title="Open in new tab">
-      <img class="new-tab-icon" src="images/new-tab.png" />
-    </a>
-    <div id="container" class="container"></div>
+    <!-- tab -->
+    <div id="tab-wrapper">
+      <div class="tab-list">
+        <span data-index="0" class="tab-button"> 编辑器 </span>
+        <span data-index="1" class="tab-button active"> 本地缓存 </span>
+      </div>
 
+      <div class="tab-pane-list">
+        <div id="tab-edit-content" class="tab-pane">
+          <div id="container" class="container"></div>
+        </div>
+
+        <div id="tab-local-content" class="tab-pane active">
+          <div id="path-map-container"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/dom-event.js"></script>
     <script src="lib/monaco-editor/min/vs/loader.js"></script>
     <script src="lib/strip-json-comments.js"></script>
     <script src="js/default-data.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/clean-json-reg.js"></script>
+    <script src="js/table.js"></script>
   </body>
 </html>
