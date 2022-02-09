@@ -1,13 +1,15 @@
 {
-  "name": "my-server",
-  "version": "0.0.10",
+  "name": "happy-service",
+  "version": "0.0.1",
   "description": "",
   "main": "src/index.ts",
   "scripts": {
     "start": "node scripts/index.ts && nodemon src/index.ts",
-    "pm2": "pm2 stop all && pm2 start pm2.config.json",
-    "stop": "node_modules/.bin/pm2 stop all",
-    "clean": "nodemon scripts/clean.ts"
+    "clean": "nodemon scripts/clean.ts",
+    "pm2": "node scripts/index.ts && pm2 start pm2.config.json",
+    "pm2-stop": "pm2 stop all",
+    "pm2-clean": "pm2 delete all",
+    "pm2-list": "pm2 list"
   },
   "author": "",
   "license": "ISC",
@@ -33,6 +35,7 @@
     "pm2": "^5.1.2",
     "ts-node": "^10.4.0",
     "tslib": "^2.3.1",
+    "typescript": "^4.5.5",
     "url-join": "^4.0.1"
   }
 }
