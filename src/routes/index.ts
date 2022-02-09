@@ -135,9 +135,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
   return queryLocalJson(completeUrl)
     .then((localContent) => (ctx.body = localContent))
     .catch(() => queryRealData({ method, url: completeUrl, headers, body }))
-    .then((res: any) => {
-      ctx.body = res;
-    });
+    .then((res: any) => (ctx.body = res));
 };
 
 export default routeMiddleWare;

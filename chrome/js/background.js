@@ -101,7 +101,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     };
   },
   {
-    urls: targetUrls,
+    urls: ["<all_urls>"],
   },
   ["blocking", "requestHeaders", "extraHeaders"]
 );
