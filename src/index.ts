@@ -8,7 +8,11 @@ const app = new Koa();
 
 /* 允许跨域 */
 const corsMiddleware = cors({
-  origin: (res) => res.request.header.origin || "null",
+  origin: ({ request }) => {
+    const origin = request.header.origin;
+    console.log("origin:", origin);
+    return origin || "null";
+  },
   credentials: true,
 });
 
@@ -21,8 +25,4 @@ app.use(bodyParser());
 /* 路由信息 */
 app.use(routeMiddleWare);
 
-app.listen(4000, () => {
-  console.log(
-    "🌈🌈🌈🌈🌈 🦄🦄🦄🦄🦄 SUCCESS, 监听在4000端口 🦄🦄🦄🦄🦄 🌈🌈🌈🌈🌈"
-  );
-});
+app.listen(4000, () => console.log("🟢", "监听在4000端口"));

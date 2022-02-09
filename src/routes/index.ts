@@ -1,12 +1,11 @@
-import chalk from "chalk";
 import Koa from "koa";
 import fs from "fs";
-import _ from "lodash";
-import fsPromises from "fs/promises";
+import omit from "lodash/omit";
+import cloneDeep from "lodash/cloneDeep";
 import axios from "axios";
 import join from "url-join";
+import fsPromises from "fs/promises";
 
-import log from "../utils/log";
 import { pathToFileMapPath, responseBasePath } from "../utils/constant";
 
 /**
@@ -56,15 +55,13 @@ const saveResponseToLocal = (path: string, response: any) => {
       ...localPathToFileMap,
       [path]: filePath,
     };
-  } catch (error) {
-    log.error(
-      `保存response到本地出错 \n 错误原因: ${(error as Error).message}`
-    );
+  } catch (error: any) {
+    console.error(`1.保存response到本地出错\nError: ${error?.message}`);
   }
 
   try {
     // 接口响应数据
-    const resStr = JSON.stringify(_.cloneDeep(responseData), undefined, 2);
+    const resStr = JSON.stringify(cloneDeep(responseData), undefined, 2);
     // 写入接口响应
     fs.writeFileSync(filePath, resStr);
     // 更新 映射文件
@@ -72,10 +69,8 @@ const saveResponseToLocal = (path: string, response: any) => {
       pathToFileMapPath,
       JSON.stringify(newPathToFileMap, undefined, 2)
     );
-  } catch (error) {
-    log.error(
-      `保存response到本地出错 \n 错误原因: ${(error as Error).message}`
-    );
+  } catch (error: any) {
+    console.error(`2. 保存response到本地出错\nError: ${error?.message}`);
   }
 };
 
@@ -101,9 +96,9 @@ const queryRealData = (props: {
   return axios(queryParams)
     .then((res) => {
       // TODO 这里的成功条件需要根据自己项目实际情况自定义 仅请求成功才将结果写入本地
-      const isRequestOk = res.status === 200 && res.data.code > 0;
+      const isOk = res.status === 200 && res.data.code > 0;
 
-      if (!isRequestOk) {
+      if (!isOk) {
         const errMsg = `请求出错, \n 错误原因=> ${res.data.message} \n URL=> ${url}`;
         throw Error(errMsg);
       }
@@ -112,10 +107,8 @@ const queryRealData = (props: {
       return res.data;
     })
     .catch((err) => {
-      const errMsg = `请求出错, \n 错误原因=> ${err.message} \n URL=> ${url}`;
-      log.error(errMsg);
-      console.log(errMsg);
-      return Promise.reject(errMsg);
+      console.error(`网络请求出错`, `接口: ${url}`, `error: ${err.message}`);
+      return Promise.reject(err.message);
     });
 };
 
@@ -130,24 +123,18 @@ const queryRealData = (props: {
  *         3-2-2. 将响应内容写入该地址
  */
 const routeMiddleWare = async (ctx: Koa.Context) => {
-  log(`\n\n--------------------------🌧🌧🌧-----------------------------`);
-
   const { url, method, headers: reqHeaders, body } = ctx.request;
   const domain = reqHeaders["b-domain"];
   const cookie = reqHeaders["b-cookie"];
-  const headers = { ...reqHeaders, cookie, domain };
-
-  if (headers.host) {
-    delete headers.host;
-  }
+  const headers = omit({ ...reqHeaders, cookie, domain }, "host");
 
   const completeUrl = join(domain as string, url);
 
-  log(JSON.stringify(headers, undefined, 4));
+  console.log("URL:", completeUrl);
 
   return queryLocalJson(completeUrl)
     .then((localContent) => (ctx.body = localContent))
-    .catch((err) => queryRealData({ method, url: completeUrl, headers, body }))
+    .catch(() => queryRealData({ method, url: completeUrl, headers, body }))
     .then((res: any) => {
       ctx.body = res;
     });

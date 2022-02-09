@@ -1,21 +1,6 @@
 const chalk = require("chalk");
 const fsPromises = require("fs/promises");
 
-/**
- * 依次检查以下 文件/文件夹是否存在，若不存在，则创建
- *    logs
- *    response
- *    path_map/index.ts
- */
-
-/** logs */
-fsPromises
-  .access("logs")
-  .then(() => {
-    console.log("SUCCESS", "本地存在logs文件夹");
-  })
-  .catch(() => fsPromises.mkdir("logs"));
-
 /** response  */
 fsPromises
   .access("response")
