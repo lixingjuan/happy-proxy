@@ -12,16 +12,3 @@ fs.rm("response", {
     console.log("err", err.message);
   }
 );
-
-fs.rm("logs", {
-  force: true,
-  recursive: true,
-}).then(
-  (res: any) => {
-    console.log("succeeded", res);
-    fs.mkdir("logs");
-  },
-  (err: any) => {
-    console.log("err", err.message);
-  }
-);

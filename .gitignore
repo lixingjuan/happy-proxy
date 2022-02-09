@@ -1,5 +1,5 @@
 logs
 node_modules
 response
-path_map
+page/map.json
 .DS_Store

@@ -27,3 +27,9 @@
 
 
 
+## UI 查看本地接口-json文件存储
+
+两种方式
+
+1. 执行脚本 `npm run page`
+2. 使用 vscode 插件 `Live Server`
