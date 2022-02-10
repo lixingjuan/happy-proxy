@@ -90,5 +90,6 @@ fetch(apiQueryPatMap, {
     pathMapContainer.appendChild(ul);
   })
   .catch((err) => {
-    pathMapContainer.innerHTML = "<h2> 请求出错</h2>";
+    pathMapContainer.innerHTML =
+      `<h2 style='padding-left: 20px'> Error: ${err.message}，请检查本地服务是否启动</h2>`;
   });
