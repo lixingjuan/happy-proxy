@@ -16,36 +16,25 @@ import {
 const queryPathMap = () => {
   return fsPromises
     .readFile(pathToFileMapPath, "utf-8")
-    .then((res) => {
-      console.log({ res });
-      return JSON.parse(res);
-    })
+    .then((res) => JSON.parse(res))
     .catch((err) => {
       console.log(err);
       return {};
     });
 };
 
-/**
- * 根据请求路由去寻找对应的文件路径
- */
+/** 根据请求路由去寻找对应的文件路径 */
 const queryLocalJson = (routePath: string) => {
-  const pathToFileStr = fs.readFileSync(pathToFileMapPath, "utf-8");
-  const pathToFileMap = pathToFileStr ? JSON.parse(pathToFileStr) : {};
-
-  if (!Object.keys(pathToFileMap).length) {
-    return Promise.reject("empty");
-  }
-
-  const responseFilePath = pathToFileMap[routePath];
-
-  if (!responseFilePath) {
-    return Promise.reject("empty");
-  }
-
-  return fsPromises
-    .readFile(responseFilePath, "utf8")
-    .then((res) => JSON.parse(res));
+  return queryPathMap()
+    .then((res) => {
+      const responseFilePath = res[routePath];
+      if (!responseFilePath) {
+        throw new Error("path empty");
+      }
+      return responseFilePath;
+    })
+    .then((path) => fsPromises.readFile(path, "utf8"))
+    .then((data) => JSON.parse(data));
 };
 
 /**
@@ -117,15 +106,19 @@ const queryRealData = (props: {
       const isOk = res.status === 200 && res.data.code > 0;
 
       if (!isOk) {
-        const errMsg = `请求出错, \n 错误原因=> ${res.data.message} \n URL=> ${url}`;
-        throw Error(errMsg);
+        throw Error(res.data.message);
       }
 
       saveResponseToLocal(url, res);
       return res.data;
     })
     .catch((err) => {
-      console.error(`网络请求出错`, `接口: ${url}`, `error: ${err.message}`);
+      console.error(
+        `
+        接口: ${url},
+        error: ${err.message},
+        headers: ${JSON.stringify(headers, undefined, 4)}`
+      );
       return Promise.reject(err.message);
     });
 };
