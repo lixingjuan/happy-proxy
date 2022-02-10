@@ -86,19 +86,19 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
     const customHeaders = [
       {
         name: "B-Cookie",
-        value: cookie,
+        value: window.cookie,
       },
       {
         name: "B-Domain",
-        value: originalDomain,
+        value: window.originalDomain,
       },
     ];
 
     const headers = [...requestHeaders, ...customHeaders];
 
-    return {
-      requestHeaders: headers,
-    };
+    console.log("window.cookie", window.cookie);
+
+    return { requestHeaders: headers };
   },
   {
     urls: ["<all_urls>"],
