@@ -15,15 +15,11 @@ body {
 }
 
 .switch-area {
-  position: fixed;
-  right: 42px;
   z-index: 1000;
   opacity: 0;
 }
 
 .new-tab-control {
-  position: fixed;
-  right: 14px;
   z-index: 1000;
   opacity: 0.5;
   cursor: pointer;

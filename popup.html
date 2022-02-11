@@ -6,6 +6,19 @@
     <link rel="stylesheet" href="web.css" />
     <link rel="stylesheet" href="table.css" />
     <style>
+      /** button-list */
+      #button-wrapper {
+        position: fixed;
+        display: flex;
+        flex-flow: row-reverse;
+        right: 0;
+      }
+      #button-wrapper > div,
+      #button-wrapper > button,
+      #button-wrapper > a {
+        margin: 0px 8px;
+      }
+
       .tab-pane {
         display: none;
       }
@@ -35,44 +48,49 @@
     </style>
   </head>
   <body>
-    <!-- buttons -->
-    <div class="button-wrapper">
-      <div id="J_SwitchArea" class="switch-area" title="control">
-        <span class="ant-switch" id="J_Switch">
-          <span class="ant-switch-inner" id="J_SwitchInner">Off</span>
-        </span>
-      </div>
+    <div id="root">
+      <!-- buttons -->
+      <div id="button-wrapper">
+        <a id="J_OpenInNewTab" class="new-tab-control" title="Open in new tab">
+          <img class="new-tab-icon" src="images/new-tab.png" />
+        </a>
 
-      <a id="J_OpenInNewTab" class="new-tab-control" title="Open in new tab">
-        <img class="new-tab-icon" src="images/new-tab.png" />
-      </a>
-    </div>
-
-    <!-- tab -->
-    <div id="tab-wrapper">
-      <div class="tab-list">
-        <span data-index="0" class="tab-button active"> 编辑器 </span>
-        <span data-index="1" class="tab-button"> 本地缓存 </span>
-      </div>
-
-      <div class="tab-pane-list">
-        <div id="tab-edit-content" class="tab-pane active">
-          <div id="container" class="container"></div>
-        </div>
-
-        <div id="tab-local-content" class="tab-pane">
-          <div id="path-map-container"></div>
+        <div id="J_SwitchArea" class="switch-area" title="control">
+          <span class="ant-switch" id="J_Switch">
+            <span class="ant-switch-inner" id="J_SwitchInner">Off</span>
+          </span>
         </div>
       </div>
+
+      <!-- tab -->
+      <div id="tab-wrapper">
+        <div class="tab-list">
+          <span data-index="0" class="tab-button active"> 编辑器 </span>
+          <span data-index="1" class="tab-button"> 本地缓存 </span>
+        </div>
+
+        <div class="tab-pane-list">
+          <div id="tab-edit-content" class="tab-pane active">
+            <div id="container" class="container"></div>
+          </div>
+
+          <div id="tab-local-content" class="tab-pane">
+            <!-- 数据tabel 容器 -->
+            <div id="path-map-container"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
+    <script src="js/page-constant.js"></script>
     <script src="js/dom-event.js"></script>
     <script src="js/delete-button.js"></script>
+    <script src="js/update-button.js"></script>
     <script src="lib/monaco-editor/min/vs/loader.js"></script>
     <script src="lib/strip-json-comments.js"></script>
     <script src="js/default-data.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/clean-json-reg.js"></script>
-    <script src="js/table.js"></script>
+    <script src="js/utils.js"></script>
   </body>
 </html>
