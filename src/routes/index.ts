@@ -137,9 +137,19 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
     });
   }
 
-  const domain = reqHeaders["b-domain"];
-  const cookie = reqHeaders["b-cookie"];
+  const { happydomain: domain, happycookie: cookie } = reqHeaders;
+
   const headers = omit({ ...reqHeaders, cookie, domain }, "host");
+
+  if (cookie) {
+    Object.assign(headers, { headers });
+  }
+
+  if (domain) {
+    Object.assign(headers, { domain });
+  }
+
+  console.log("URL:", url);
 
   const completeUrl = join(domain as string, url);
 

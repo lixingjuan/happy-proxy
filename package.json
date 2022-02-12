@@ -7,7 +7,7 @@
     "start": "node scripts/index.ts && nodemon src/index.ts",
     "clean": "nodemon scripts/clean.ts",
     "pm2": "node scripts/index.ts && pm2 start pm2.config.json",
-    "pm2-stop": "pm2 stop all",
+    "stop": "pm2 stop all",
     "pm2-clean": "pm2 delete all",
     "pm2-list": "pm2 list",
     "page": "http-server page"
