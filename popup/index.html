@@ -10,6 +10,8 @@
     <link rel="stylesheet" type="text/less" href="css/buttons.less" />
     <link rel="stylesheet" type="text/less" href="css/input.less" />
     <script src="./lib/less.min.js"></script>
+    <script src="lib/strip-json-comments.js"></script>
+
   </head>
   <body>
     <ul id="input-wrapper">
@@ -43,31 +45,39 @@
         <div class="tab-list">
           <span data-index="0" class="tab-button active"> 编辑器 </span>
           <span data-index="1" class="tab-button"> 本地缓存 </span>
+          <span data-index="2" class="tab-button">国际化工具 </span>
         </div>
 
         <div class="tab-pane-list">
+          <!-- 编辑器 -->
           <div id="tab-edit-content" class="tab-pane active">
             <div id="container" class="container"></div>
           </div>
 
+          <!-- 数据tabel 容器 -->
           <div id="tab-local-content" class="tab-pane">
-            <!-- 数据tabel 容器 -->
             <div id="path-map-container"></div>
+          </div>
+
+          <!-- 国际化配置 -->
+          <div id="i18-transform-container" class="tab-pane">
+            <textarea id="source"></textarea>
+            <textarea id="result"></textarea>
           </div>
         </div>
       </div>
     </div>
 
     <script src="js/page-constant.js"></script>
-    <script src="js/dom-event.js"></script>
+    <script src="js/tab-list.js"></script>
     <script src="js/input.js"></script>
     <script src="js/delete-button.js"></script>
     <script src="js/update-button.js"></script>
     <script src="lib/monaco-editor/min/vs/loader.js"></script>
-    <script src="lib/strip-json-comments.js"></script>
     <script src="js/default-data.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/clean-json-reg.js"></script>
     <script src="js/utils.js"></script>
+    <script src="js/i18n-transform.js"></script>
   </body>
 </html>
