@@ -1,7 +1,6 @@
 (function () {
-  /**
-   * @desc 生成项目国际化中英文配置json
-   */
+  /** 最让截取单词数 */
+  const keyMaxLength = 5;
 
   const getResultStr = (arr) => {
     let zhI18nResult = ``;
@@ -13,7 +12,7 @@
       const i18nKey = enStr
         .toLocaleUpperCase()
         .split(" ")
-        .slice(0, 5)
+        .slice(0, keyMaxLength)
         .join("_");
 
       zhI18nResult = zhI18nResult + "\n" + `${i18nKey}: ${zhStr}`;
@@ -39,7 +38,10 @@
     "#i18-transform-container > #result"
   );
 
-  const initData = [["中文描述", "English description"]];
+  const initData = `[
+    // 输入json, 前中文，后英文
+    ["中文描述", "English description"]
+]`;
 
   const style = [
     "height: calc(100vh - 200px)",
@@ -52,14 +54,18 @@
 
   sourceTextArea.style = style;
   resultTextArea.style = style;
-  sourceTextArea.value = JSON.stringify(initData, undefined, 2);
+  sourceTextArea.value = initData;
 
-  const updateResult = (valStr) => {
-    resultTextArea.value = getResultStr(valStr);
+  const updateResult = (arr) => {
+    resultTextArea.value = getResultStr(arr);
   };
 
-  updateResult(initData);
+  updateResult(JSON.parse(window.stripJsonComments(initData)));
+
   sourceTextArea.addEventListener("change", (e) => {
-    updateResult(e.target.value);
+    const excludesComments = window.stripJsonComments(e.target.value);
+
+    const arr = JSON.parse(excludesComments);
+    updateResult(arr);
   });
 })();
