@@ -4,7 +4,8 @@
 
 ## 前置条件
 
-请安装目录`./chrome` 指定的谷歌插件
+1. 项目根目录执行 `git submodule update --init --recursive`
+2. 安装目录`./chrome` 指定的谷歌插件
 
 
 ## 项目启动
