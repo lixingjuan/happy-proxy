@@ -16,17 +16,21 @@ import {
 import { queryPathMap } from "../utils/fs-utils";
 
 /** 根据请求路由去寻找对应的文件路径 */
-const queryLocalJson = (routePath: string) => {
+const queryLocalJson = (completeUrl: string) => {
   return queryPathMap()
     .then((res) => {
-      const responseFilePath = res[routePath];
+      const responseFilePath = res[completeUrl];
       if (!responseFilePath) {
         throw new Error("path empty");
       }
       return responseFilePath;
     })
     .then((path) => fsPromises.readFile(path, "utf8"))
-    .then((data) => JSON.parse(data));
+    .then((data) => JSON.parse(data))
+    .then((data) => {
+      console.log(`本地响应: ${completeUrl}`);
+      return data;
+    });
 };
 
 /**
@@ -94,7 +98,6 @@ const queryRealData = (props: {
 
   return axios(queryParams)
     .then((res) => {
-      // TODO 这里的成功条件需要根据自己项目实际情况自定义 仅请求成功才将结果写入本地
       const isOk = res.status === 200 && res.data.code > 0;
 
       if (!isOk) {
@@ -143,7 +146,10 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
   console.log("URL:", completeUrl);
 
   return queryLocalJson(completeUrl)
-    .catch(() => queryRealData({ method, url: completeUrl, headers, body }))
+    .catch(() => {
+      console.log(`接口响应: ${completeUrl}`);
+      return queryRealData({ method, url: completeUrl, headers, body });
+    })
     .then((res: any) => (ctx.body = res));
 };
 
