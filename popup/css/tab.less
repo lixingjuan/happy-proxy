@@ -1,0 +1,28 @@
+#tab-wrapper {
+  .tab-list {
+    height: 40px;
+    font-size: 16px;
+    & > .tab-button {
+      cursor: pointer;
+      height: 40px;
+      padding: 8px;
+      &.active {
+        color: goldenrod;
+      }
+    }
+  }
+
+  .tab-pane-list {
+    .tab-pane {
+      display: none;
+      &.active {
+        display: block;
+      }
+    }
+
+    #path-map-container {
+      min-width: 644px;
+      min-height: 500px;
+    }
+  }
+}

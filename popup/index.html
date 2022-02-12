@@ -3,51 +3,27 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="web.css" />
-    <link rel="stylesheet" href="table.css" />
-    <style>
-      /** button-list */
-      #button-wrapper {
-        position: fixed;
-        display: flex;
-        flex-flow: row-reverse;
-        right: 0;
-      }
-      #button-wrapper > div,
-      #button-wrapper > button,
-      #button-wrapper > a {
-        margin: 0px 8px;
-      }
 
-      .tab-pane {
-        display: none;
-      }
-      .tab-pane.active {
-        display: block;
-      }
-
-      .tab-list {
-        height: 40px;
-        font-size: 16px;
-      }
-
-      .tab-list .tab-button {
-        cursor: pointer;
-        height: 40px;
-        padding: 8px;
-      }
-
-      .tab-list .tab-button.active {
-        color: goldenrod;
-      }
-
-      #path-map-container {
-        min-width: 644px;
-        min-height: 500px;
-      }
-    </style>
+    <link rel="stylesheet" href="css/web.css" />
+    <link rel="stylesheet" type="text/less" href="css/table.less" />
+    <link rel="stylesheet" type="text/less" href="css/tab.less" />
+    <link rel="stylesheet" type="text/less" href="css/buttons.less" />
+    <link rel="stylesheet" type="text/less" href="css/input.less" />
+    <script src="./lib/less.min.js"></script>
   </head>
   <body>
+    <ul id="input-wrapper">
+      <li>
+        <span class="label">真实的目标域名</span>
+        <input id="original-domain-input" value="https://gw.datayes-stg.com" /></input>
+      </li>
+
+      <li>
+        <span class="label">请输入http-only的cookie域名</span>
+        <input id="cookie-domain-input" value=".datayes-stg.com" /></input>
+      </li>
+    </ul>
+
     <div id="root">
       <!-- buttons -->
       <div id="button-wrapper">
@@ -82,15 +58,16 @@
       </div>
     </div>
 
-    <script src="page-constant.js"></script>
-    <script src="dom-event.js"></script>
-    <script src="delete-button.js"></script>
-    <script src="update-button.js"></script>
+    <script src="js/page-constant.js"></script>
+    <script src="js/dom-event.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/delete-button.js"></script>
+    <script src="js/update-button.js"></script>
     <script src="lib/monaco-editor/min/vs/loader.js"></script>
     <script src="lib/strip-json-comments.js"></script>
-    <script src="default-data.js"></script>
-    <script src="editor.js"></script>
-    <script src="clean-json-reg.js"></script>
-    <script src="utils.js"></script>
+    <script src="js/default-data.js"></script>
+    <script src="js/editor.js"></script>
+    <script src="js/clean-json-reg.js"></script>
+    <script src="js/utils.js"></script>
   </body>
 </html>

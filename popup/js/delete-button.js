@@ -20,7 +20,6 @@
       referrerPolicy: "no-referrer",
     })
       .then((res) => {
-        console.log(res);
         const { status, statusText } = res;
         if (status === 500) {
           throw new Error(`${(status, statusText)}`);

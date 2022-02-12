@@ -9,6 +9,20 @@ chrome.storage.sync.get("config", (result) => {
   }
 });
 
+/** 获取根据用户输入域名从本地获取的cookie */
+chrome.storage.sync.get("happyCookie", (res) => {
+  try {
+    window.happyCookie = res.happyCookie;
+  } catch (e) {}
+});
+
+/** 获取用户输入的真实请求域名 */
+chrome.storage.sync.get("happyDomain", (res) => {
+  try {
+    window.happyDomain = res.happyDomain;
+  } catch (e) {}
+});
+
 function setIcon() {
   let text = "";
   const cba = chrome.browserAction;
@@ -79,24 +93,20 @@ chrome.webRequest.onBeforeRequest.addListener(
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
   (details) => {
-    console.log("收到 onBeforeSendHeaders", details);
-
     const { requestHeaders = [] } = details;
 
     const customHeaders = [
       {
-        name: "B-Cookie",
-        value: window.cookie,
+        name: "happyCookie",
+        value: window.happyCookie,
       },
       {
-        name: "B-Domain",
-        value: window.originalDomain,
+        name: "happyDomain",
+        value: window.happyDomain,
       },
     ];
 
     const headers = [...requestHeaders, ...customHeaders];
-
-    console.log("window.cookie", window.cookie);
 
     return { requestHeaders: headers };
   },

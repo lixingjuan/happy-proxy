@@ -138,7 +138,7 @@ document.getElementById("J_Switch").addEventListener("click", (ev) => {
 
 document.getElementById("J_OpenInNewTab").addEventListener("click", (ev) => {
   chrome.tabs.create(
-    { url: chrome.extension.getURL("popup.html") },
+    { url: chrome.extension.getURL("popup/index.html") },
     function (tab) {
       // Tab opened.
     }
