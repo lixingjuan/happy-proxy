@@ -8,25 +8,10 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: {
-    background: {
-      import: ["./background/forward.js", "./background/index.js"],
-      filename: "background.js",
+    like_button: {
+      import: ["./like_button.js"],
+      filename: "like_button.js",
     },
-
-    popupLib: {
-      import: ["./background/forward.js", "./background/index.js"],
-      filename: "popupLib.js",
-    },
-
-    // popup: {
-    //   import: [
-    //     "./src/popup/lib/monaco-editor/min/vs/loader.js",
-    //     "./src/popup/lib/strip-json-comments.js",
-    //     "./src/popup/js/constants.js",
-    //     "./src/popup/js/editor.js",
-    //   ],
-    //   filename: "popup.js",
-    // },
   },
 
   output: {
@@ -38,27 +23,13 @@ module.exports = {
   plugins: [
     // new HtmlWebpackPlugin({
     //   title: "happy-req",
-    //   template: "./popup/index.html",
+    //   template: "./public/index.html",
     //   chunks: ["popup"],
     //   filename: "popup.html",
     // }),
-
-    new MiniCssExtractPlugin({
-      filename: "index.css",
-    }),
-
-    new CopyWebpackPlugin({
-      patterns: [
-        {
-          from: "public/*",
-          to: "[name][ext]",
-        },
-        {
-          from: "popup/**/*",
-          to: "[name][ext]",
-        },
-      ],
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: "index.css",
+    // }),
   ],
 
   module: {

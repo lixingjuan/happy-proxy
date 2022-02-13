@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack -c ./config/webpack.config.js --env production"
+    "build": "webpack -c ./config/webpack.config.js --env production",
+    "babel": "npx babel --watch src --out-dir ./public --presets react-app/prod"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,11 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "antd": "^4.18.6",
+    "babel-cli": "^6.26.0",
+    "babel-preset-react-app": "^3.1.2",
+    "lodash": "^4.17.21",
+    "lodash-es": "^4.17.21",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   }
