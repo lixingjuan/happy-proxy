@@ -2,32 +2,16 @@
 (function () {
   const cookieDomainInput = document.getElementById("cookie-domain-input");
 
-  const updateGlobalCookie = (val) => {
-    chrome.cookies.getAll(
-      {
-        domain: val,
-      },
-      (res) => {
-        if (!val) {
-          console.error("cookie domain cannot be empty");
-          return;
-        }
-        const httpOnlyCookieArr = res.filter((it) => it.httpOnly);
-        const httpOnlyCookies = httpOnlyCookieArr.reduce(
-          (tol, { name, value }) => `${tol}${name}=${value}`,
-          ""
-        );
-        chrome.storage.sync.set({
-          happyCookie: httpOnlyCookies,
-        });
-      }
-    );
+  const updateGlobalCookieDomain = (val) => {
+    chrome.storage.sync.set({
+      happyCookieDomain: val,
+    });
   };
 
-  updateGlobalCookie(cookieDomainInput.value);
+  updateGlobalCookieDomain(cookieDomainInput.value);
 
   cookieDomainInput.addEventListener("change", (e) => {
-    updateGlobalCookie(e.target.value);
+    updateGlobalCookieDomain(e.target.value);
   });
 })();
 
@@ -45,3 +29,48 @@
     });
   });
 })();
+
+/**
+ *
+ *
+ *
+ *
+ *
+ */
+
+/** 监听本地happyCookieDomain对应的cookie变化 */
+let happyCookieDomain = "";
+
+chrome.storage.sync.get("happyCookieDomain", (res) => {
+  happyCookieDomain = res.happyCookieDomain;
+});
+
+chrome.cookies.onChanged.addListener((res) => {
+  console.log(res);
+  const { cookie } = res;
+  const { domain, name, value, httpOnly } = cookie;
+
+  if (domain !== happyCookieDomain) {
+    return;
+  }
+
+  if (!httpOnly) {
+    return;
+  }
+
+  const newHappyCookie = `${name}=${value}`;
+  console.log({ newHappyCookie });
+
+  chrome.storage.sync.set({
+    happyCookie: newHappyCookie,
+  });
+});
+
+// chrome.cookies.onChanged.addListener(
+//   {
+//     domain: happyCookieDomain,
+//   },
+//   (res) => {
+//     console.log({ res });
+//   }
+// );
