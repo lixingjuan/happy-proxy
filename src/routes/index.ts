@@ -141,8 +141,8 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   const headers = omit({ ...reqHeaders, cookie, domain }, "host");
 
-  if (cookie) {
-    Object.assign(headers, { headers });
+  if (cookie && !headers.cookie) {
+    Object.assign(headers, { cookie });
   }
 
   if (domain) {
