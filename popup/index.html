@@ -12,6 +12,19 @@
     <script src="./lib/less.min.js"></script>
     <script src="lib/strip-json-comments.js"></script>
 
+
+    <!-- antd -->
+    <script src="https://cdn.bootcss.com/react/16.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.bootcss.com/react-dom/16.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.bootcss.com/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/antd/3.0.2/antd.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/antd/3.0.2/antd.js"></script>
+    <!-- antd -->
+
   </head>
   <body>
     <ul id="input-wrapper">
@@ -24,6 +37,8 @@
         <span class="label">请输入http-only的cookie域名</span>
         <input id="cookie-domain-input" value=".datayes-stg.com" /></input>
       </li>
+
+      <div id></div>
     </ul>
 
     <div id="root">
@@ -77,7 +92,17 @@
     <script src="js/default-data.js"></script>
     <script src="js/editor.js"></script>
     <script src="js/clean-json-reg.js"></script>
-    <script src="js/utils.js"></script>
     <script src="js/i18n-transform.js"></script>
+
+    <!-- react -->
+    <script
+    src="https://unpkg.com/react@17/umd/react.development.js"
+    crossorigin
+  ></script>
+  <script
+    src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"
+    crossorigin
+  ></script>
+
   </body>
 </html>

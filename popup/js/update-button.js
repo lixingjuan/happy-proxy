@@ -21,7 +21,7 @@
     })
       .then((response) => response.json())
       .then((data) => {
-        message.success("查询成功！");
+        antd.message.success("查询成功！");
 
         const ul = document.createElement("ul");
 
@@ -67,7 +67,7 @@
         pathMapContainer.appendChild(ul);
       })
       .catch((err) => {
-        messages.error(`查询失败:${err.messages}, 请检查本地服务是否启动`);
+        antd.messages.error(`查询失败:${err.messages}, 请检查本地服务是否启动`);
       });
   }
 

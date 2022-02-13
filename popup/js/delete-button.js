@@ -25,10 +25,10 @@
           throw new Error(`${(status, statusText)}`);
         }
         handleUpdate();
-        messages.success("删除成功");
+        antd.messages.success("删除成功");
       })
       .catch((err) => {
-        messages.error(`删除失败:${err.messages}`);
+        antd.messages.error(`删除失败:${err.messages}`);
       });
   }
 
