@@ -53,7 +53,8 @@ const Demo = (props: Props) => {
         size="small"
         columns={columns}
         dataSource={dataSource}
-        scroll={{ y: "90vh" }}
+        scroll={{ y: "calc(100vh - 150px)" }}
+        pagination={false}
       />
       <Modal>确认删除？</Modal>
     </div>
