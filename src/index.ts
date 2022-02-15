@@ -8,7 +8,10 @@ const app = new Koa();
 
 /* 允许跨域 */
 const corsMiddleware = cors({
-  origin: ({ request }) => request.header.origin || "Null",
+  origin: ({ request }) => {
+    console.log("request.header.origin", request.header.origin);
+    return request.header.origin || "Null";
+  },
   credentials: true,
 });
 

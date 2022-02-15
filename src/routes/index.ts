@@ -5,15 +5,13 @@ import cloneDeep from "lodash/cloneDeep";
 import axios from "axios";
 import join from "url-join";
 import fsPromises from "fs/promises";
+import queryString from "query-string";
 
 import happyServiceApi from "./happy-service-api";
 
-import {
-  pathToFileMapPath,
-  responseBasePath,
-  happyServiceFlag,
-} from "../utils/constant";
+import { happyServiceFlag } from "../utils/constant";
 import { queryPathMap } from "../utils/fs-utils";
+import { saveResponseToLocal } from "./utils";
 
 /** 根据请求路由去寻找对应的文件路径 */
 const queryLocalJson = (completeUrl: string) => {
@@ -31,50 +29,6 @@ const queryLocalJson = (completeUrl: string) => {
       console.log(`本地响应: ${completeUrl}`);
       return data;
     });
-};
-
-/**
- * @desc 保存接口返回数据到本地，并更新映射文件
- * @param {string} path 请求完整接口
- * @param {any} resData 接口响应数据
- */
-const saveResponseToLocal = (path: string, response: any) => {
-  const { data: responseData } = response;
-  let filePath = "";
-  let newPathToFileMap = {};
-  try {
-    // 去除 / . : 等符号后做为文件名称
-    const fileName = `${(path || "").replace(/[\/|\.|:]/g, "__")}.json`;
-
-    // 文件存储路径
-    filePath = `${responseBasePath}/${fileName}`;
-
-    const localPathToFileMap = fs.readFileSync(pathToFileMapPath, "utf-8")
-      ? JSON.parse(fs.readFileSync(pathToFileMapPath, "utf-8"))
-      : {};
-
-    // 新的path to file 映射文件内容
-    newPathToFileMap = {
-      ...localPathToFileMap,
-      [path]: filePath,
-    };
-  } catch (error: any) {
-    console.error(`1.保存response到本地出错\nError: ${error?.message}`);
-  }
-
-  try {
-    // 接口响应数据
-    const resStr = JSON.stringify(cloneDeep(responseData), undefined, 2);
-    // 写入接口响应
-    fs.writeFileSync(filePath, resStr);
-    // 更新 映射文件
-    fs.writeFileSync(
-      pathToFileMapPath,
-      JSON.stringify(newPathToFileMap, undefined, 2)
-    );
-  } catch (error: any) {
-    console.error(`2. 保存response到本地出错\nError: ${error?.message}`);
-  }
 };
 
 /**
@@ -99,6 +53,7 @@ const queryRealData = (props: {
   return axios(queryParams)
     .then((res) => {
       const isOk = res.status === 200 && res.data.code > 0;
+      console.log(`接口响应: ${url}, res.data: ${res.data}`);
 
       if (!isOk) {
         throw Error(res.data.message);
@@ -131,35 +86,24 @@ const queryRealData = (props: {
 const routeMiddleWare = async (ctx: Koa.Context) => {
   const { url, method, headers: reqHeaders, body } = ctx.request;
 
+  const headers = omit({ ...reqHeaders }, "host");
+
   if (url.includes(happyServiceFlag)) {
     return happyServiceApi(ctx.request).then((res) => {
       ctx.body = res;
     });
   }
 
-  const { happydomain: domain, happycookie: cookie } = reqHeaders;
+  const { query } = queryString.parseUrl(url);
 
-  const headers = omit({ ...reqHeaders, cookie, domain }, "host");
+  const happyDomain = query?.happyDomain || "";
 
-  if (cookie && !headers.cookie) {
-    Object.assign(headers, { cookie });
-  }
-
-  if (domain) {
-    Object.assign(headers, { domain });
-  }
-
-  console.log("URL:", url);
-
-  const completeUrl = join(domain as string, url);
+  const completeUrl = join(happyDomain as string, url);
 
   console.log("URL:", completeUrl);
 
   return queryLocalJson(completeUrl)
-    .catch(() => {
-      console.log(`接口响应: ${completeUrl}`);
-      return queryRealData({ method, url: completeUrl, headers, body });
-    })
+    .catch(() => queryRealData({ method, url: completeUrl, headers, body }))
     .then((res: any) => (ctx.body = res));
 };
 

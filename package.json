@@ -16,11 +16,13 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.24.0",
+    "dayjs": "^1.10.7",
     "dotenv": "^14.2.0",
     "http-server": "^14.1.0",
     "koa": "^2.13.1",
     "koa-bodyparser": "^3.2.0",
-    "koa2-cors": "^2.0.6"
+    "koa2-cors": "^2.0.6",
+    "query-string": "^7.1.1"
   },
   "devDependencies": {
     "@types/koa-bodyparser": "^4.3.4",

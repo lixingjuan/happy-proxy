@@ -4,3 +4,5 @@ response
 page/map.json
 .DS_Store
 chrome
+Db/response/**
+Db/index.json
