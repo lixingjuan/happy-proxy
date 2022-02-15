@@ -1,0 +1,30 @@
+{
+  "name": "拦截请求",
+  "description": "拦截chrome发出的请求，并为头部补充 http-only cookie",
+  "version": "0.1.0",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": "images/icon48.png",
+    "default_title": "拦截请求",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "cookies",
+    "webRequest",
+    "storage",
+    "webRequestBlocking",
+    "<all_urls>",
+    "browsingData"
+  ],
+  "icons": {
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "background": {
+    "scripts": [
+      "background/update-cookie.js",
+      "background/forward.js",
+      "background/index.js"
+    ]
+  }
+}
