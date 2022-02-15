@@ -50,7 +50,7 @@ window.redirectToMatchingRule = (details) => {
   const { origin: happyDomain = "", search = "" } = new URL(details.url);
 
   const params = search
-    ? `happyDomain=${happyDomain}`
+    ? `&happyDomain=${happyDomain}`
     : `?happyDomain=${happyDomain}`;
 
   return redirectUrl === details.url
