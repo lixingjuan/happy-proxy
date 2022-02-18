@@ -7,15 +7,14 @@ const demo = (val) => {
    * init cookie
    */
   chrome.cookies.getAll({ domain: val }, (res) => {
-    const httpOnlyItems = res.filter((it) => it.httpOnly && it.domain === val);
+    const httpOnlyItems = res.find((it) => it.httpOnly && it.domain === val);
 
-    const happyCookie = httpOnlyItems.reduce(
-      (tol, { name, value }) => `${name}=${value}&${tol}`,
-      ""
-    );
-
-    console.log("happyCookie update", { happyCookieDomain: val, happyCookie });
-    window.happyCookie = happyCookie;
+    if (httpOnlyItems) {
+      const { name, value } = httpOnlyItems;
+      const happyCookie = `${name}=${value}`;
+      window.happyCookie = happyCookie;
+      console.log("happyCookie update", { domain: val, happyCookie });
+    }
   });
 };
 

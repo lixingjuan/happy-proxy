@@ -10,21 +10,6 @@ if (chrome) {
     }
   });
 
-  /** 获取根据用户输入域名从本地获取的cookie */
-  chrome.storage.sync.get("happyCookie", (res) => {
-    try {
-      window.happyCookie = res.happyCookie;
-      console.log("获取cookie成功", res.happyCookie);
-    } catch (e) {}
-  });
-
-  /** 获取用户输入的真实请求域名 */
-  chrome.storage.sync.get("happyDomain", (res) => {
-    try {
-      window.happyDomain = res.happyDomain;
-    } catch (e) {}
-  });
-
   function setIcon() {
     let text = "";
     const cba = chrome.browserAction;
@@ -95,15 +80,11 @@ if (chrome) {
 
   chrome.webRequest.onBeforeSendHeaders.addListener(
     (details) => {
-      console.log({ details });
-
       const happyCookieDomain = window.happyCookieDomain;
 
       let headers = [...(details.requestHeaders || [])];
 
       let happyCookie = window.happyCookie;
-
-      console.log("window.happyCookie", window.happyCookie);
 
       const { happyDomain } = new URL(details.url).search
         .slice(1)
@@ -114,7 +95,11 @@ if (chrome) {
           return tol;
         }, {});
 
-      if (happyDomain && happyDomain.includes(happyCookieDomain)) {
+      if (
+        happyDomain &&
+        happyDomain.includes(happyCookieDomain) &&
+        details.url.startsWith("http://127.0.0.1:4000")
+      ) {
         const currentItemCookie = headers.find(
           (h) => h.name.toLocaleLowerCase() === "cookie"
         );
