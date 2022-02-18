@@ -1,18 +1,17 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button, message, Modal, Input } from "antd";
 import { addItemApi } from "../service";
 import ErrorStatus from "./ErrorStatus";
+import isEmpty from "lodash/isEmpty";
 
-const AddButton = () => {
+const AddButton = ({ onUpdate }: any) => {
   const [visible, setVisible] = useState(false);
 
   const [error, setError] = useState("");
 
   const [params, setParams] = useState({
     url: "",
-    mockBody: {
-      data: [],
-    },
+    mockBody: {},
   });
 
   const onUrlChange = (val: any) => {
@@ -33,16 +32,34 @@ const AddButton = () => {
   };
 
   const handleOk = () => {
-    const { mockBody, url } = params;
+    const { mockBody } = params;
+
     if (Object.prototype.toString.call(mockBody) !== "[object Object]") {
       message.error("body 必须是json");
       return;
     }
 
-    addItemApi(url, mockBody).then(() => {
-      message.success("查询成功");
-    });
+    addItemApi(params)
+      .then((result) => {
+        const { code, message: responseMsg } = result;
+        if (code < 0) {
+          throw new Error(responseMsg);
+        }
+        message.success(`add ${responseMsg}`);
+        onUpdate?.();
+      })
+      .catch((error) => {
+        message.error(error.message);
+      });
   };
+
+  const { disabledOk, showParseStatus } = useMemo(
+    () => ({
+      disabledOk: !!error || isEmpty(params?.mockBody),
+      showParseStatus: !isEmpty(params?.mockBody),
+    }),
+    [params.mockBody, error]
+  );
 
   return (
     <>
@@ -60,7 +77,7 @@ const AddButton = () => {
         onOk={handleOk}
         title="Add One Mock Item"
         onCancel={() => setVisible(false)}
-        okButtonProps={{ disabled: !!error }}
+        okButtonProps={{ disabled: disabledOk }}
       >
         <div
           style={{
@@ -69,7 +86,9 @@ const AddButton = () => {
           }}
         >
           <Input placeholder="请输入接口" onChange={onUrlChange} />
-          <ErrorStatus error={error} />
+
+          {showParseStatus && <ErrorStatus error={error} />}
+
           <Input.TextArea
             rows={10}
             onChange={onBodyChange}

@@ -29,12 +29,13 @@ function App() {
   const handleUpdate = useCallback(() => {
     getAllApi()
       .then(({ data, code }) => {
-        console.log({ data });
-        message.success("successful");
-        const dataArr = Object.entries(data).map(([url, filePath]) => ({
-          url,
-          filePath,
-        }));
+        message.success("query successful");
+        const dataArr = Object.entries(data)
+          .reverse()
+          .map(([url, filePath = ""]) => ({
+            url,
+            filePath: filePath.split("my")?.[1],
+          }));
         setDataSource(dataArr);
       })
       .catch((err) => message.error("error", err.message));

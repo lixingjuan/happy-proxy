@@ -10,7 +10,7 @@ const Buttons = ({ onUpdate }: any) => {
     <Space size="small">
       <ConfigInput />
       <UpdateButton key="UpdateButton" onUpdate={onUpdate} />
-      <AddButton key="AddButton" />
+      <AddButton key="AddButton" onUpdate={onUpdate} />
       <DeleteAllButton key="DeleteAllButton" />
       <SwitchButton key="SwitchButton" />
     </Space>

@@ -18,8 +18,12 @@ export const deleteAllApi = () =>
 
 /** 删除一条 */
 export const deleteItemApi = (url: string) =>
-  axios.delete(`${apiQueryPathMap}?url=${url}`).then((res) => res.data);
+  axios
+    .delete(`${apiQueryPathMap}`, {
+      url,
+    })
+    .then((res) => res.data);
 
 /** 增加一条mock */
-export const addItemApi = (url: string, data: any) =>
-  axios.post(`${apiQueryPathMap}?url=${url}`, data).then((res) => res.data);
+export const addItemApi = (data: { url: string; mockBody: any }) =>
+  axios.post(`${apiQueryPathMap}`, data).then((res) => res.data);
