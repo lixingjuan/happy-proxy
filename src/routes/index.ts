@@ -12,10 +12,11 @@ import happyServiceApi from "./happy-service-api";
 import { happyServiceFlag } from "../utils/constant";
 import { queryPathMap } from "../utils/fs-utils";
 import { saveResponseToLocal } from "./utils";
+import qs from "query-string";
 
 /** 根据请求路由去寻找对应的文件路径 */
-const queryLocalJson = (completeUrl: string) => {
-  return queryPathMap()
+const queryLocalJson = (completeUrl: string) =>
+  queryPathMap()
     .then((res) => {
       const responseFilePath = res[completeUrl];
       if (!responseFilePath) {
@@ -29,7 +30,6 @@ const queryLocalJson = (completeUrl: string) => {
       console.log(`本地响应: ${completeUrl}`);
       return data;
     });
-};
 
 /**
  * @desc 向真正的接口发起请求
@@ -98,9 +98,9 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   const happyDomain = query?.happyDomain || "";
 
-  const completeUrl = join(happyDomain as string, url);
+  const tempUrl = join(happyDomain as string, url);
 
-  console.log("URL:", completeUrl);
+  const completeUrl = qs.exclude(tempUrl, ["happyDomain"]);
 
   return queryLocalJson(completeUrl)
     .catch(() => queryRealData({ method, url: completeUrl, headers, body }))

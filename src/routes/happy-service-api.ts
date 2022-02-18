@@ -1,17 +1,26 @@
 import fs from "fs";
-import { queryPathMap, cleanPathMap } from "../utils/fs-utils";
+import { queryPathMap } from "../utils/fs-utils";
 import { saveResponseToLocal } from "./utils";
 import queryString from "query-string";
 import omit from "lodash/omit";
-import { pathToFileMapPath, responseBasePath } from "../utils/constant";
+import { pathToFileMapPath } from "../utils/constant";
 
 /** add one mock item */
 const addItem = async (targetKey: string, body: any) => {
+  const { url, mockBody } = body;
   try {
-    saveResponseToLocal(targetKey, { data: body });
-    return Promise.resolve();
+    saveResponseToLocal(url, { data: mockBody });
+    return Promise.resolve({
+      code: 1,
+      message: "successfully",
+      data: null,
+    });
   } catch (error) {
-    return Promise.reject();
+    return Promise.reject({
+      code: -1,
+      message: "error",
+      data: null,
+    });
   }
 };
 
