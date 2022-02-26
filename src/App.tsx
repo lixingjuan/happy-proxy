@@ -19,7 +19,7 @@ const style = {
 };
 
 function App() {
-  const [activeTab, setActiveTab] = useState(defaultActiveKey);
+  const [activeTab, setActiveTab] = useState("3");
 
   const [dataSource, setDataSource] = useState<
     { url: string; filePath: string }[]
@@ -53,14 +53,14 @@ function App() {
         onChange={onChange}
         activeKey={activeTab}
         defaultActiveKey={defaultActiveKey}
-        tabBarExtraContent={<Buttons onUpdate={handleUpdate} />}
+        // tabBarExtraContent={<Buttons onUpdate={handleUpdate} />}
       >
-        <TabPane tab="编辑器" key="1">
+        {/* <TabPane tab="编辑器" key="1">
           <div id="container" className="container"></div>
         </TabPane>
         <TabPane tab="本地数据" key="2">
           <DataList onUpdate={handleUpdate} dataSource={dataSource} />
-        </TabPane>
+        </TabPane> */}
         <TabPane tab="国际化" key="3">
           <I18nTransform />
         </TabPane>

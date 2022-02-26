@@ -97,7 +97,7 @@ export default function I18nTransform() {
 
   useEffect(() => {
     onUpdate();
-  }, []);
+  }, [maxKeyLength]);
 
   return (
     <>
@@ -120,9 +120,6 @@ export default function I18nTransform() {
           />
           <Button onClick={onCopyResult} size="small">
             Copy Result
-          </Button>
-          <Button onClick={onUpdate} size="small">
-            Update Result
           </Button>
         </Space>
       </div>
