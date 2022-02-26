@@ -12,6 +12,7 @@
     "lib/less.min.js": "/lib/less.min.js",
     "lib/monaco-editor/min/vs/language/html/htmlWorker.js": "/lib/monaco-editor/min/vs/language/html/htmlWorker.js",
     "lib/monaco-editor/min/vs/language/json/jsonWorker.js": "/lib/monaco-editor/min/vs/language/json/jsonWorker.js",
+    "static/media/codicon.ttf": "/static/media/codicon.56dba998166ea5a0ca7f.ttf",
     "lib/monaco-editor/min/vs/editor/editor.main.nls.ru.js": "/lib/monaco-editor/min/vs/editor/editor.main.nls.ru.js",
     "lib/monaco-editor/min/vs/language/json/jsonMode.js": "/lib/monaco-editor/min/vs/language/json/jsonMode.js",
     "lib/monaco-editor/min/vs/editor/editor.main.nls.ja.js": "/lib/monaco-editor/min/vs/editor/editor.main.nls.ja.js",

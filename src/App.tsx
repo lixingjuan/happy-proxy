@@ -3,6 +3,7 @@ import { Tabs, message } from "antd";
 import { useState, useCallback } from "react";
 
 import Buttons from "./components/Buttons";
+import Editor from "./components/Editor";
 import DataList from "./components/Table";
 import I18nTransform from "./components/I18nTransform";
 
@@ -56,7 +57,7 @@ function App() {
         tabBarExtraContent={<Buttons onUpdate={handleUpdate} />}
       >
         <TabPane tab="编辑器" key="1">
-          <div id="container" className="container"></div>
+          <Editor />
         </TabPane>
         <TabPane tab="本地数据" key="2">
           <DataList onUpdate={handleUpdate} dataSource={dataSource} />
