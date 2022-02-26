@@ -24,25 +24,35 @@ const initData = `
   ["中文描述2", "Second English description "]
 ]`;
 
-const getResultStr = (arr: any, keyMaxLength = 5) => {
-  let zhResult = ``;
-  let enResult = ``;
+/**
+ * @desc 生成项目国际化中英文配置json
+ */
+const getUpperStr = (val: string, maxKeyLength: number = 5) =>
+  val.toLocaleUpperCase().split(" ").slice(0, maxKeyLength).join("_").trim();
 
-  arr.forEach((it: any, index: number) => {
-    const [zhStr, enStr] = it;
+const getResultStr = (
+  arr: [string, string][],
+  maxKeyLength: number
+): string => {
+  const enRes = arr.reduce(
+    (tol, [zhStr, enStr]) =>
+      (tol += `"${getUpperStr(enStr, maxKeyLength)}": "${enStr}",
+`),
+    ""
+  );
 
-    const i18nKey = enStr
-      .toLocaleUpperCase()
-      .split(" ")
-      .slice(0, keyMaxLength)
-      .join("_");
+  const zhRes = arr.reduce(
+    (tol, [zhStr, enStr]) =>
+      (tol += `"${getUpperStr(enStr, maxKeyLength)}": "${zhStr}",
+`),
+    ""
+  );
 
-    zhResult = `${zhResult}${index !== 0 ? "," : ""}\n${i18nKey}: ${zhStr}`;
+  return `
+${enRes}
 
-    enResult = `${enResult}${index !== 0 ? "," : ""}\n${i18nKey}: ${zhStr}`;
-  });
-
-  return zhResult + "\n\n\n" + enResult;
+${zhRes}
+  `;
 };
 
 export default function I18nTransform() {
@@ -128,12 +138,18 @@ export default function I18nTransform() {
       >
         <TextArea
           id="source"
+          name="输入"
           onChange={onChange}
           value={sourceDate}
           rows={20}
           placeholder={placeholder}
         />
-        <TextArea id="result" rows={20} value={resultDate} />
+        <TextArea
+          id="result"
+          name="格式化后的结果"
+          rows={20}
+          value={resultDate}
+        />
       </div>
     </>
   );

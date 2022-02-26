@@ -1,0 +1,23 @@
+{
+  "name": "My extension",
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules_1.json"
+      },
+      {
+        "id": "ruleset_2",
+        "enabled": false,
+        "path": "rules_2.json"
+      }
+    ]
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "*://example.com/*"
+  ]
+}
