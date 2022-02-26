@@ -34,3 +34,14 @@
 
 1. 执行脚本 `npm run page`
 2. 使用 vscode 插件 `Live Server`
+
+
+## 一些指令
+
+```bash
+# 更新子模块
+git submodule update --recursive
+
+# 初始化submodule & 递归更新
+git submodule update --init --recursive
+```
