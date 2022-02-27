@@ -1,4 +1,4 @@
-window.proxyDisabled = "";
+window.proxyDisabled = "on"; // 打开：on, 关闭：disabled
 window.proxyConfig = [];
 window.clearRunning = false;
 
@@ -6,10 +6,52 @@ window.happyCookie = "";
 window.happyCookieDomain = "";
 
 /* ****************************************************************************************************
- *                                    监听前台发送的信息
+ *                                    工具函数
+ ************************************************************************************************* */
+
+/** 当前拦截规则的数量 */
+function setIcon() {
+  let text = "";
+  const cba = chrome.browserAction;
+
+  const icon =
+    window.proxyDisabled !== "disabled" &&
+    window.proxyConfig &&
+    window.proxyConfig.length;
+
+  if (icon) {
+    text = window.proxyConfig.length;
+  }
+
+  if (cba) {
+    cba.setBadgeText({
+      text: "" + text,
+    });
+  }
+}
+
+function clearCache() {
+  if (!window.clearRunning) {
+    window.clearRunning = true;
+    const millisecondsPerWeek = 1000 * 60 * 60 * 24 * 7;
+    const oneWeekAgo = new Date().getTime() - millisecondsPerWeek;
+    chrome.browsingData.removeCache(
+      {
+        since: oneWeekAgo,
+      },
+      () => {
+        window.clearRunning = false;
+      }
+    );
+  }
+}
+
+/* ****************************************************************************************************
+ *                                    初始化监听前台发送的信息
  ************************************************************************************************* */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { action, value } = request;
+  console.log({ action, value });
 
   /** 更新cookie对应的域名 */
   if (action === "Update_Happy_Cookie_Domain") {
@@ -24,7 +66,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   /** 更新cookie */
   if (action === "Update_Happy_Cookie") {
     window.happyCookie = value;
-    console.log("Update_Proxy_Config", Update_Happy_Cookie);
+    console.log("Update_Happy_Cookie", Update_Happy_Cookie);
     sendResponse({
       message: "success",
     });
@@ -32,11 +74,18 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
   /** 转发配置 */
   if (action === "Update_Proxy_Config") {
-    window.proxyConfig = JSON.parse(value);
-    console.log("Update_Proxy_Config", value);
-    sendResponse({
-      message: "success",
-    });
+    try {
+      window.proxyConfig = JSON.parse(value);
+      console.log("Update_Proxy_Config", value);
+      sendResponse({
+        message: "success",
+      });
+    } catch (error) {
+      window.proxyConfig = [];
+      sendResponse({
+        message: "fail",
+      });
+    }
   }
 
   /** 禁止/开启 */
@@ -53,7 +102,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
  *                                    监听cookie & cookieDomain 变化，实时更新happyCookie的值
  ************************************************************************************************* */
 
-chrome.cookies.getAll({ domain: val }, (res) => {
+chrome.cookies.getAll({ domain: happyCookieDomain }, (res) => {
   const httpOnlyItems = res.find((it) => it.httpOnly && it.domain === val);
 
   if (httpOnlyItems) {
@@ -80,47 +129,6 @@ chrome.cookies.onChanged.addListener((res) => {
   });
   window.happyCookie = newHappyCookie;
 });
-
-/* ****************************************************************************************************
- *                                    工具函数
- ************************************************************************************************* */
-
-/** 当前拦截规则的数量 */
-function setIcon() {
-  let text = "";
-  const cba = chrome.browserAction;
-
-  const icon =
-    window.proxyDisabled !== "disabled" &&
-    window.proxyConfig.proxy &&
-    window.proxyConfig.proxy.length;
-
-  if (icon) {
-    text = window.proxyConfig.proxy.length;
-  }
-
-  if (cba) {
-    cba.setBadgeText({
-      text: "" + text,
-    });
-  }
-}
-
-function clearCache() {
-  if (!window.clearRunning) {
-    window.clearRunning = true;
-    const millisecondsPerWeek = 1000 * 60 * 60 * 24 * 7;
-    const oneWeekAgo = new Date().getTime() - millisecondsPerWeek;
-    chrome.browsingData.removeCache(
-      {
-        since: oneWeekAgo,
-      },
-      () => {
-        window.clearRunning = false;
-      }
-    );
-  }
-}
 
 /* ****************************************************************************************************
  *                                    监听事件
