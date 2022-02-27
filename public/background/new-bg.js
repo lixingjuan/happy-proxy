@@ -14,13 +14,11 @@ const rules = {
       action: {
         type: "redirect",
         redirect: {
-          regexSubstitution: "https://\\1.xyz.com/",
+          regexSubstitution: "http://127\\.0\\.0\\.1:4000\\.com",
         },
       },
       condition: {
-        regexFilter: "^https://gw\\.(abc|def)\\.xyz\\.com/",
-        // datayes-stg.com
-        // regexFilter: "^https://gw\\.(abc|def)\\.xyz\\.com/",
+        regexFilter: "^https://gw\\.datayes-stg\\.com",
         resourceTypes: ["main_frame"],
       },
     },
