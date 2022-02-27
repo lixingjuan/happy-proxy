@@ -19,12 +19,11 @@ const style = {
   width: "calc(100vw - 40px)",
 };
 
+type DataSourceItem = { url: string; filePath: string };
 function App() {
   const [activeTab, setActiveTab] = useState(defaultActiveKey);
 
-  const [dataSource, setDataSource] = useState<
-    { url: string; filePath: string }[]
-  >([]);
+  const [dataSource, setDataSource] = useState<DataSourceItem[]>([]);
 
   /** update data */
   const handleUpdate = useCallback(() => {

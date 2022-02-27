@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Input } from "antd";
+import { Input, message } from "antd";
 
 const defaultCookieDomain = ".datayes-stg.com";
 
@@ -10,40 +10,17 @@ const ConfigInput = () => {
     const value = e.target.value;
     setCookieDomain(value);
 
-    if (chrome?.storage?.sync?.set) {
-      chrome.storage.sync.set({
-        happyCookieDomain: value,
-      });
-
-      /** 监听本地happyCookieDomain对应的cookie变化 */
-      let happyCookieDomain = "";
-
-      chrome.storage.sync.get("happyCookieDomain", (res) => {
-        happyCookieDomain = res.happyCookieDomain;
-      });
-
-      /** 监听所有 cookie 的变化 */
-      chrome.cookies.onChanged.addListener((res) => {
-        console.log(res);
-        const { cookie } = res;
-        const { domain, name, value, httpOnly } = cookie;
-
-        if (domain !== happyCookieDomain) {
-          return;
+    chrome.runtime.sendMessage(
+      {
+        action: "Update_Happy_Cookie_Domain",
+        value: e.target.value,
+      },
+      (response) => {
+        if (response.message === "success") {
+          message.success(response.message);
         }
-
-        if (!httpOnly) {
-          return;
-        }
-
-        const newHappyCookie = `${name}=${value}`;
-        console.log({ newHappyCookie });
-
-        chrome.storage.sync.set({
-          happyCookie: newHappyCookie,
-        });
-      });
-    }
+      }
+    );
   };
 
   useEffect(() => {

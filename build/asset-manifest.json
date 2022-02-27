@@ -1,10 +1,13 @@
 {
   "files": {
     "main.js": "/static/js/bundle.js",
+    "static/js/vendors-node_modules_monaco-editor_esm_vs_language_json_jsonMode_js.chunk.js": "/static/js/vendors-node_modules_monaco-editor_esm_vs_language_json_jsonMode_js.chunk.js",
     "static/js/node_modules_web-vitals_dist_web-vitals_js.chunk.js": "/static/js/node_modules_web-vitals_dist_web-vitals_js.chunk.js",
     "lib/monaco-editor/min/vs/editor/editor.main.js": "/lib/monaco-editor/min/vs/editor/editor.main.js",
     "lib/monaco-editor/min/vs/language/typescript/src/worker.js": "/lib/monaco-editor/min/vs/language/typescript/src/worker.js",
     "lib/monaco-editor/min/vs/language/typescript/lib/typescriptServices.js": "/lib/monaco-editor/min/vs/language/typescript/lib/typescriptServices.js",
+    "json.worker.js": "/json.worker.js",
+    "editor.worker.js": "/editor.worker.js",
     "lib/monaco-editor/min/vs/language/css/cssWorker.js": "/lib/monaco-editor/min/vs/language/css/cssWorker.js",
     "lib/monaco-editor/monaco.d.ts": "/lib/monaco-editor/monaco.d.ts",
     "lib/monaco-editor/min/vs/editor/editor.main.css": "/lib/monaco-editor/min/vs/editor/editor.main.css",
@@ -49,6 +52,7 @@
     "lib/monaco-editor/min/vs/basic-languages/src/vb.js": "/lib/monaco-editor/min/vs/basic-languages/src/vb.js",
     "lib/monaco-editor/min/vs/basic-languages/src/msdax.js": "/lib/monaco-editor/min/vs/basic-languages/src/msdax.js",
     "lib/monaco-editor/min/vs/basic-languages/src/pug.js": "/lib/monaco-editor/min/vs/basic-languages/src/pug.js",
+    "background/index.js": "/background/index.js",
     "lib/monaco-editor/min/vs/basic-languages/src/csharp.js": "/lib/monaco-editor/min/vs/basic-languages/src/csharp.js",
     "lib/monaco-editor/min/vs/basic-languages/src/html.js": "/lib/monaco-editor/min/vs/basic-languages/src/html.js",
     "lib/monaco-editor/min/vs/editor/contrib/suggest/browser/media/String_16x.svg": "/lib/monaco-editor/min/vs/editor/contrib/suggest/browser/media/String_16x.svg",
@@ -65,7 +69,6 @@
     "lib/monaco-editor/min/vs/basic-languages/src/r.js": "/lib/monaco-editor/min/vs/basic-languages/src/r.js",
     "lib/monaco-editor/min/vs/basic-languages/src/java.js": "/lib/monaco-editor/min/vs/basic-languages/src/java.js",
     "lib/monaco-editor/min/vs/basic-languages/src/fsharp.js": "/lib/monaco-editor/min/vs/basic-languages/src/fsharp.js",
-    "background/index.js": "/background/index.js",
     "lib/monaco-editor/min/vs/basic-languages/src/go.js": "/lib/monaco-editor/min/vs/basic-languages/src/go.js",
     "lib/monaco-editor/min/vs/basic-languages/src/objective-c.js": "/lib/monaco-editor/min/vs/basic-languages/src/objective-c.js",
     "lib/monaco-editor/min/vs/basic-languages/src/lua.js": "/lib/monaco-editor/min/vs/basic-languages/src/lua.js",
@@ -89,6 +92,7 @@
     "robots.txt": "/robots.txt",
     "js/clean-json-reg.js": "/js/clean-json-reg.js",
     "bundle.js.map": "/static/js/bundle.js.map",
+    "vendors-node_modules_monaco-editor_esm_vs_language_json_jsonMode_js.chunk.js.map": "/static/js/vendors-node_modules_monaco-editor_esm_vs_language_json_jsonMode_js.chunk.js.map",
     "node_modules_web-vitals_dist_web-vitals_js.chunk.js.map": "/static/js/node_modules_web-vitals_dist_web-vitals_js.chunk.js.map"
   },
   "entrypoints": [

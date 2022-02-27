@@ -1,7 +1,7 @@
-const defaultCode = `{
+/** chrome.storage.sync.get, 若本地没有，则使用这个 */
+const initCode = `{
   // Use IntelliSense to learn about possible links.
   // Type \`rule\` to quick insert rule.
-  // For more information, visit: https://github.com/yize/xswitch
   "proxy": [
     [
       "//alinw.alicdn.com/platform/daily-test/isDaily.js",
@@ -19,37 +19,32 @@ const defaultCode = `{
 }
 `;
 
-const options = {
-  selectOnLineNumbers: true,
-  minimap: {
-    enabled: false,
-  },
-  fontSize: 14,
-  fontFamily: "Fira Code, monospace",
-  fontLigatures: true,
-  contextmenu: false,
-  scrollBeyondLastLine: false,
-  folding: true,
-  useTabStops: true,
-  wordBasedSuggestions: true,
-  quickSuggestions: true,
-  suggestOnTriggerCharacters: true,
+const getDefaultCode = () => {
+  let result = initCode;
+  if (chrome.storage) {
+    chrome.storage.sync.get("proxyConfig", () => {
+      result = initCode;
+    });
+  }
+  return result;
 };
 
-function updateConfig(data) {
+function updateProxyConfig(data) {
   const config = window
     .stripJsonComments(data)
     .replace(/\s+/g, "")
     .replace(window.cleanJSONReg, ($0, $1, $2) => $2);
-  debugger;
+
   try {
     console.log("=========data");
     console.log(data);
     console.log("=========config");
     console.log(config);
+
+    chrome.post;
   } catch (e) {
     console.error(e);
   }
 }
 
-export { defaultCode, options, updateConfig };
+export { getDefaultCode, updateProxyConfig };

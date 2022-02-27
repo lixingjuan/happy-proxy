@@ -1,9 +1,26 @@
 import { useState } from "react";
 import MonacoEditor from "react-monaco-editor";
-import { defaultCode, updateConfig, options } from "./editor-config";
+import { getDefaultCode, updateProxyConfig } from "./editor-config";
+
+const options = {
+  selectOnLineNumbers: true,
+  minimap: {
+    enabled: false,
+  },
+  fontSize: 14,
+  fontFamily: "Fira Code, monospace",
+  fontLigatures: true,
+  contextmenu: false,
+  scrollBeyondLastLine: false,
+  folding: true,
+  useTabStops: true,
+  wordBasedSuggestions: true,
+  quickSuggestions: true,
+  suggestOnTriggerCharacters: true,
+};
 
 const Editor = () => {
-  const [code, setCode] = useState(defaultCode);
+  const [code, setCode] = useState(getDefaultCode);
   const editorDidMount = (editor: any, monaco: any) => {
     console.log("editorDidMount", editor);
     editor.focus();
@@ -11,7 +28,10 @@ const Editor = () => {
 
   const onChange = (newValue: any) => {
     console.log("onChange", newValue);
-    updateConfig(newValue);
+    setCode(newValue);
+    /** 更新本地 */
+    chrome.storage.sync.set({ proxyConig: JSON.stringify(newValue) });
+    updateProxyConfig(newValue);
   };
 
   return (
