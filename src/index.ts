@@ -15,7 +15,7 @@ const corsMiddleware = cors({
   credentials: true,
 });
 
-/* 路由信息 */
+/* 允许跨域 中间件 */
 app.use(corsMiddleware);
 
 /* body 解析中间件 */

@@ -1,3 +1,4 @@
 [submodule "chrome"]
 	path = chrome
 	url = git@github.com:lixingjuan/happy-request.git
+	branch = gh-pages
