@@ -3,7 +3,7 @@ window.proxyConfig = [];
 window.clearRunning = false;
 
 window.happyCookie = "";
-window.happyCookieDomain = ".datayes-stg.com";
+window.happyCookieDomain = "";
 
 /* ****************************************************************************************************
  *                                    监听前台发送的信息
@@ -11,7 +11,7 @@ window.happyCookieDomain = ".datayes-stg.com";
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { action, value } = request;
 
-  /** 更新cookie domain */
+  /** 更新cookie对应的域名 */
   if (action === "Update_Happy_Cookie_Domain") {
     window.happyCookieDomain = value;
     console.log("window.happyCookieDomain", window.happyCookieDomain);
@@ -24,81 +24,46 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   /** 更新cookie */
   if (action === "Update_Happy_Cookie") {
     window.happyCookie = value;
+    console.log("Update_Proxy_Config", Update_Happy_Cookie);
     sendResponse({
       message: "success",
     });
   }
 
-  /** 更新编辑器拦截配置 */
-  if (action === "Update_Config") {
-    try {
-      window.proxyConfig = JSON.parse(value);
-    } catch (e) {
-      console.warn("can not parse config", value);
-      window.proxyConfig.proxy = [];
-    }
-
+  /** 转发配置 */
+  if (action === "Update_Proxy_Config") {
+    window.proxyConfig = JSON.parse(value);
+    console.log("Update_Proxy_Config", value);
     sendResponse({
       message: "success",
     });
   }
 
-  if (request.message === "get_name") {
-    chrome.storage.local.get("name", (data) => {
-      if (chrome.runtime.lastError) {
-        sendResponse({
-          message: "fail",
-        });
-
-        return;
-      }
-
-      sendResponse({
-        message: "success",
-        payload: data.name,
-      });
+  /** 禁止/开启 */
+  if (action === "Update_Proxy_Disabled") {
+    window.proxyDisabled = value;
+    setIcon();
+    sendResponse({
+      message: "success",
     });
-
-    return true;
-  } else if (request.message === "change_name") {
-    chrome.storage.local.set(
-      {
-        name: request.payload,
-      },
-      () => {
-        if (chrome.runtime.lastError) {
-          sendResponse({ message: "fail" });
-          return;
-        }
-
-        sendResponse({ message: "success" });
-      }
-    );
-
-    return true;
   }
 });
 
 /* ****************************************************************************************************
- *                                    更新本地config
+ *                                    工具函数
  ************************************************************************************************* */
-chrome.storage.sync.get("config", (result) => {
-  try {
-    window.proxyConfig = JSON.parse(result.config);
-  } catch (e) {
-    console.warn("can not parse config", result.config);
-    window.proxyConfig.proxy = [];
-  }
-});
 
+/** 当前拦截规则的数量 */
 function setIcon() {
   let text = "";
   const cba = chrome.browserAction;
-  if (
+
+  const icon =
     window.proxyDisabled !== "disabled" &&
     window.proxyConfig.proxy &&
-    window.proxyConfig.proxy.length
-  ) {
+    window.proxyConfig.proxy.length;
+
+  if (icon) {
     text = window.proxyConfig.proxy.length;
   }
 
@@ -108,21 +73,6 @@ function setIcon() {
     });
   }
 }
-
-chrome.storage.onChanged.addListener((changes) => {
-  if (changes.config) {
-    try {
-      window.proxyConfig = JSON.parse(changes.config.newValue);
-    } catch (e) {
-      console.warn("can not parse fresh config", changes.config.newValue);
-      window.proxyConfig.proxy = [];
-    }
-  }
-  if (changes.disabled) {
-    window.proxyDisabled = changes.disabled.newValue;
-  }
-  setIcon();
-});
 
 function clearCache() {
   if (!window.clearRunning) {
@@ -140,11 +90,9 @@ function clearCache() {
   }
 }
 
-chrome.storage.sync.get("disabled", (result) => {
-  window.proxyDisabled = result.disabled;
-  setIcon();
-});
-
+/* ****************************************************************************************************
+ *                                    监听事件
+ ************************************************************************************************* */
 chrome.webRequest.onBeforeRequest.addListener(
   (details) => {
     if (window.proxyDisabled !== "disabled") {
@@ -176,11 +124,12 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
         return tol;
       }, {});
 
-    if (
+    const needHappyCookie =
       happyDomain &&
       happyDomain.includes(happyCookieDomain) &&
-      details.url.startsWith("http://127.0.0.1:4000")
-    ) {
+      details.url.startsWith("http://127.0.0.1:4000");
+
+    if (needHappyCookie) {
       const currentItemCookie = headers.find(
         (h) => h.name.toLocaleLowerCase() === "cookie"
       );

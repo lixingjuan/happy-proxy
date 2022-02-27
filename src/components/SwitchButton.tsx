@@ -8,11 +8,17 @@ const SwitchButton = () => {
     const nextStatus = !checked;
     setChecked(nextStatus);
 
-    if (chrome?.storage?.sync?.set) {
-      chrome.storage.sync.set({
-        disabled: nextStatus ? "" : "disabled",
-      });
-    }
+    chrome.runtime.sendMessage(
+      {
+        action: "Update_Proxy_Disabled",
+        value: nextStatus === true ? "on" : "disabled",
+      },
+      (response) => {
+        if (response.message === "success") {
+          console.log("Update_Proxy_Disabled", "更新成功");
+        }
+      }
+    );
   };
 
   return (

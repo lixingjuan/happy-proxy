@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MonacoEditor from "react-monaco-editor";
 import { getDefaultCode, updateProxyConfig } from "./editor-config";
 
@@ -21,6 +21,7 @@ const options = {
 
 const Editor = () => {
   const [code, setCode] = useState(getDefaultCode);
+
   const editorDidMount = (editor: any, monaco: any) => {
     console.log("editorDidMount", editor);
     editor.focus();
@@ -30,9 +31,14 @@ const Editor = () => {
     console.log("onChange", newValue);
     setCode(newValue);
     /** 更新本地 */
-    chrome.storage.sync.set({ proxyConig: JSON.stringify(newValue) });
+    chrome.storage.sync.set({ proxyConig: newValue });
+    /** 通知后台 */
     updateProxyConfig(newValue);
   };
+
+  useEffect(() => {
+    onChange(getDefaultCode());
+  }, []);
 
   return (
     <MonacoEditor
