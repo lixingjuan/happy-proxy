@@ -1,4 +1,4 @@
-import { Table, Modal, Space, message } from "antd";
+import { Button, Table, Modal, Space, message } from "antd";
 import { useEffect } from "react";
 import { writeTextToClipboard } from "../utils";
 import { deleteItemApi } from "../service";
@@ -23,7 +23,7 @@ const Demo = (props: Props) => {
       title: "接口",
       dataIndex: "url",
       key: "url",
-      render: (text: string) => <a>{text}</a>,
+      render: (text: string) => <span>{text}</span>,
     },
     {
       title: "文件地址",
@@ -36,16 +36,20 @@ const Demo = (props: Props) => {
       width: 100,
       render: (text: string, record: any) => (
         <Space size="middle">
-          <a onClick={() => writeTextToClipboard(record.filePath)} key="copy">
-            copy
-          </a>
-          <a onClick={() => onDelete(record.url)}>delete</a>
+          <Button
+            key="copy"
+            type="link"
+            onClick={() => writeTextToClipboard(record.filePath)}
+          >
+            Copy
+          </Button>
+          <Button onClick={() => onDelete(record.url)}>Delete</Button>
         </Space>
       ),
     },
   ];
 
-  useEffect(() => onUpdate(), []);
+  useEffect(() => onUpdate(), [onUpdate]);
 
   return (
     <div>

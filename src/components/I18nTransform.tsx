@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Input, Button, Space, InputNumber } from "antd";
 import ErrorStatus from "./ErrorStatus";
 
@@ -63,32 +63,27 @@ export default function I18nTransform() {
   /** key 截取单词数 */
   const [maxKeyLength, setMaxKeyLength] = useState(5);
 
-  const onChange = (e: any) => {
-    try {
-      const newValue = e.target.value;
-      console.log("newValue", newValue);
-      setSourceDate(newValue);
+  /** input onChange */
+  const onChange = useCallback(
+    (e: any) => {
+      try {
+        const newValue = e.target.value;
+        console.log("newValue", newValue);
+        setSourceDate(newValue);
 
-      const excludesComments = stripJsonComments(newValue);
-      const arr = JSON.parse(excludesComments);
-      const result = getResultStr(arr, maxKeyLength);
+        const excludesComments = stripJsonComments(newValue);
+        const arr = JSON.parse(excludesComments);
+        const result = getResultStr(arr, maxKeyLength);
 
-      setResultDate(result);
-      setError("");
-    } catch (error: any) {
-      console.log({ error });
-      setError(error?.message);
-    }
-  };
-
-  /** 更新结果 */
-  const onUpdate = () => {
-    onChange({
-      target: {
-        value: initData,
-      },
-    });
-  };
+        setResultDate(result);
+        setError("");
+      } catch (error: any) {
+        console.log({ error });
+        setError(error?.message);
+      }
+    },
+    [maxKeyLength]
+  );
 
   /** copy result */
   const onCopyResult = () => {
@@ -96,8 +91,13 @@ export default function I18nTransform() {
   };
 
   useEffect(() => {
-    onUpdate();
-  }, [maxKeyLength]);
+    /** 更新结果 */
+    onChange({
+      target: {
+        value: sourceDate,
+      },
+    });
+  }, [maxKeyLength, onChange, sourceDate]);
 
   return (
     <>

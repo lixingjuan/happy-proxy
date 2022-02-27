@@ -247,6 +247,7 @@ module.exports = function (webpackEnv) {
     infrastructureLogging: {
       level: "none",
     },
+    devtool: false,
     optimization: {
       minimize: isEnvProduction,
       minimizer: [
@@ -567,17 +568,17 @@ module.exports = function (webpackEnv) {
     plugins: [
       new MonacoWebpackPlugin({
         // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
-        languages: ["json", "jsonc"],
+        languages: ["json"],
       }),
 
-      new CopyWebpackPlugin({
-        patterns: [
-          {
-            from: "public",
-            to: "",
-          },
-        ],
-      }),
+      // new CopyWebpackPlugin({
+      //   patterns: [
+      //     {
+      //       from: "public",
+      //       to: "",
+      //     },
+      //   ],
+      // }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(

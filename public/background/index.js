@@ -1,53 +1,9 @@
-window.proxyDisabled = "";
+window.proxyDisabled = "on"; // 打开：on, 关闭：disabled
 window.proxyConfig = [];
 window.clearRunning = false;
 
 window.happyCookie = "";
 window.happyCookieDomain = "";
-
-/* ****************************************************************************************************
- *                                    监听前台发送的信息
- ************************************************************************************************* */
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  const { action, value } = request;
-
-  /** 更新cookie对应的域名 */
-  if (action === "Update_Happy_Cookie_Domain") {
-    window.happyCookieDomain = value;
-    console.log("window.happyCookieDomain", window.happyCookieDomain);
-
-    sendResponse({
-      message: "success",
-    });
-  }
-
-  /** 更新cookie */
-  if (action === "Update_Happy_Cookie") {
-    window.happyCookie = value;
-    console.log("Update_Proxy_Config", Update_Happy_Cookie);
-    sendResponse({
-      message: "success",
-    });
-  }
-
-  /** 转发配置 */
-  if (action === "Update_Proxy_Config") {
-    window.proxyConfig = JSON.parse(value);
-    console.log("Update_Proxy_Config", value);
-    sendResponse({
-      message: "success",
-    });
-  }
-
-  /** 禁止/开启 */
-  if (action === "Update_Proxy_Disabled") {
-    window.proxyDisabled = value;
-    setIcon();
-    sendResponse({
-      message: "success",
-    });
-  }
-});
 
 /* ****************************************************************************************************
  *                                    工具函数
@@ -60,11 +16,11 @@ function setIcon() {
 
   const icon =
     window.proxyDisabled !== "disabled" &&
-    window.proxyConfig.proxy &&
-    window.proxyConfig.proxy.length;
+    window.proxyConfig &&
+    window.proxyConfig.length;
 
   if (icon) {
-    text = window.proxyConfig.proxy.length;
+    text = window.proxyConfig.length;
   }
 
   if (cba) {
@@ -89,6 +45,90 @@ function clearCache() {
     );
   }
 }
+
+/* ****************************************************************************************************
+ *                                    初始化监听前台发送的信息
+ ************************************************************************************************* */
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  const { action, value } = request;
+  console.log({ action, value });
+
+  /** 更新cookie对应的域名 */
+  if (action === "Update_Happy_Cookie_Domain") {
+    window.happyCookieDomain = value;
+    console.log("window.happyCookieDomain", window.happyCookieDomain);
+
+    sendResponse({
+      message: "success",
+    });
+  }
+
+  /** 更新cookie */
+  if (action === "Update_Happy_Cookie") {
+    window.happyCookie = value;
+    console.log("Update_Happy_Cookie", Update_Happy_Cookie);
+    sendResponse({
+      message: "success",
+    });
+  }
+
+  /** 转发配置 */
+  if (action === "Update_Proxy_Config") {
+    try {
+      window.proxyConfig = JSON.parse(value);
+      console.log("Update_Proxy_Config", value);
+      sendResponse({
+        message: "success",
+      });
+    } catch (error) {
+      window.proxyConfig = [];
+      sendResponse({
+        message: "fail",
+      });
+    }
+  }
+
+  /** 禁止/开启 */
+  if (action === "Update_Proxy_Disabled") {
+    window.proxyDisabled = value;
+    setIcon();
+    sendResponse({
+      message: "success",
+    });
+  }
+});
+
+/* ****************************************************************************************************
+ *                                    监听cookie & cookieDomain 变化，实时更新happyCookie的值
+ ************************************************************************************************* */
+
+chrome.cookies.getAll({ domain: happyCookieDomain }, (res) => {
+  const httpOnlyItems = res.find((it) => it.httpOnly && it.domain === val);
+
+  if (httpOnlyItems) {
+    const { name, value } = httpOnlyItems;
+    const happyCookie = `${name}=${value}`;
+    console.log("happyCookie update", { domain: val, happyCookie });
+    window.happyCookie = happyCookie;
+  }
+});
+
+chrome.cookies.onChanged.addListener((res) => {
+  const { cookie } = res;
+  const { domain, name, value, httpOnly } = cookie;
+
+  const updateNotMine = domain !== happyCookieDomain || !httpOnly;
+  if (updateNotMine) {
+    return;
+  }
+
+  const newHappyCookie = `${name}=${value}`;
+  window.console.log("happyCookie onChanged", {
+    happyCookieDomain,
+    newHappyCookie,
+  });
+  window.happyCookie = newHappyCookie;
+});
 
 /* ****************************************************************************************************
  *                                    监听事件

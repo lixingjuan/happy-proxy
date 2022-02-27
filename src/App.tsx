@@ -16,7 +16,7 @@ const defaultActiveKey = localStorage.getItem("activeTab") || "1";
 const style = {
   height: "100vh",
   margin: "0px auto",
-  width: "calc(100vw - 40px)",
+  width: "calc(100vw - 10px)",
 };
 
 type DataSourceItem = { url: string; filePath: string };
@@ -47,25 +47,23 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <Tabs
-        style={style}
-        onChange={onChange}
-        activeKey={activeTab}
-        defaultActiveKey={defaultActiveKey}
-        tabBarExtraContent={<Buttons onUpdate={handleUpdate} />}
-      >
-        <TabPane tab="编辑器" key="1">
-          <Editor />
-        </TabPane>
-        <TabPane tab="本地数据" key="2">
-          <DataList onUpdate={handleUpdate} dataSource={dataSource} />
-        </TabPane>
-        <TabPane tab="国际化" key="3">
-          <I18nTransform />
-        </TabPane>
-      </Tabs>
-    </div>
+    <Tabs
+      style={style}
+      onChange={onChange}
+      activeKey={activeTab}
+      defaultActiveKey={defaultActiveKey}
+      tabBarExtraContent={<Buttons onUpdate={handleUpdate} />}
+    >
+      <TabPane tab="编辑器" key="1">
+        <Editor />
+      </TabPane>
+      <TabPane tab="本地数据" key="2">
+        <DataList onUpdate={handleUpdate} dataSource={dataSource} />
+      </TabPane>
+      <TabPane tab="国际化" key="3">
+        <I18nTransform />
+      </TabPane>
+    </Tabs>
   );
 }
 
