@@ -1,5 +1,5 @@
 {
-  "name": "输入item for i18next",
+  "name": "输出item for i18next",
   "description": "国际化json文件",
   "version": "0.1.0",
   "manifest_version": 3,
@@ -8,7 +8,7 @@
     "default_title": "国际化json文件",
     "default_popup": "popup.html"
   },
-  "permissions": ["tabs"],
+  "permissions": [],
   "icons": {
     "48": "images/icon48.png",
     "128": "images/icon128.png"
