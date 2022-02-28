@@ -1,5 +1,5 @@
 import fs from "fs";
-import { queryPathMap } from "../utils/fs-utils";
+import { queryPathMap, queryPathDetail } from "../utils/fs-utils";
 import { saveResponseToLocal } from "./utils";
 import queryString from "query-string";
 import omit from "lodash/omit";
@@ -25,8 +25,17 @@ const addItem = async (targetKey: string, body: any) => {
 };
 
 /** query all path map */
-const getAllApi = async () => {
+const queryAllApi = async (filePath?: string) => {
   try {
+    if (filePath) {
+      const data = await queryPathDetail(filePath);
+      return {
+        data,
+        message: "查询成功",
+        code: 1,
+      };
+    }
+
     const data = await queryPathMap();
     return {
       data,
@@ -58,20 +67,21 @@ const deleteOneOrAllApi = async (toDeleteKey: string) => {
       pathToFileMapPath,
       JSON.stringify(newPathToFileMap, undefined, 2)
     );
+
     return {
-      data: {},
+      data: newPathToFileMap,
       message: "删除成功",
       code: 1,
     };
-  } else {
-    // 更新 映射文件
-    fs.writeFileSync(pathToFileMapPath, "{}");
-    return {
-      data: {},
-      message: "删除全部成功",
-      code: 1,
-    };
   }
+
+  // 更新 映射文件
+  fs.writeFileSync(pathToFileMapPath, "{}");
+  return {
+    data: {},
+    message: "删除全部成功",
+    code: 1,
+  };
 };
 
 /** 本服务自己的接口 */
@@ -79,16 +89,20 @@ const happyServiceApi = (req: any) => {
   const { method, url, body, querystring } = req;
 
   const { query } = queryString.parseUrl(url);
-  const targetUrl = query.url || "";
+
+  /** 要查询的文件路径 */
+  const filePath = query?.filePath || "";
+  /** 要删除/增加的url路径 */
+  const urlPath = query?.urlPath || "";
 
   switch (method) {
     case "GET":
-      return getAllApi();
+      return queryAllApi(filePath as string);
     case "DELETE":
-      return deleteOneOrAllApi(targetUrl as string);
+      return deleteOneOrAllApi(urlPath as string);
     case "POST":
       console.warn("add item");
-      return addItem(targetUrl as string, body);
+      return addItem(urlPath as string, body);
     default:
       return queryPathMap();
   }
