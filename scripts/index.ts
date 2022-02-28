@@ -1,9 +1,9 @@
 const fsPromises = require("fs/promises");
 
 /** response  */
-fsPromises.access("Db/response").catch(() =>
-  fsPromises.mkdir("Db").then(() => {
-    fsPromises.mkdir("Db/response");
-    fsPromises.writeFile("Db/index.json", JSON.stringify({}));
+fsPromises.access("DB/response").catch(() =>
+  fsPromises.mkdir("DB").then(() => {
+    fsPromises.mkdir("DB/response");
+    fsPromises.writeFile("DB/index.json", JSON.stringify({}));
   })
 );
