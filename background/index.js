@@ -14,13 +14,11 @@ function setIcon() {
   let text = "";
   const cba = chrome.browserAction;
 
-  const icon =
-    window.proxyDisabled !== "disabled" &&
-    window.proxyConfig &&
-    window.proxyConfig.length;
+  const showIconNumber =
+    window.proxyDisabled !== "disabled" && window?.proxyConfig?.proxy?.length;
 
-  if (icon) {
-    text = window.proxyConfig.length;
+  if (showIconNumber) {
+    text = window.proxyConfig.proxy.length;
   }
 
   if (cba) {
@@ -81,7 +79,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         message: "success",
       });
     } catch (error) {
-      window.proxyConfig = [];
+      window.proxyConfig = { proxy: [] };
       sendResponse({
         message: "fail",
       });
