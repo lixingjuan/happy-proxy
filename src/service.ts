@@ -12,6 +12,18 @@ interface Response<T> {
 export const getAllApi = (): Promise<Response<Record<string, string>>> =>
   axios.get(apiQueryPathMap).then((res) => res.data);
 
+/** 查询接口详情数据 */
+export const getDetailApi = (
+  filePath: string
+): Promise<Response<Record<string, string>>> =>
+  axios
+    .get(apiQueryPathMap, {
+      params: {
+        filePath,
+      },
+    })
+    .then((res) => res.data);
+
 /** 删除全部 */
 export const deleteAllApi = () =>
   axios.delete(apiQueryPathMap).then((res) => res.data);

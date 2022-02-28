@@ -4,10 +4,12 @@ import { useState, useCallback } from "react";
 
 import Buttons from "./components/Buttons";
 import Editor from "./components/Editor";
-import DataList from "./components/Table";
+import DataList from "./components/DataList";
 import I18nTransform from "./components/I18nTransform";
 
 import { getAllApi } from "./service";
+
+const backendName = "happy-service";
 
 const { TabPane } = Tabs;
 
@@ -22,23 +24,30 @@ const style = {
 type DataSourceItem = { url: string; filePath: string };
 function App() {
   const [activeTab, setActiveTab] = useState(defaultActiveKey);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [dataSource, setDataSource] = useState<DataSourceItem[]>([]);
 
   /** update data */
   const handleUpdate = useCallback(() => {
+    setIsLoading(true);
     getAllApi()
       .then(({ data, code }) => {
         message.success("query successful");
+
         const dataArr = Object.entries(data)
           .reverse()
           .map(([url, filePath = ""]) => ({
             url,
-            filePath: filePath.split("my")?.[1],
+            key: url,
+            filePath: filePath.split(backendName)?.[1],
           }));
         setDataSource(dataArr);
       })
-      .catch((err) => message.error("error", err.message));
+      .catch((err) => message.error("error", err.message))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   const onChange = (val: string) => {
@@ -58,7 +67,11 @@ function App() {
         <Editor />
       </TabPane>
       <TabPane tab="本地数据" key="2">
-        <DataList onUpdate={handleUpdate} dataSource={dataSource} />
+        <DataList
+          onUpdate={handleUpdate}
+          dataSource={dataSource}
+          isLoading={isLoading}
+        />
       </TabPane>
       <TabPane tab="国际化" key="3">
         <I18nTransform />
