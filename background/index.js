@@ -54,7 +54,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   /** 更新cookie对应的域名 */
   if (action === "Update_Happy_Cookie_Domain") {
     window.happyCookieDomain = value;
-    console.log("window.happyCookieDomain", window.happyCookieDomain);
+    console.log("window.happyCookieDomain", value);
 
     sendResponse({
       message: "success",
@@ -64,7 +64,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   /** 更新cookie */
   if (action === "Update_Happy_Cookie") {
     window.happyCookie = value;
-    console.log("Update_Happy_Cookie", Update_Happy_Cookie);
+    console.log("Update_Happy_Cookie", value);
     sendResponse({
       message: "success",
     });
@@ -89,6 +89,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   /** 禁止/开启 */
   if (action === "Update_Proxy_Disabled") {
     window.proxyDisabled = value;
+    console.log("Update_Proxy_Disabled", value);
     setIcon();
     sendResponse({
       message: "success",
