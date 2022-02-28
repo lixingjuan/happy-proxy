@@ -9,9 +9,9 @@ const Buttons = ({ onUpdate }: any) => {
   return (
     <Space size="small">
       <ConfigInput />
+      <DeleteAllButton key="DeleteAllButton" />
       <UpdateButton key="UpdateButton" onUpdate={onUpdate} />
       <AddButton key="AddButton" onUpdate={onUpdate} />
-      <DeleteAllButton key="DeleteAllButton" />
       <SwitchButton key="SwitchButton" />
     </Space>
   );

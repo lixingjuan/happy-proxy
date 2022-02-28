@@ -14,10 +14,17 @@ interface Props {
 const DataList = (props: Props) => {
   const { onUpdate, dataSource, isLoading } = props;
 
+  /** 删除一条记录 */
   const onDelete = (url: string) => {
+    if (!url) {
+      message.error("url不能为空");
+      return;
+    }
+
     deleteItemApi(url)
       .then(() => {
         message.success("删除成功");
+        onUpdate();
       })
       .catch((err: any) => message.error(err.message));
   };
@@ -40,9 +47,17 @@ const DataList = (props: Props) => {
     {
       title: "Action",
       key: "url",
-      width: 120,
+      width: 140,
       render: (text: string, record: any) => (
         <Space size="small">
+          <Button
+            danger
+            size="small"
+            type="link"
+            onClick={() => onDelete(record.url)}
+          >
+            Delete
+          </Button>
           <Button
             key="copy"
             type="link"
@@ -52,12 +67,12 @@ const DataList = (props: Props) => {
             复制文件地址
           </Button>
           <Button
-            danger
-            size="small"
+            key="copy"
             type="link"
-            onClick={() => onDelete(record.url)}
+            size="small"
+            onClick={() => writeTextToClipboard(record.url)}
           >
-            Delete
+            复制url
           </Button>
         </Space>
       ),

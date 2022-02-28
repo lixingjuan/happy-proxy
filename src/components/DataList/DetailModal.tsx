@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Button, Modal } from "antd";
+import { Button, Modal, Spin } from "antd";
 import { getDetailApi } from "../../service";
 import Editor from "./Editor";
 
@@ -11,6 +11,7 @@ const DataList = (props: Props) => {
   const { filePath } = props;
 
   const [visible, setVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [response, setResponse] = useState("");
 
@@ -18,6 +19,7 @@ const DataList = (props: Props) => {
     if (!visible) {
       return;
     }
+    setIsLoading(true);
     getDetailApi(filePath)
       .then(({ data }) => {
         const detailData = JSON.stringify(data, undefined, 2);
@@ -25,6 +27,9 @@ const DataList = (props: Props) => {
       })
       .catch((err) => {
         setResponse(`Error, Reason: ${err.message}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [visible, filePath]);
 
@@ -42,7 +47,9 @@ const DataList = (props: Props) => {
         onCancel={() => setVisible(false)}
         footer={[<Button onClick={() => setVisible(false)}>Cancel</Button>]}
       >
-        <Editor code={response} />
+        <Spin spinning={isLoading}>
+          <Editor code={response} />
+        </Spin>
       </Modal>
     </>
   );

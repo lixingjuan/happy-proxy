@@ -68,7 +68,7 @@ const AddButton = ({ onUpdate }: any) => {
         type="primary"
         onClick={() => setVisible((pre) => !pre)}
       >
-        Add
+        Add Record
       </Button>
 
       <Modal

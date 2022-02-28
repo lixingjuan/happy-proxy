@@ -29,10 +29,12 @@ export const deleteAllApi = () =>
   axios.delete(apiQueryPathMap).then((res) => res.data);
 
 /** 删除一条 */
-export const deleteItemApi = (url: string) =>
+export const deleteItemApi = (urlPath: string) =>
   axios
     .delete(`${apiQueryPathMap}`, {
-      url,
+      params: {
+        urlPath,
+      },
     })
     .then((res) => res.data);
 

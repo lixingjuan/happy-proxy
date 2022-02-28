@@ -31,9 +31,10 @@ function App() {
   /** update data */
   const handleUpdate = useCallback(() => {
     setIsLoading(true);
+
     getAllApi()
       .then(({ data, code }) => {
-        message.success("query successful");
+        message.success("update successful");
 
         const dataArr = Object.entries(data)
           .reverse()
