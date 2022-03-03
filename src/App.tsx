@@ -38,8 +38,8 @@ function App() {
         const dataArr = Object.entries(data)
           .reverse()
           .map(([url, filePath = ""]) => ({
-            url,
-            key: url,
+            url: decodeURIComponent(url),
+            key: decodeURIComponent(url),
             filePath: filePath.split(backendName)?.[1],
           }));
         setDataSource(dataArr);
