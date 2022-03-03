@@ -47,7 +47,8 @@ const DataList = (props: Props) => {
     {
       title: "Action",
       key: "url",
-      width: 140,
+      width: 250,
+      fixed: "right",
       render: (text: string, record: any) => (
         <Space size="small">
           <Button
@@ -77,7 +78,7 @@ const DataList = (props: Props) => {
         </Space>
       ),
     },
-  ];
+  ] as any;
 
   useEffect(() => onUpdate(), [onUpdate]);
 

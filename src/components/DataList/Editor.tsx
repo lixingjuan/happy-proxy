@@ -20,12 +20,12 @@ const options = {
 const Editor = ({ code }: { code: string }) => {
   return (
     <MonacoEditor
-      height="70vh"
+      height="85vh"
       width="100%"
       language="json"
       value={code}
       defaultValue={"{}"}
-      theme="default"
+      theme="vs"
       options={options}
     />
   );
