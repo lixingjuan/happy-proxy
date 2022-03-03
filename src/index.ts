@@ -19,7 +19,7 @@ const corsMiddleware = cors({
 app.use(corsMiddleware);
 
 /* body 解析中间件 */
-app.use(bodyParser());
+app.use(bodyParser({ jsonLimit: "50mb" }));
 
 /* 路由信息 */
 app.use(routeMiddleWare);
