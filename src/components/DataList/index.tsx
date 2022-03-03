@@ -50,7 +50,7 @@ const DataList = (props: Props) => {
       width: 250,
       fixed: "right",
       render: (text: string, record: any) => (
-        <Space size="small">
+        <Space size="small" align="center">
           <Button
             danger
             size="small"
@@ -85,6 +85,7 @@ const DataList = (props: Props) => {
   return (
     <Spin spinning={isLoading}>
       <Table
+        bordered
         size="small"
         columns={columns}
         pagination={false}

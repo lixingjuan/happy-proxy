@@ -43,6 +43,8 @@
     "jest": "^27.4.3",
     "jest-resolve": "^27.4.2",
     "jest-watch-typeahead": "^1.0.0",
+    "less": "^4.1.2",
+    "less-loader": "^10.2.0",
     "lodash": "^4.17.21",
     "mini-css-extract-plugin": "^2.4.5",
     "postcss": "^8.4.4",
@@ -99,6 +101,7 @@
     "@types/url-join": "^4.0.1",
     "axios": "^0.26.0",
     "copy-webpack-plugin": "^10.2.4",
+    "dart-sass": "^1.25.0",
     "monaco-editor-webpack-plugin": "^7.0.1"
   },
   "jest": {

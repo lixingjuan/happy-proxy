@@ -1,4 +1,3 @@
-import "./App.css";
 import { Tabs, message } from "antd";
 import { useState, useCallback } from "react";
 
