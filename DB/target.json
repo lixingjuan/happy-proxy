@@ -1,0 +1,12 @@
+{
+  "ishashValue": {
+    "url": "https://gw.datayes-stg.com/ams_monitor_qa/web/monitor/data/slot/remind/record",
+    "filePath": "/Users/xingjuan.li/Documents/Codes/my/happy-service/DB/response/2022-02-28-05-03-42.json",
+    "tags": ["查询框架详情"]
+  },
+  "ishashValue222": {
+    "url": "https://gw.datayes-stg.com/ams_monitor_qa/web/monitor/data/slot/remind/record",
+    "filePath": "/Users/xingjuan.li/Documents/Codes/my/happy-service/DB/response/2022-02-28-05-03-42.json",
+    "tags": ["my-mock"]
+  }
+}

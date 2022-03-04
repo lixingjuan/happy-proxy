@@ -1,47 +1,41 @@
-import fs from "fs";
-import { pathToFileMapPath, responseBasePath } from "../utils/constant";
-import cloneDeep from "lodash/cloneDeep";
-import dayjs from "dayjs";
+import jsonfile from "jsonfile";
+import { pathToFileMapPath } from "../utils/constant";
 
 /**
  * @desc 保存接口返回数据到本地，并更新映射文件
  * @param {string} path 请求完整接口
  * @param {any} resData 接口响应数据
  */
-const saveResponseToLocal = async (path: string, response: any) => {
+const saveResponseToLocal = async (
+  record: Record<
+    string,
+    {
+      url: string;
+      filePath: string;
+      tags: string[] | undefined;
+    }
+  >,
+  response: any
+) => {
   const { data: responseData } = response;
-  let filePath = "";
-  let newPathToFileMap = {};
-  try {
-    const fileName = `${dayjs().format("YYYY-MM-DD-hh-mm-ss")}.json`;
-    console.log({ fileName });
 
-    // 文件存储路径
-    filePath = `${responseBasePath}/${fileName}`;
-
-    const localPathToFileMap = fs.readFileSync(pathToFileMapPath, "utf-8")
-      ? JSON.parse(fs.readFileSync(pathToFileMapPath, "utf-8"))
-      : {};
-
-    // 新的path to file 映射文件内容
-    newPathToFileMap = {
-      ...localPathToFileMap,
-      [path]: filePath,
-    };
-  } catch (error: any) {
-    console.error(`1.保存response到本地出错\nError: ${error?.message}`);
-  }
+  let filePath = Object.values(record)?.[0]?.filePath;
 
   try {
-    // 接口响应数据
-    const resStr = JSON.stringify(cloneDeep(responseData), undefined, 2);
-    // 写入接口响应
-    fs.writeFileSync(filePath, resStr);
+    const localPathToFileMap = jsonfile.readFileSync(pathToFileMapPath) || {};
+
     // 更新 映射文件
-    fs.writeFileSync(
+    jsonfile.writeFileSync(
       pathToFileMapPath,
-      JSON.stringify(newPathToFileMap, undefined, 2)
+      {
+        ...localPathToFileMap,
+        ...record,
+      },
+      { spaces: 2 }
     );
+
+    // 更新本地数据
+    jsonfile.writeFileSync(filePath, responseData, { spaces: 2 });
   } catch (error: any) {
     console.error(`2. 保存response到本地出错\nError: ${error?.message}`);
   }

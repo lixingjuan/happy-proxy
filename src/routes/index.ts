@@ -1,29 +1,31 @@
 import Koa from "koa";
 import axios from "axios";
+import jsonfile from "jsonfile";
 import join from "url-join";
 import omit from "lodash/omit";
 import qs from "query-string";
 import fsPromises from "fs/promises";
 import happyServiceApi from "./happy-service-api";
+import { outputRecord } from "../utils/build-up-record";
 
 import { happyServiceFlag } from "../utils/constant";
 import { queryPathMap } from "../utils/fs-utils";
+import { generateHashKey } from "../utils/build-up-record";
 import { saveResponseToLocal } from "./utils";
 
 /** 根据请求路由去寻找对应的文件路径 */
-const queryLocalJson = (completeUrl: string) =>
+const queryLocalJson = (hash: string) =>
   queryPathMap()
     .then((res) => {
-      const responseFilePath = res[completeUrl];
+      const responseFilePath = res[hash]?.filePath;
       if (!responseFilePath) {
         throw new Error("path empty");
       }
       return responseFilePath;
     })
-    .then((path) => fsPromises.readFile(path, "utf8"))
+    .then((path) => jsonfile.readFileSync(path, "utf8"))
     .then((data) => JSON.parse(data))
     .then((data) => {
-      console.log(`本地响应: ${completeUrl}`);
       return data;
     });
 
@@ -55,7 +57,10 @@ const queryRealData = (props: {
         throw Error(res.data.message);
       }
 
-      saveResponseToLocal(url, res);
+      /** 获得一条记录 */
+      const oneRecord = outputRecord({ url, method, body });
+      /** 保存该记录到本地 */
+      saveResponseToLocal(oneRecord, res);
       return res.data;
     })
     .catch((err) => {
@@ -71,13 +76,6 @@ const queryRealData = (props: {
 
 /**
  * @desc 路由
- * 1. 收到请求
- * 2. 拼接完整的请求地址
- * 3. 查到本地的映射文件, 根据请求地址判断找到对应的response json文件存储地址
- *    3-1. 若本地有该文件&该文件内容非空，则读取该内容后返回
- *    3-2. 否则，发起真正的请求，请求成功后
- *         3-2-1. 在本地映射文件新增该条pathMap
- *         3-2-2. 将响应内容写入该地址
  */
 const routeMiddleWare = async (ctx: Koa.Context) => {
   const { url, method, headers: reqHeaders, body } = ctx.request;
@@ -98,7 +96,13 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   const completeUrl = qs.exclude(tempUrl, ["happyDomain"]);
 
-  return queryLocalJson(completeUrl)
+  const hash = generateHashKey({ url: completeUrl, method, body });
+
+  return queryLocalJson(hash)
+    .then((res) => {
+      console.log(`本地响应: ${url}`);
+      return res;
+    })
     .catch(() => queryRealData({ method, url: completeUrl, headers, body }))
     .then((res: any) => (ctx.body = res));
 };
