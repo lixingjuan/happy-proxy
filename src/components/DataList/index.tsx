@@ -1,5 +1,7 @@
 import { useEffect } from "react";
-import { Button, Table, Modal, Space, message, Spin } from "antd";
+import { Button, Table, Modal, message, Spin } from "antd";
+import { TableRowSelection } from "antd/lib/table/interface.d";
+
 import DetailModal from "./DetailModal";
 
 import { writeTextToClipboard } from "../../utils";
@@ -33,52 +35,60 @@ const DataList = (props: Props) => {
     {
       title: "接口",
       dataIndex: "url",
-      key: "url",
       width: 600,
-      render: (text: string) => <span style={{ color: "#333" }}>{text}</span>,
+      key: "url",
+      render: (text: string) => {
+        return (
+          <>
+            <span style={{ color: "#333", paddingLeft: "10px" }}>{text}</span>
+            <Button
+              key="copy"
+              type="link"
+              size="small"
+              onClick={() => writeTextToClipboard(text)}
+            >
+              copy
+            </Button>
+          </>
+        );
+      },
     },
     {
       title: "文件地址",
-      width: 240,
+      width: 200,
       dataIndex: "filePath",
       key: "filePath",
-      render: (text: string) => <DetailModal filePath={text} />,
+      render: (text: string) => (
+        <>
+          <DetailModal filePath={text} />
+          <Button
+            key="copy"
+            type="link"
+            size="small"
+            onClick={() => writeTextToClipboard(text)}
+          >
+            copy
+          </Button>
+        </>
+      ),
     },
     {
       title: "Action",
-      key: "url",
-      width: 250,
-      fixed: "right",
+      key: "action",
+      width: 60,
+      fixed: "right" as TableRowSelection<string>["fixed"],
       render: (text: string, record: any) => (
-        <Space size="small" align="center">
-          <Button
-            danger
-            size="small"
-            type="link"
-            onClick={() => onDelete(record.url)}
-          >
-            Delete
-          </Button>
-          <Button
-            key="copy"
-            type="link"
-            size="small"
-            onClick={() => writeTextToClipboard(record.filePath)}
-          >
-            复制文件地址
-          </Button>
-          <Button
-            key="copy"
-            type="link"
-            size="small"
-            onClick={() => writeTextToClipboard(record.url)}
-          >
-            复制url
-          </Button>
-        </Space>
+        <Button
+          danger
+          size="small"
+          type="link"
+          onClick={() => onDelete(record.url)}
+        >
+          Delete
+        </Button>
       ),
     },
-  ] as any;
+  ];
 
   useEffect(() => onUpdate(), [onUpdate]);
 
