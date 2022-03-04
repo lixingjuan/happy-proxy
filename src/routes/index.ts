@@ -1,18 +1,14 @@
 import Koa from "koa";
-import fs from "fs";
-import omit from "lodash/omit";
-import cloneDeep from "lodash/cloneDeep";
 import axios from "axios";
 import join from "url-join";
+import omit from "lodash/omit";
+import qs from "query-string";
 import fsPromises from "fs/promises";
-import queryString from "query-string";
-
 import happyServiceApi from "./happy-service-api";
 
 import { happyServiceFlag } from "../utils/constant";
 import { queryPathMap } from "../utils/fs-utils";
 import { saveResponseToLocal } from "./utils";
-import qs from "query-string";
 
 /** 根据请求路由去寻找对应的文件路径 */
 const queryLocalJson = (completeUrl: string) =>
@@ -94,7 +90,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
     });
   }
 
-  const { query } = queryString.parseUrl(url);
+  const { query } = qs.parseUrl(url);
 
   const happyDomain = query?.happyDomain || "";
 
