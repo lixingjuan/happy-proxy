@@ -23,6 +23,7 @@ const style = {
 type DataSourceItem = { url: string; filePath: string };
 function App() {
   const [activeTab, setActiveTab] = useState(defaultActiveKey);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [dataSource, setDataSource] = useState<DataSourceItem[]>([]);
@@ -33,21 +34,39 @@ function App() {
 
     getAllApi()
       .then(({ data, code }) => {
-        message.success("update successful");
+        const res = data.map(({ url, hash, filePath = "", tags = [] }) => ({
+          tags,
+          hash,
+          url: decodeURIComponent(url),
+          key: decodeURIComponent(url),
+          filePath: filePath.split(backendName)?.[1],
+        }));
 
-        const dataArr = Object.entries(data)
-          .reverse()
-          .map(([url, filePath = ""]) => ({
-            url: decodeURIComponent(url),
-            key: decodeURIComponent(url),
-            filePath: filePath.split(backendName)?.[1],
-          }));
-        setDataSource(dataArr);
+        setDataSource(res);
+        message.success("update successful");
       })
       .catch((err) => message.error("error", err.message))
       .finally(() => {
         setIsLoading(false);
       });
+
+    // TODO ??? Slower
+    // getAllApi()
+    //   .then(({ data, code }) =>
+    //     data.map(({ url, hash, filePath = "", tags = [] }) => ({
+    //       tags,
+    //       hash,
+    //       url: decodeURIComponent(url),
+    //       key: decodeURIComponent(url),
+    //       filePath: filePath.split(backendName)?.[1],
+    //     }))
+    //   )
+    //   .then((res) => setDataSource(res))
+    //   .then(() => message.success("update successful"))
+    //   .catch((err) => message.error("error", err.message))
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   }, []);
 
   const onChange = (val: string) => {

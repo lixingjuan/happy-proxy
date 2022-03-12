@@ -1,8 +1,10 @@
 import { useMemo, useState } from "react";
-import { Button, message, Modal, Input } from "antd";
+import { Button, message, Modal, Input, Select } from "antd";
 import { addItemApi } from "../service";
 import ErrorStatus from "./ErrorStatus";
 import isEmpty from "lodash/isEmpty";
+
+const { Option } = Select;
 
 const AddButton = ({ onUpdate }: any) => {
   const [visible, setVisible] = useState(false);
@@ -11,6 +13,7 @@ const AddButton = ({ onUpdate }: any) => {
 
   const [params, setParams] = useState({
     url: "",
+    method: "GET",
     mockBody: {},
   });
 
@@ -20,13 +23,16 @@ const AddButton = ({ onUpdate }: any) => {
     setParams((pre) => ({ ...pre, url }));
   };
 
+  const onMethodChange = (val: any) => {
+    setParams((pre) => ({ ...pre, method: val }));
+  };
+
   const onBodyChange = (val: any) => {
     try {
       const mockBody = JSON.parse(val.target.value);
       setParams((pre) => ({ ...pre, mockBody }));
       setError("");
     } catch (error: any) {
-      console.log({ error });
       setError(error?.message);
     }
   };
@@ -53,12 +59,11 @@ const AddButton = ({ onUpdate }: any) => {
       });
   };
 
-  const { disabledOk, showParseStatus } = useMemo(
+  const { disabledOk } = useMemo(
     () => ({
-      disabledOk: !!error || isEmpty(params?.mockBody),
-      showParseStatus: !isEmpty(params?.mockBody),
+      disabledOk: !!error || isEmpty(params?.url),
     }),
-    [params.mockBody, error]
+    [params.url, error]
   );
 
   return (
@@ -85,9 +90,23 @@ const AddButton = ({ onUpdate }: any) => {
             gridRowGap: "10px",
           }}
         >
-          <Input placeholder="请输入接口" onChange={onUrlChange} />
+          <div style={{ display: "grid", gridTemplateColumns: "auto 100px" }}>
+            <Input placeholder="请输入接口" onChange={onUrlChange} />
 
-          {showParseStatus && <ErrorStatus error={error} />}
+            <Select
+              defaultValue="Get"
+              style={{ width: 120 }}
+              onChange={onMethodChange}
+              value={params.method}
+            >
+              <Option value="GET">Get</Option>
+              <Option value="POST">Post</Option>
+              <Option value="PUT">Put</Option>
+              <Option value="DELETE">Delete</Option>
+            </Select>
+          </div>
+
+          <ErrorStatus error={error} />
 
           <Input.TextArea
             rows={10}

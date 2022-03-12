@@ -14,10 +14,11 @@ const HeartIcon = (props: any) => <Icon component={HeartSvg} {...props} />;
 
 interface Props {
   filePath: string;
+  hash: string;
 }
 
 const DataList = (props: Props) => {
-  const { filePath } = props;
+  const { hash, filePath } = props;
 
   const [visible, setVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +30,7 @@ const DataList = (props: Props) => {
       return;
     }
     setIsLoading(true);
-    getDetailApi(filePath)
+    getDetailApi(hash)
       .then(({ data }) => {
         const detailData = JSON.stringify(data, undefined, 2);
         setResponse(detailData);
@@ -40,7 +41,7 @@ const DataList = (props: Props) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [visible, filePath]);
+  }, [visible, hash]);
 
   return (
     <>
