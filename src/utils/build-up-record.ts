@@ -27,11 +27,7 @@ export const generateHashKey = ({
 };
 
 /** 输出一条记录 */
-export const outputRecord = ({
-  method,
-  url,
-  body,
-}: {
+export const outputRecord = (props: {
   method: string;
   url: string;
   body: any;
@@ -43,8 +39,11 @@ export const outputRecord = ({
     tags: string[] | undefined;
   }
 > => {
+  const { method, url, body } = props;
+  let theMethod = method.toLocaleLowerCase();
+
   const hashKey = generateHashKey({
-    method,
+    method: theMethod,
     url,
     body,
   });
@@ -55,7 +54,7 @@ export const outputRecord = ({
     [hashKey]: {
       url,
       filePath: localFilePath,
-      tags: ["TODO"],
+      tags: [],
     },
   };
 };

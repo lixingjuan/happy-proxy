@@ -6,7 +6,7 @@ import { pathToFileMapPath } from "../utils/constant";
  * @param {string} path 请求完整接口
  * @param {any} resData 接口响应数据
  */
-const saveResponseToLocal = async (
+const saveResponseToLocal = (
   record: Record<
     string,
     {

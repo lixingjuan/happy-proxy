@@ -1,6 +1,7 @@
 import fsPromises from "fs/promises";
 import { pathToFileMapPath, rootPath } from "../utils/constant";
 import join from "url-join";
+import jsonfile from "jsonfile";
 
 /** 获取本地映射文件内容 */
 export const queryPathMap = () => {
@@ -11,6 +12,13 @@ export const queryPathMap = () => {
       console.log(err);
       return {};
     });
+};
+
+/** 更新本地映射文件内容 */
+export const updateLocalPathMap = (
+  newMap: Map<string, { url: string; filePath: string; tags: string[] }>
+) => {
+  jsonfile.writeFileSync(pathToFileMapPath, newMap, { spaces: 2 });
 };
 
 /** 根据文件地址获取数据 */

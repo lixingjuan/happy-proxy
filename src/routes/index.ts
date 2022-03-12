@@ -4,8 +4,7 @@ import jsonfile from "jsonfile";
 import join from "url-join";
 import omit from "lodash/omit";
 import qs from "query-string";
-import fsPromises from "fs/promises";
-import happyServiceApi from "./happy-service-api";
+import happyServiceApi from "./happy-service-api/index";
 import { outputRecord } from "../utils/build-up-record";
 
 import { happyServiceFlag } from "../utils/constant";
@@ -84,7 +83,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   if (url.includes(happyServiceFlag)) {
     return happyServiceApi(ctx.request).then((res) => {
-      ctx.body = res;
+      ctx.body = JSON.stringify(res);
     });
   }
 
@@ -96,6 +95,7 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
 
   const completeUrl = qs.exclude(tempUrl, ["happyDomain"]);
 
+  /** 先找到该接口对应的hash值 */
   const hash = generateHashKey({ url: completeUrl, method, body });
 
   return queryLocalJson(hash)
