@@ -1,12 +1,56 @@
 import { useCallback, useEffect, useState } from "react";
 import { Input, Button, Space, InputNumber } from "antd";
 import ErrorStatus from "../ErrorStatus";
-
+import styled from "styled-components";
 import stripJsonComments from "strip-json-comments";
 import { writeTextToClipboard } from "../../utils";
 import useMemoryInput from "./hook";
+import { Card } from "antd";
 
 const { TextArea } = Input;
+
+const StyledWrapper = styled.div`
+  width: calc(100vw - 20px);
+  padding: 0px 10px;
+  .header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-list {
+    display: grid;
+    grid-gap: 12px;
+    overflow: auto;
+    grid-template-columns: repeat(2, 1fr);
+    height: calc(100vh - 120px);
+  }
+
+  .result-card-title {
+    display: grid;
+    grid-template-columns: 40px auto;
+    .right {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+`;
+
+const StyledCard = styled(Card)`
+  height: max-content;
+  .ant-card-body {
+    padding: 1px 0px 0px 0px;
+    height: max-content;
+  }
+`;
+
+const StyledTextArea = styled(TextArea)`
+  border: none;
+  height: 100%;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+`;
 
 const placeholder = `[
   /**
@@ -146,69 +190,72 @@ export default function I18nTransform() {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          height: "40px",
-        }}
-      >
-        <ErrorStatus error={error} />
-        <Space>
-          <InputNumber
-            min={1}
-            max={10}
+      <StyledWrapper>
+        <div id="i18-transform-container" className="card-list">
+          <StyledCard
             size="small"
-            value={maxKeyLength}
-            onChange={(val) => setMaxKeyLength(val)}
-          />
-          <Button onClick={onCopyResult} size="small">
-            Copy Result
-          </Button>
-        </Space>
-      </div>
+            title={
+              <div className="result-card-title">
+                <span>原始数组</span>
+                <div className="right">
+                  <ErrorStatus error={error} />
+                </div>
+              </div>
+            }
+          >
+            <StyledTextArea
+              id="source"
+              rows={10}
+              onChange={onChange}
+              value={sourceData}
+              placeholder={placeholder}
+            />
+          </StyledCard>
 
-      <div
-        id="i18-transform-container"
-        style={{
-          display: "grid",
-          width: "calc(100vw - 24px)",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gridColumnGap: "10px",
-          overflow: "auto",
-          height: "calc(100vh - 120px)",
-        }}
-      >
-        <TextArea
-          id="source"
-          name="输入"
-          rows={15}
-          onChange={onChange}
-          value={sourceData}
-          placeholder={placeholder}
-        />
-        <TextArea
-          rows={15}
-          id="result"
-          name="格式化后的结果"
-          value={resultData}
-        />
+          <StyledCard
+            size="small"
+            title={
+              <div className="result-card-title">
+                <span>格式化后的结果</span>
+                <div className="right">
+                  <Space size="small">
+                    <span>key length:</span>
+                    <InputNumber
+                      min={1}
+                      max={10}
+                      size="small"
+                      value={maxKeyLength}
+                      onChange={(val) => setMaxKeyLength(val)}
+                    />
+                    <Button onClick={onCopyResult} size="small">
+                      Copy Result
+                    </Button>
+                  </Space>
+                </div>
+              </div>
+            }
+          >
+            <StyledTextArea rows={10} value={resultData} />
+          </StyledCard>
 
-        <TextArea
-          rows={15}
-          id="source"
-          value={codeInput}
-          onChange={onCodeChange}
-          placeholder={"输入要执行替换的代码"}
-        />
-        <TextArea
-          rows={15}
-          id="source"
-          value={codeResult}
-          placeholder={"输入要执行替换的代码"}
-        />
-      </div>
+          <StyledCard size="small" title="输入要执行替换的代码">
+            <StyledTextArea
+              rows={10}
+              value={codeInput}
+              onChange={onCodeChange}
+              placeholder={"输入要执行替换的代码"}
+            />
+          </StyledCard>
+
+          <StyledCard size="small" title="替换后的代码">
+            <StyledTextArea
+              rows={10}
+              value={codeResult}
+              placeholder={"替换后的代码"}
+            />
+          </StyledCard>
+        </div>
+      </StyledWrapper>
     </>
   );
 }

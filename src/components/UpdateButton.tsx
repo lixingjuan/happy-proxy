@@ -1,9 +1,14 @@
 import { Button } from "antd";
+import { SyncOutlined } from "@ant-design/icons";
 
-const UpdateButton = ({ onUpdate }: any) => {
+interface Props {
+  onUpdate: () => void;
+  isLoading: boolean;
+}
+const UpdateButton = ({ onUpdate, isLoading }: Props) => {
   return (
-    <Button onClick={onUpdate} size="small">
-      Update List
+    <Button onClick={onUpdate} size="small" title="更新列表数据">
+      <SyncOutlined spin={isLoading} />
     </Button>
   );
 };

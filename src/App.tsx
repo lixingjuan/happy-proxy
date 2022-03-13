@@ -80,7 +80,9 @@ function App() {
       onChange={onChange}
       activeKey={activeTab}
       defaultActiveKey={defaultActiveKey}
-      tabBarExtraContent={<Buttons onUpdate={handleUpdate} />}
+      tabBarExtraContent={
+        <Buttons onUpdate={handleUpdate} isLoading={isLoading} />
+      }
     >
       <TabPane tab="编辑器" key="1">
         <Editor />

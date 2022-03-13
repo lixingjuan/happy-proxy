@@ -5,12 +5,20 @@ import SwitchButton from "./SwitchButton";
 import UpdateButton from "./UpdateButton";
 import DeleteAllButton from "./DeleteAllButton";
 
-const Buttons = ({ onUpdate }: any) => {
+interface Props {
+  onUpdate: () => void;
+  isLoading: boolean;
+}
+const Buttons = ({ onUpdate, isLoading }: Props) => {
   return (
     <Space size="small">
       <ConfigInput />
       <DeleteAllButton key="DeleteAllButton" />
-      <UpdateButton key="UpdateButton" onUpdate={onUpdate} />
+      <UpdateButton
+        key="UpdateButton"
+        onUpdate={onUpdate}
+        isLoading={isLoading}
+      />
       <AddButton key="AddButton" onUpdate={onUpdate} />
       <SwitchButton key="SwitchButton" />
     </Space>

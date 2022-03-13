@@ -3,6 +3,7 @@ import { Button, message, Modal, Input, Select } from "antd";
 import { addItemApi } from "../service";
 import ErrorStatus from "./ErrorStatus";
 import isEmpty from "lodash/isEmpty";
+import { PlusOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
@@ -72,8 +73,9 @@ const AddButton = ({ onUpdate }: any) => {
         size="small"
         type="primary"
         onClick={() => setVisible((pre) => !pre)}
+        title="增加一条mock记录"
       >
-        Add Record
+        <PlusOutlined />
       </Button>
 
       <Modal
@@ -90,12 +92,9 @@ const AddButton = ({ onUpdate }: any) => {
             gridRowGap: "10px",
           }}
         >
-          <div style={{ display: "grid", gridTemplateColumns: "auto 100px" }}>
-            <Input placeholder="请输入接口" onChange={onUrlChange} />
-
+          <div style={{ display: "grid", gridTemplateColumns: "100px auto" }}>
             <Select
               defaultValue="Get"
-              style={{ width: 120 }}
               onChange={onMethodChange}
               value={params.method}
             >
@@ -104,6 +103,8 @@ const AddButton = ({ onUpdate }: any) => {
               <Option value="PUT">Put</Option>
               <Option value="DELETE">Delete</Option>
             </Select>
+
+            <Input placeholder="请输入接口" onChange={onUrlChange} />
           </div>
 
           <ErrorStatus error={error} />

@@ -50,9 +50,14 @@ const DataList = (props: Props) => {
       </Button>
 
       <Modal
-        width="100%"
-        centered
-        bodyStyle={{ padding: "0px" }}
+        width="100vw"
+        style={{ top: 10, bottom: 10 }}
+        bodyStyle={{
+          padding: "0px",
+          margin: "0px",
+          height: "100%",
+          minHeight: "80vh",
+        }}
         destroyOnClose
         title={
           <>

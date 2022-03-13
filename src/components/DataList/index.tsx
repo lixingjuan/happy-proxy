@@ -88,12 +88,7 @@ const DataList = (props: Props) => {
       width: 60,
       fixed: "right" as TableRowSelection<string>["fixed"],
       render: (text: string, record: any) => (
-        <Button
-          danger
-          size="small"
-          type="link"
-          onClick={() => onDelete(record?.hash)}
-        >
+        <Button danger size="small" onClick={() => onDelete(record?.hash)}>
           Delete
         </Button>
       ),

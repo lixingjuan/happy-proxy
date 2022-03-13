@@ -20,7 +20,7 @@ const options = {
 const Editor = ({ code }: { code: string }) => {
   return (
     <MonacoEditor
-      height="85vh"
+      height="80vh"
       width="100%"
       language="json"
       value={code}
