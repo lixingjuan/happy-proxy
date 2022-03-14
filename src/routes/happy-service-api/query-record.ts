@@ -1,12 +1,13 @@
 import jsonfile from "jsonfile";
+import fs from "fs";
 import { toArray } from "json-function";
 
-import { queryPathMap } from "../../utils/fs-utils";
+import { queryPathMapSync } from "../../utils/fs-utils";
 
 /** query all path map */
 export const queryAllRecordApi = async () => {
   try {
-    const localMap = await queryPathMap();
+    const localMap = queryPathMapSync();
     const data = toArray(localMap, { key: "hash" });
     return {
       data: data,
@@ -25,7 +26,7 @@ export const queryAllRecordApi = async () => {
 /** query all path map */
 export const queryRecordDetailApi = async (hash: string) => {
   try {
-    const res = await queryPathMap();
+    const res = queryPathMapSync();
     const filePath = res[hash].filePath;
     const data = jsonfile.readFileSync(filePath);
     return {

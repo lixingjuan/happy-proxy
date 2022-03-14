@@ -23,7 +23,6 @@ const queryLocalJson = (hash: string) =>
       return responseFilePath;
     })
     .then((path) => jsonfile.readFileSync(path, "utf8"))
-    .then((data) => JSON.parse(data))
     .then((data) => {
       return data;
     });
@@ -50,7 +49,6 @@ const queryRealData = (props: {
   return axios(queryParams)
     .then((res) => {
       const isOk = res.status === 200 && res.data.code > 0;
-      console.log(`接口响应: ${url}, res.data: ${res.data}`);
 
       if (!isOk) {
         throw Error(res.data.message);
@@ -82,9 +80,13 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
   const headers = omit({ ...reqHeaders }, "host");
 
   if (url.includes(happyServiceFlag)) {
-    return happyServiceApi(ctx.request).then((res) => {
-      ctx.body = JSON.stringify(res);
-    });
+    return happyServiceApi(ctx.request)
+      .then((res) => {
+        ctx.body = res;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
 
   const { query } = qs.parseUrl(url);
@@ -103,7 +105,10 @@ const routeMiddleWare = async (ctx: Koa.Context) => {
       console.log(`本地响应: ${url}`);
       return res;
     })
-    .catch(() => queryRealData({ method, url: completeUrl, headers, body }))
+    .catch((err) => {
+      console.log(`接口响应: ${url}, 接口响应原因: ${err.message}`);
+      return queryRealData({ method, url: completeUrl, headers, body });
+    })
     .then((res: any) => (ctx.body = res));
 };
 

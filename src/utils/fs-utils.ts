@@ -5,13 +5,12 @@ import jsonfile from "jsonfile";
 
 /** 获取本地映射文件内容 */
 export const queryPathMap = () => {
-  return fsPromises
-    .readFile(pathToFileMapPath, "utf-8")
-    .then((res) => JSON.parse(res))
-    .catch((err) => {
-      console.log(err);
-      return {};
-    });
+  return jsonfile.readFile(pathToFileMapPath) || {};
+};
+
+/** 同步获取本地映射文件内容 */
+export const queryPathMapSync = () => {
+  return jsonfile.readFileSync(pathToFileMapPath) || {};
 };
 
 /** 更新本地映射文件内容 */

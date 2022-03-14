@@ -2,6 +2,12 @@ import { queryPathMap, updateLocalPathMap } from "../../utils/fs-utils";
 
 /** add Tag  */
 const addTag = async ({ hash, tag }: { hash: string; tag: string }) => {
+  if (!tag) {
+    return {
+      code: -1,
+      message: "tag值不能为空",
+    };
+  }
   if (!hash) {
     return {
       code: -1,

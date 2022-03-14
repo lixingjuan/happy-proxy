@@ -1,3 +1,4 @@
+import fs from "fs";
 import omit from "lodash/omit";
 import jsonfile from "jsonfile";
 import { pathToFileMapPath } from "../../utils/constant";
@@ -23,11 +24,18 @@ const deleteOneRecord = async (hash: string) => {
   }
   const localPathToFileMap = jsonfile.readFileSync(pathToFileMapPath);
 
+  const record = localPathToFileMap?.[hash] || {};
+
   // 新的path to file 映射文件内容
   const newPathToFileMap = omit(localPathToFileMap, hash as string);
 
   // 更新 映射文件
-  jsonfile.writeFileSync(pathToFileMapPath, newPathToFileMap);
+  jsonfile.writeFileSync(pathToFileMapPath, newPathToFileMap, { spaces: 2 });
+
+  // 删除对应的本地数据
+  if (record?.filePath) {
+    fs.rmSync(record.filePath);
+  }
 
   return {
     data: JSON.stringify(newPathToFileMap),
