@@ -4,7 +4,7 @@ import { responseBasePath } from "./constant";
 
 /** 生成文件地址 */
 const generateLocalFilePath = () => {
-  const fileName = `${dayjs().format("YYYYMMDD-hh-mm-ss-SSS")}.json`;
+  const fileName = `${dayjs().format("YYYYMMDD-HH-mm-ss-SSS")}.json`;
 
   // 文件存储路径
   const filePath = `${responseBasePath}/${fileName}`;
@@ -57,7 +57,7 @@ export const outputRecord = (props: {
       filePath: localFilePath,
       tags: [],
       method,
-      createTime: dayjs().format("YYYY-MM-DD hh:mm:ss"),
+      createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     },
   };
 };
