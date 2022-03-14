@@ -1,33 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import MonacoEditor from "react-monaco-editor";
 import { getDefaultCode, cleanJSONReg } from "./editor-config";
 import stripJsonComments from "strip-json-comments";
-
-const options = {
-  selectOnLineNumbers: true,
-  minimap: {
-    enabled: false,
-  },
-  fontSize: 14,
-  fontFamily: "Fira Code, monospace",
-  fontLigatures: true,
-  contextmenu: false,
-  scrollBeyondLastLine: false,
-  folding: true,
-  useTabStops: true,
-  wordBasedSuggestions: true,
-  quickSuggestions: true,
-  suggestOnTriggerCharacters: true,
-};
+import CodeEditor from "../CodeEditor";
 
 const Editor = () => {
-  const [code, setCode] = useState(getDefaultCode());
-
-  /** 编辑器加载完成 */
-  const editorDidMount = (editor: any) => {
-    console.log("editorDidMount", editor);
-    editor.focus();
-  };
+  const [code, setCode] = useState<string>(getDefaultCode());
 
   /** 更新本地 */
   const updateLocal = (val: string) => {
@@ -76,15 +53,11 @@ const Editor = () => {
   }, [code]);
 
   return (
-    <MonacoEditor
-      height="calc(100vh - 200px)"
-      width="100%"
-      language="json"
-      theme="default"
+    <CodeEditor
       value={code}
-      options={options}
       onChange={onChange}
-      editorDidMount={editorDidMount}
+      height="calc(100vh - 200px)"
+      defaultValue={getDefaultCode()}
     />
   );
 };

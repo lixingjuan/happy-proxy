@@ -1,114 +1,65 @@
-import { useEffect } from "react";
-import { Button, Table, Modal, message, Spin } from "antd";
-import { TableRowSelection } from "antd/lib/table/interface.d";
+import { useCallback, useEffect, useState } from "react";
+import { message } from "antd";
+import Table from "./Table";
 
-import DetailModal from "./DetailModal";
-import EditableTagGroup from "./EditableTagGroup";
+import { getAllApi } from "../../service";
 
-import { writeTextToClipboard } from "../../utils";
-import { deleteItemApi } from "../../service";
+const backendName = "happy-service";
 
-interface Props {
-  onUpdate: () => void;
-  isLoading: boolean;
-  dataSource: { url: string; filePath: string }[];
-}
+type DataSourceItem = { url: string; filePath: string };
 
-const DataList = (props: Props) => {
-  const { onUpdate, dataSource, isLoading } = props;
+const DataList = () => {
+  const [isLoading, setIsLoading] = useState(true);
 
-  /** 删除一条记录 */
-  const onDelete = (hash: string) => {
-    if (!hash) {
-      message.error("hash不能为空");
-      return;
-    }
+  const [dataSource, setDataSource] = useState<DataSourceItem[]>([]);
 
-    deleteItemApi(hash)
-      .then(() => {
-        message.success("删除成功");
-        onUpdate();
+  /** update data */
+  const handleUpdate = useCallback(() => {
+    setIsLoading(true);
+    getAllApi()
+      .then(({ data, code }) => {
+        const res = data.map((it) => ({
+          ...it,
+          url: decodeURIComponent(it.url),
+          key: decodeURIComponent(it.url),
+          filePath: (it?.filePath || "").split(backendName)?.[1],
+        }));
+
+        setDataSource(res);
+        message.success("update successful");
       })
-      .catch((err: any) => message.error(err.message));
-  };
+      .catch((err) => message.error("error", err.message))
+      .finally(() => {
+        setIsLoading(false);
+      });
 
-  const columns = [
-    {
-      title: "接口",
-      dataIndex: "url",
-      width: 600,
-      key: "hash",
-      render: (text: string) => {
-        return (
-          <>
-            <span style={{ color: "#333", paddingLeft: "10px" }}>{text}</span>
-            <Button
-              key="url"
-              type="link"
-              size="small"
-              onClick={() => writeTextToClipboard(text)}
-            >
-              copy
-            </Button>
-          </>
-        );
-      },
-    },
-    {
-      title: "文件地址",
-      width: 220,
-      dataIndex: "filePath",
-      key: "filePath",
-      render: (text: string, record: any) => (
-        <>
-          <DetailModal hash={record.hash} filePath={text} />
-          <Button
-            key="copy"
-            type="link"
-            size="small"
-            onClick={() => writeTextToClipboard(text)}
-          >
-            copy
-          </Button>
-        </>
-      ),
-    },
-    {
-      title: "tags",
-      width: 120,
-      dataIndex: "tags",
-      key: "tags",
-      render: (text: string[], record: any) => {
-        return <EditableTagGroup defaultTags={text} hash={record.hash} />;
-      },
-    },
-    {
-      title: "Action",
-      key: "action",
-      width: 60,
-      fixed: "right" as TableRowSelection<string>["fixed"],
-      render: (text: string, record: any) => (
-        <Button danger size="small" onClick={() => onDelete(record?.hash)}>
-          Delete
-        </Button>
-      ),
-    },
-  ];
+    // TODO ??? Slower
+    // getAllApi()
+    //   .then(({ data, code }) =>
+    //     data.map(({ url, hash, filePath = "", tags = [] }) => ({
+    //       tags,
+    //       hash,
+    //       url: decodeURIComponent(url),
+    //       key: decodeURIComponent(url),
+    //       filePath: filePath.split(backendName)?.[1],
+    //     }))
+    //   )
+    //   .then((res) => setDataSource(res))
+    //   .then(() => message.success("update successful"))
+    //   .catch((err) => message.error("error", err.message))
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
+  }, []);
 
-  useEffect(() => onUpdate(), [onUpdate]);
+  useEffect(() => handleUpdate(), [handleUpdate]);
 
   return (
-    <Spin spinning={isLoading}>
-      <Table
-        bordered
-        size="small"
-        columns={columns}
-        pagination={false}
-        dataSource={dataSource}
-        scroll={{ y: "calc(100vh - 150px)" }}
-      />
-      <Modal>确认删除？</Modal>
-    </Spin>
+    <Table
+      isLoading={isLoading}
+      dataSource={dataSource}
+      onUpdate={handleUpdate}
+    />
   );
 };
 

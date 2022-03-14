@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
-import { Button, Modal, Spin } from "antd";
-import { getDetailApi } from "../../service";
-import Editor from "./Editor";
+import { Button, Spin, Drawer } from "antd";
 import Icon from "@ant-design/icons";
+
+import CodeEditor from "../CodeEditor";
+import { getDetailApi } from "../../service";
+import { writeTextToClipboard } from "../../utils";
 
 const HeartSvg = () => (
   <svg width="1em" height="1em" fill="currentColor" viewBox="0 0 1024 1024">
@@ -49,31 +51,24 @@ const DataList = (props: Props) => {
         {filePath}
       </Button>
 
-      <Modal
-        width="100vw"
-        style={{ top: 10, bottom: 10 }}
-        bodyStyle={{
-          padding: "0px",
-          margin: "0px",
-          height: "100%",
-          minHeight: "80vh",
-        }}
-        destroyOnClose
+      <Drawer
+        visible={visible}
+        width="80vw"
+        placement="right"
+        onClose={() => setVisible(false)}
         title={
           <>
-            <HeartIcon style={{ color: "hotpink", paddingRight: "10px" }} />
-            <span>Local Interface Details</span>
+            <span onClick={() => writeTextToClipboard(filePath)}>
+              {filePath}
+            </span>
             <HeartIcon style={{ color: "hotpink", paddingLeft: "10px" }} />
           </>
         }
-        visible={visible}
-        onCancel={() => setVisible(false)}
-        footer={[<Button onClick={() => setVisible(false)}>Cancel</Button>]}
       >
         <Spin spinning={isLoading}>
-          <Editor code={response} />
+          <CodeEditor value={response} height="80vh" />
         </Spin>
-      </Modal>
+      </Drawer>
     </>
   );
 };

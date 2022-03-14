@@ -15,10 +15,17 @@ interface Response<T> {
   data: T;
 }
 
+type RecordInfo = {
+  url: string;
+  filePath: string;
+  hash: string;
+  tags: string[];
+  createTime: string;
+};
+
 /** 查询全部 */
-export const getAllApi = (): Promise<
-  Response<{ url: string; filePath: string; hash: string; tags: string[] }[]>
-> => service.get("/query-all").then((res) => res.data);
+export const getAllApi = (): Promise<Response<RecordInfo[]>> =>
+  service.get("/query-all").then((res) => res.data);
 
 /** 查询接口详情数据 */
 export const getDetailApi = (

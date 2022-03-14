@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
-import { Button, message, Modal, Input, Select } from "antd";
-import { addItemApi } from "../service";
-import ErrorStatus from "./ErrorStatus";
+import { Button, message, Modal, Input, Select, Tooltip } from "antd";
+import { addItemApi } from "../../service";
+import ErrorStatus from "../ErrorStatus";
 import isEmpty from "lodash/isEmpty";
 import { PlusOutlined } from "@ant-design/icons";
 
@@ -69,14 +69,15 @@ const AddButton = ({ onUpdate }: any) => {
 
   return (
     <>
-      <Button
-        size="small"
-        type="primary"
-        onClick={() => setVisible((pre) => !pre)}
-        title="增加一条mock记录"
-      >
-        <PlusOutlined />
-      </Button>
+      <Tooltip title="增加一条mock记录">
+        <Button
+          size="small"
+          type="primary"
+          onClick={() => setVisible((pre) => !pre)}
+        >
+          <PlusOutlined />
+        </Button>
+      </Tooltip>
 
       <Modal
         visible={visible}

@@ -601,6 +601,7 @@ module.exports = function (webpackEnv) {
       new MonacoWebpackPlugin({
         // available options are documented at https://github.com/Microsoft/monaco-editor-webpack-plugin#options
         languages: ["json"],
+        features: ["comment"],
       }),
 
       // new CopyWebpackPlugin({

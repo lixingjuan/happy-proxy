@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 import { Tag, Input, Space } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { addTagsApi, deleteTagsApi } from "../../service";
@@ -24,7 +24,7 @@ const EditableTagGroup = ({
   defaultTags: string[];
   hash: string;
 }) => {
-  const SaveInputRef = useRef<any>(null);
+  const InputRef = useRef<any>(null);
 
   const [tags, setTags] = useState(defaultTags);
   const [inputVisible, setInputVisible] = useState(false);
@@ -44,6 +44,11 @@ const EditableTagGroup = ({
 
   /** 增加tag */
   const handleInputConfirm = async () => {
+    if (!inputValue) {
+      setInputVisible(false);
+      setInputValue("");
+      return;
+    }
     addTagsApi({
       hash,
       tag: inputValue,
@@ -58,11 +63,11 @@ const EditableTagGroup = ({
 
   const showInput = () => {
     setInputVisible(true);
-    SaveInputRef?.current?.focus?.();
+    InputRef?.current?.focus?.();
   };
 
   const handleInputChange = (e: any) => {
-    setInputValue(e.target.value);
+    e.target.value && setInputValue(e.target.value);
   };
 
   const tagChild = tags.map((tag: string, index: number) => {
@@ -87,20 +92,23 @@ const EditableTagGroup = ({
       <Space size="small" wrap>
         {tagChild}
 
-        {inputVisible && (
-          <Input
-            ref={SaveInputRef}
-            type="text"
-            size="small"
-            style={{ width: 78 }}
-            value={inputValue}
-            onChange={handleInputChange}
-            onBlur={handleInputConfirm}
-            onPressEnter={handleInputConfirm}
-          />
-        )}
+        <Input
+          ref={InputRef}
+          style={{ width: 78, display: inputVisible ? "inline-block" : "none" }}
+          type="text"
+          size="small"
+          value={inputValue}
+          onChange={handleInputChange}
+          onBlur={handleInputConfirm}
+          onPressEnter={handleInputConfirm}
+        />
+
         {!inputVisible && (
-          <Tag onClick={showInput} className="site-tag-plus">
+          <Tag
+            onClick={showInput}
+            className="site-tag-plus"
+            style={{ color: "#879879", cursor: "pointer" }}
+          >
             <PlusOutlined /> New Tag
           </Tag>
         )}

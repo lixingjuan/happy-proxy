@@ -43,19 +43,18 @@
 
 .ant-table {
   box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
-
-  &,
-  &.ant-table-container {
-    border-radius: 8px;
-  }
-
-  .ant-table-header {
-    border-top-left-radius: 8px;
-    border-top-right-radius: 8px;
-  }
+  border-radius: 8px;
 
   .ant-table-container {
+    border-radius: 8px;
+    .ant-table-header {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+    }
+
     .ant-table-body {
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
       td.ant-table-cell {
         padding: 4px;
         font-size: 12px;
@@ -71,5 +70,17 @@
   border-radius: 8px;
   &.ant-tag-magenta {
     box-shadow: 0px 1px 1px 1px #e297c847;
+  }
+}
+/* ****************************************************************************************************
+ *                                    Tooltip
+ ************************************************************************************************* */
+.ant-tooltip {
+  .ant-tooltip-inner {
+    color: #333;
+  }
+  .ant-tooltip-inner,
+  .ant-tooltip-arrow > .ant-tooltip-arrow-content {
+    background-color: #fff;
   }
 }

@@ -8,10 +8,9 @@ export const writeTextToClipboard = (text: string) => {
   }
 
   if (navigator?.clipboard) {
-    // clipboard api 复制
     navigator?.clipboard
       ?.writeText(text)
-      .then(() => message.success("复制成功！"))
+      .then(() => message.success("内容已复制到截切板"))
       .catch((err) => message.error("复制失败！"));
     return;
   }
@@ -32,7 +31,7 @@ export const writeTextToClipboard = (text: string) => {
     // 移除输入框
     document.body.removeChild(textarea);
 
-    message.success("复制成功！");
+    message.success("内容已复制到截切板");
   } catch (error) {
     message.error("复制失败！");
   }
