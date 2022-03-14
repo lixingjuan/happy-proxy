@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
-import { Row, Tooltip, Button, Table, message, Checkbox, Space } from "antd";
+import {
+  Row,
+  Table,
+  Space,
+  Button,
+  Tooltip,
+  message,
+  Checkbox,
+  Popconfirm,
+} from "antd";
+import moment from "moment";
 import { TableRowSelection } from "antd/lib/table/interface.d";
 import { DeleteOutlined, QuestionCircleOutlined } from "@ant-design/icons";
 
 import DetailDrawer from "./DrawerDetail";
 import EditableTagGroup from "./Tags";
-
 import { writeTextToClipboard } from "../../utils";
 import { deleteItemApi } from "../../service";
 import AddButton from "./AddButton";
@@ -57,7 +66,7 @@ const DataList = (props: Props) => {
         </Row>
       ),
       dataIndex: "url",
-      key: "hash",
+      key: "url",
       width: 800,
       render: (text: string) => {
         return (
@@ -74,6 +83,7 @@ const DataList = (props: Props) => {
           </>
         );
       },
+      sorter: (a: any, b: any) => (a?.url || "").length - (b?.url || "").length,
     },
     {
       title: "文件地址",
@@ -102,19 +112,24 @@ const DataList = (props: Props) => {
       render: (text: string[], record: any) => (
         <EditableTagGroup defaultTags={text} hash={record.hash} />
       ),
+      sorter: (a: any, b: any) =>
+        (a?.tags || []).length - (b?.tags || []).length,
     },
     {
       title: "createTime",
       width: 150,
       dataIndex: "createTime",
       key: "createTime",
+      sorter: (a: any, b: any) => +moment(a.createTime) - +moment(b.createTime),
     },
     {
       title: "method",
-      width: 70,
+      width: 80,
       dataIndex: "method",
       key: "method",
       align: "center" as any,
+      sorter: (a: any, b: any) =>
+        (a?.method || "").length - (b?.method || "").length,
     },
     {
       title: () => {
@@ -153,9 +168,16 @@ const DataList = (props: Props) => {
             checked={selected.includes(hash)}
           />
 
-          <Button danger size="small" onClick={() => onDelete(hash)}>
-            <DeleteOutlined />
-          </Button>
+          <Popconfirm
+            title="Are you sure to delete this record?"
+            onConfirm={() => onDelete(hash)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <Button danger size="small">
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
         </Space>
       ),
     },
@@ -172,6 +194,7 @@ const DataList = (props: Props) => {
       bordered
       loading={isLoading}
       size="small"
+      rowKey="hash"
       columns={columns}
       pagination={false}
       dataSource={dataSource}

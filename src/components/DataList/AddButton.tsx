@@ -70,11 +70,7 @@ const AddButton = ({ onUpdate }: any) => {
   return (
     <>
       <Tooltip title="增加一条mock记录">
-        <Button
-          size="small"
-          type="primary"
-          onClick={() => setVisible((pre) => !pre)}
-        >
+        <Button size="small" onClick={() => setVisible((pre) => !pre)}>
           <PlusOutlined />
         </Button>
       </Tooltip>
