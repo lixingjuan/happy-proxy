@@ -23,18 +23,9 @@ const initCode = `{
 
 const getDefaultCode = () => {
   let result = initCode;
-  if (chrome.storage) {
-    chrome.storage.sync.get("proxyConfig", (result) => {
-      try {
-        if (result.proxyConfig) {
-          result = JSON.parse(result.proxyConfig);
-        }
-      } catch (e) {
-        console.warn("can not parse config", result.config);
-      }
-    });
-  }
-  return result;
+  const local = localStorage.getItem("proxyConfig");
+
+  return local || result;
 };
 
 export { getDefaultCode, cleanJSONReg };
