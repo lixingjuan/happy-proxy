@@ -1,14 +1,27 @@
-// import Editor, { useMonaco } from "@monaco-editor/react";
-import Editor from "react-monaco-editor";
+import Editor from "@monaco-editor/react";
+import { loader } from "@monaco-editor/react";
+
+loader.config({
+  paths: {
+    vs: "./packages",
+  },
+});
 
 interface Props {
   value: string;
-  defaultValue: string;
+  defaultValue?: string;
+  theme?: "vs-dark" | "light";
   height?: string | number;
   onChange?: (value: string) => void;
 }
 
-function CodeEditor({ onChange, value, height, defaultValue }: Props) {
+function CodeEditor({
+  onChange,
+  value,
+  height,
+  defaultValue,
+  theme = "light",
+}: Props) {
   const onMount = (a: any, editor: any) => {
     editor.languages.json.jsonDefaults.setDiagnosticsOptions({
       allowComments: true,
@@ -16,17 +29,15 @@ function CodeEditor({ onChange, value, height, defaultValue }: Props) {
   };
 
   return (
-    <>
-      <Editor
-        height={height} // By default, it fully fits with its parent
-        theme={"light"}
-        value={value}
-        language="json"
-        onChange={onChange}
-        defaultValue={defaultValue}
-        editorDidMount={onMount}
-      />
-    </>
+    <Editor
+      height={height}
+      theme={theme}
+      value={value}
+      language="json"
+      onChange={(val) => onChange?.(val || "")}
+      defaultValue={defaultValue}
+      onMount={onMount}
+    />
   );
 }
 
