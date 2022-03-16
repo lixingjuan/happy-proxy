@@ -8,13 +8,11 @@ const Editor = () => {
 
   /** 更新本地 */
   const updateLocal = (val: string) => {
-    if (chrome.storage) {
-      chrome.storage.sync.set({ proxyConig: val });
-    }
+    localStorage.setItem("proxyConfig", val);
   };
 
   /** 通知后台更新proxyConig  */
-  function updateProxyConfig(data: string) {
+  const updateProxyConfig = useCallback((data: string) => {
     const config = stripJsonComments(data)
       .replace(/\s+/g, "")
       .replace(cleanJSONReg, ($0, $1, $2) => $2);
@@ -22,6 +20,8 @@ const Editor = () => {
     try {
       console.log("=========config");
       console.log(config);
+      updateLocal(data);
+
       if (!chrome.runtime) {
         return;
       }
@@ -40,7 +40,7 @@ const Editor = () => {
     } catch (e) {
       console.error(e);
     }
-  }
+  }, []);
 
   const onChange = useCallback((newValue: any) => {
     console.log("onChange", newValue);
@@ -48,15 +48,15 @@ const Editor = () => {
   }, []);
 
   useEffect(() => {
-    updateLocal(code);
+    console.log("更新code", code);
     updateProxyConfig(code);
-  }, [code]);
+  }, [code, updateProxyConfig]);
 
   return (
     <CodeEditor
       value={code}
       onChange={onChange}
-      height="calc(100vh - 200px)"
+      height="calc(100vh - 20px)"
       defaultValue={getDefaultCode()}
     />
   );
