@@ -1,54 +1,33 @@
-import { useCallback } from "react";
-import MonacoEditor from "react-monaco-editor";
-// import MonacoEditor from "@monaco-editor/react";
+// import Editor, { useMonaco } from "@monaco-editor/react";
+import Editor from "react-monaco-editor";
 
 interface Props {
   value: string;
-  height?: string;
-  defaultValue?: string;
-  onChange?: (val: string) => void;
+  defaultValue: string;
+  height?: string | number;
+  onChange?: (value: string) => void;
 }
 
-const Editor = ({
-  defaultValue,
-  value,
-  onChange: onChangeProps,
-  height,
-}: Props) => {
-  const onChange = useCallback(
-    (val: any) => {
-      onChangeProps?.(val);
-    },
-    [onChangeProps]
-  );
+function CodeEditor({ onChange, value, height, defaultValue }: Props) {
+  const onMount = (a: any, editor: any) => {
+    editor.languages.json.jsonDefaults.setDiagnosticsOptions({
+      allowComments: true,
+    });
+  };
 
   return (
-    <MonacoEditor
-      height={height}
-      width="100%"
-      theme="light"
-      defaultValue={defaultValue}
-      value={value}
-      language="json"
-      options={{
-        selectOnLineNumbers: true,
-        minimap: {
-          enabled: false,
-        },
-        fontSize: 14,
-        fontFamily: "Fira Code, monospace",
-        fontLigatures: true,
-        contextmenu: false,
-        scrollBeyondLastLine: false,
-        folding: true,
-        useTabStops: true,
-        wordBasedSuggestions: true,
-        quickSuggestions: true,
-        suggestOnTriggerCharacters: true,
-      }}
-      onChange={onChange}
-    />
+    <>
+      <Editor
+        height={height} // By default, it fully fits with its parent
+        theme={"light"}
+        value={value}
+        language="json"
+        onChange={onChange}
+        defaultValue={defaultValue}
+        editorDidMount={onMount}
+      />
+    </>
   );
-};
+}
 
-export default Editor;
+export default CodeEditor;
