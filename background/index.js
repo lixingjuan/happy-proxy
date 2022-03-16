@@ -70,12 +70,14 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     });
   }
 
-  /** 更新转发配置 */
+  /** 转发配置 */
   if (action === "Update_Proxy_Config") {
     try {
       window.proxyConfig = JSON.parse(value);
       console.log("Update_Proxy_Config", value);
-      sendResponse({ message: "success" });
+      sendResponse({
+        message: "success",
+      });
     } catch (error) {
       window.proxyConfig = { proxy: [] };
       sendResponse({
