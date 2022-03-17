@@ -2,7 +2,11 @@ import { queryPathMap, updateLocalPathMap } from "../../utils/fs-utils";
 import queryString from "query-string";
 import { addRecord } from "./add-record";
 import { deleteOneRecord, deleteAllRecord } from "./delete-record";
-import { queryAllRecordApi, queryRecordDetailApi } from "./query-record";
+import {
+  queryAllRecordApi,
+  queryRecordDetailApi,
+  updateRecordDetailApi,
+} from "./query-record";
 import { addTag, deleteTag } from "./tag";
 
 /** 本服务自己的接口 */
@@ -19,6 +23,9 @@ const happyServiceApi = (req: any) => {
 
     case "/happy-service/query-detail":
       return queryRecordDetailApi(hash as string);
+
+    case "/happy-service/update-detail":
+      return updateRecordDetailApi(body.hash, body.response);
 
     case "/happy-service/add-record":
       return addRecord(body);

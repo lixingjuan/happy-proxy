@@ -23,7 +23,7 @@ export const queryAllRecordApi = async () => {
   }
 };
 
-/** query all path map */
+/** query detail */
 export const queryRecordDetailApi = async (hash: string) => {
   try {
     const res = queryPathMapSync();
@@ -38,6 +38,33 @@ export const queryRecordDetailApi = async (hash: string) => {
     return {
       data: {},
       message: "查询失败",
+      code: -1,
+    };
+  }
+};
+
+/** update detail */
+export const updateRecordDetailApi = async (hash: string, newResponse: any) => {
+  try {
+    const res = queryPathMapSync();
+
+    const filePath = res[hash]?.filePath;
+
+    if (!filePath) {
+      throw new Error("本地没有该文件");
+    }
+
+    jsonfile.writeFileSync(filePath, newResponse, { spaces: 2 });
+
+    return {
+      data: newResponse,
+      message: "更新成功",
+      code: 1,
+    };
+  } catch (error: any) {
+    return {
+      data: {},
+      message: `更新失败, ${error.message}`,
       code: -1,
     };
   }
