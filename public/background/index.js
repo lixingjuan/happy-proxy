@@ -76,6 +76,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       window.proxyConfig = JSON.parse(value);
       console.log("Update_Proxy_Config", value);
       sendResponse({ message: "success" });
+      setIcon();
     } catch (error) {
       window.proxyConfig = { proxy: [] };
       sendResponse({
