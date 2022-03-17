@@ -48,7 +48,7 @@ const queryRealData = (props: {
 
   return axios(queryParams)
     .then((res) => {
-      const isOk = res.status === 200 && res.data.code > 0;
+      const isOk = res.status === 200 && res.data.code >= 0;
 
       if (!isOk) {
         throw Error(res.data.message);
