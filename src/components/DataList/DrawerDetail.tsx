@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { Button, Spin, Drawer } from "antd";
+import { Space, Button, Spin, Drawer, message } from "antd";
 import Icon from "@ant-design/icons";
 
 import CodeEditor from "../CodeEditor";
-import { getDetailApi } from "../../service";
+import { getDetailApi, updateDetailApi } from "../../service";
 import { writeTextToClipboard } from "../../utils";
 
 const HeartSvg = () => (
@@ -23,14 +23,15 @@ const DataList = (props: Props) => {
   const { hash, filePath } = props;
 
   const [visible, setVisible] = useState(false);
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [response, setResponse] = useState("");
 
-  useEffect(() => {
-    if (!visible) {
-      return;
-    }
+  const [newResponse, setNewResponse] = useState("");
+
+  /** 查询详情 */
+  const queryDetail = () => {
     setIsLoading(true);
     getDetailApi(hash)
       .then(({ data }) => {
@@ -43,7 +44,30 @@ const DataList = (props: Props) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [visible, hash]);
+  };
+
+  /** 更新详情 */
+  const updateDetail = () => {
+    setIsLoading(true);
+    const theNewResponse = JSON.parse(newResponse);
+    updateDetailApi({ hash, response: theNewResponse })
+      .then(({ data }) => {
+        setResponse(JSON.stringify(data, undefined, 2));
+        message.success("更新成功");
+      })
+      .catch((err) => {
+        message.error(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    if (visible) {
+      queryDetail();
+    }
+  }, [visible]);
 
   return (
     <>
@@ -64,9 +88,21 @@ const DataList = (props: Props) => {
             <HeartIcon style={{ color: "hotpink", paddingLeft: "10px" }} />
           </>
         }
+        footer={
+          <Space style={{ display: "flex", justifyContent: "flex-end" }}>
+            <Button onClick={() => setVisible(false)}>取消</Button>
+            <Button onClick={updateDetail} type="primary">
+              确认
+            </Button>
+          </Space>
+        }
       >
         <Spin spinning={isLoading}>
-          <CodeEditor value={response} height="80vh" />
+          <CodeEditor
+            height="80vh"
+            value={response}
+            onChange={setNewResponse}
+          />
         </Spin>
       </Drawer>
     </>

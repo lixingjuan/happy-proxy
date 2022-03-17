@@ -39,6 +39,13 @@ export const getDetailApi = (
     })
     .then((res) => res.data);
 
+/** 更新本地数据 */
+export const updateDetailApi = (props: {
+  hash: string;
+  response: any;
+}): Promise<Response<string>> =>
+  service.post("/update-detail", props).then((res) => res.data);
+
 /** 删除全部 record */
 export const deleteAllApi = () =>
   service.delete("/delete-all-record").then((res) => res.data);
