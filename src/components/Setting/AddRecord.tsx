@@ -1,16 +1,7 @@
 import { useMemo, useState } from "react";
 import isEmpty from "lodash/isEmpty";
 import { PlusOutlined } from "@ant-design/icons";
-import {
-  Button,
-  message,
-  Modal,
-  Input,
-  Select,
-  Tooltip,
-  Drawer,
-  Space,
-} from "antd";
+import { Button, message, Input, Select, Tooltip, Drawer } from "antd";
 
 import { addItemApi } from "../../service";
 import ErrorStatus from "../ErrorStatus";
