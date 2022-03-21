@@ -43,12 +43,13 @@ const EditableTagGroup = ({
   };
 
   /** 增加tag */
-  const handleInputConfirm = async () => {
+  const handleInputConfirm = () => {
     if (!inputValue) {
       setInputVisible(false);
       setInputValue("");
       return;
     }
+
     addTagsApi({
       hash,
       tag: inputValue,
@@ -63,11 +64,13 @@ const EditableTagGroup = ({
 
   const showInput = () => {
     setInputVisible(true);
-    InputRef?.current?.focus?.();
+    setTimeout(() => {
+      InputRef?.current?.focus?.();
+    }, 0);
   };
 
   const handleInputChange = (e: any) => {
-    e.target.value && setInputValue(e.target.value);
+    setInputValue(e.target.value || "");
   };
 
   const tagChild = tags.map((tag: string, index: number) => {
@@ -93,14 +96,14 @@ const EditableTagGroup = ({
         {tagChild}
 
         <Input
-          ref={InputRef}
-          style={{ width: 78, display: inputVisible ? "inline-block" : "none" }}
           type="text"
           size="small"
+          ref={InputRef}
           value={inputValue}
-          onChange={handleInputChange}
           onBlur={handleInputConfirm}
+          onChange={handleInputChange}
           onPressEnter={handleInputConfirm}
+          style={{ width: 78, display: inputVisible ? "inline-block" : "none" }}
         />
 
         {!inputVisible && (
