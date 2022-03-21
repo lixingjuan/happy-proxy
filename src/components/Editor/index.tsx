@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState, useRef } from "react";
 import { message } from "antd";
 import stripJsonComments from "strip-json-comments";
 import debounce from "lodash/debounce";
@@ -7,6 +7,8 @@ import CodeEditor from "../CodeEditor";
 import { getDefaultCode, cleanJSONReg } from "./editor-config";
 
 const Editor = () => {
+  const EditorInstance = useRef(null);
+
   const [code, setCode] = useState<string>(getDefaultCode());
 
   /** 更新本地 */
@@ -62,6 +64,7 @@ const Editor = () => {
   return (
     <CodeEditor
       value={code}
+      ref={EditorInstance}
       onChange={debounce(onChange, 700)}
       height="calc(100vh - 46px)"
       defaultValue={getDefaultCode()}

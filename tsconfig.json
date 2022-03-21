@@ -17,5 +17,5 @@
     "jsx": "react-jsx"
   },
   "include": ["src", "public"],
-  "exclude": []
+  "exclude": ["src/assets/font/iconfont.js"]
 }

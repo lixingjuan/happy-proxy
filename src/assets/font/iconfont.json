@@ -1,0 +1,114 @@
+{
+  "id": "3167356",
+  "name": "lxj",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "5738189",
+      "name": "网络-4",
+      "font_class": "wangluo",
+      "unicode": "ecc1",
+      "unicode_decimal": 60609
+    },
+    {
+      "icon_id": "2217786",
+      "name": "网络错误",
+      "font_class": "wangluocuowu",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "9928519",
+      "name": "error",
+      "font_class": "error",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "2699682",
+      "name": "setting 设置",
+      "font_class": "setting",
+      "unicode": "e691",
+      "unicode_decimal": 59025
+    },
+    {
+      "icon_id": "27732097",
+      "name": "风",
+      "font_class": "feng",
+      "unicode": "e683",
+      "unicode_decimal": 59011
+    },
+    {
+      "icon_id": "27732963",
+      "name": "太阳",
+      "font_class": "taiyang",
+      "unicode": "e688",
+      "unicode_decimal": 59016
+    },
+    {
+      "icon_id": "28153077",
+      "name": "3",
+      "font_class": "a-3",
+      "unicode": "e7d2",
+      "unicode_decimal": 59346
+    },
+    {
+      "icon_id": "28153119",
+      "name": "40",
+      "font_class": "a-40",
+      "unicode": "e7d7",
+      "unicode_decimal": 59351
+    },
+    {
+      "icon_id": "28153162",
+      "name": "84",
+      "font_class": "a-84",
+      "unicode": "e7dd",
+      "unicode_decimal": 59357
+    },
+    {
+      "icon_id": "28153199",
+      "name": "115",
+      "font_class": "a-115",
+      "unicode": "e7e1",
+      "unicode_decimal": 59361
+    },
+    {
+      "icon_id": "27401420",
+      "name": "手绘小熊",
+      "font_class": "shouhuixiaoxiong",
+      "unicode": "ed72",
+      "unicode_decimal": 60786
+    },
+    {
+      "icon_id": "27401996",
+      "name": "机器人",
+      "font_class": "jiqiren",
+      "unicode": "edde",
+      "unicode_decimal": 60894
+    },
+    {
+      "icon_id": "27401997",
+      "name": "火箭",
+      "font_class": "huojian",
+      "unicode": "eddf",
+      "unicode_decimal": 60895
+    },
+    {
+      "icon_id": "27402005",
+      "name": "KTV",
+      "font_class": "KTV",
+      "unicode": "ede7",
+      "unicode_decimal": 60903
+    },
+    {
+      "icon_id": "27402007",
+      "name": "星球",
+      "font_class": "xingqiu",
+      "unicode": "ede9",
+      "unicode_decimal": 60905
+    }
+  ]
+}

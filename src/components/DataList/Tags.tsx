@@ -109,7 +109,7 @@ const EditableTagGroup = ({
             className="site-tag-plus"
             style={{ color: "#879879", cursor: "pointer" }}
           >
-            <PlusOutlined /> New Tag
+            <PlusOutlined /> Tag
           </Tag>
         )}
       </Space>

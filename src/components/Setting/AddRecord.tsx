@@ -1,13 +1,23 @@
 import { useMemo, useState } from "react";
-import { Button, message, Modal, Input, Select, Tooltip } from "antd";
-import { addItemApi } from "../../service";
-import ErrorStatus from "../ErrorStatus";
 import isEmpty from "lodash/isEmpty";
 import { PlusOutlined } from "@ant-design/icons";
+import {
+  Button,
+  message,
+  Modal,
+  Input,
+  Select,
+  Tooltip,
+  Drawer,
+  Space,
+} from "antd";
+
+import { addItemApi } from "../../service";
+import ErrorStatus from "../ErrorStatus";
 
 const { Option } = Select;
 
-const AddButton = ({ onUpdate }: any) => {
+const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
   const [visible, setVisible] = useState(false);
 
   const [error, setError] = useState("");
@@ -19,7 +29,6 @@ const AddButton = ({ onUpdate }: any) => {
   });
 
   const onUrlChange = (val: any) => {
-    console.log({ val });
     const url = val.target.value;
     setParams((pre) => ({ ...pre, url }));
   };
@@ -69,26 +78,28 @@ const AddButton = ({ onUpdate }: any) => {
 
   return (
     <>
-      <Tooltip title="增加一条mock记录">
+      <Tooltip title="增加一条Mock Record" mouseEnterDelay={1}>
         <Button size="small" onClick={() => setVisible((pre) => !pre)}>
-          <PlusOutlined />
+          <PlusOutlined className="font-22" />
         </Button>
       </Tooltip>
 
-      <Modal
+      <Drawer
+        width="80vw"
         visible={visible}
-        width="400"
-        onOk={handleOk}
-        title="Add One Mock Item"
-        onCancel={() => setVisible(false)}
-        okButtonProps={{ disabled: disabledOk }}
+        placement="right"
+        title="增加一条Mock Record"
+        onClose={() => setVisible(false)}
+        footer={
+          <div className="flex flex-end gap-12">
+            <Button onClick={() => setVisible(false)}>取消</Button>
+            <Button onClick={handleOk} type="primary" disabled={disabledOk}>
+              确认
+            </Button>
+          </div>
+        }
       >
-        <div
-          style={{
-            display: "grid",
-            gridRowGap: "10px",
-          }}
-        >
+        <div style={{ display: "grid", gridRowGap: "10px" }}>
           <div style={{ display: "grid", gridTemplateColumns: "100px auto" }}>
             <Select
               defaultValue="Get"
@@ -107,14 +118,14 @@ const AddButton = ({ onUpdate }: any) => {
           <ErrorStatus error={error} />
 
           <Input.TextArea
-            rows={10}
+            style={{ height: "70vh" }}
             onChange={onBodyChange}
             placeholder="请输入mock参数"
           />
         </div>
-      </Modal>
+      </Drawer>
     </>
   );
 };
 
-export default AddButton;
+export default AddRecord;

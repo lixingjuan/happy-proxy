@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Space, Button, Spin, Drawer, message } from "antd";
 import Icon from "@ant-design/icons";
 
-import CodeEditor from "../CodeEditor";
+import CodeEditor, { EditorRefType } from "../CodeEditor";
 import { getDetailApi, updateDetailApi } from "../../service";
 import { writeTextToClipboard } from "../../utils";
 
@@ -21,6 +21,8 @@ interface Props {
 
 const DataList = (props: Props) => {
   const { hash, filePath } = props;
+
+  const EditorInstance = useRef<EditorRefType>(null);
 
   const [visible, setVisible] = useState(false);
 
@@ -67,11 +69,18 @@ const DataList = (props: Props) => {
     if (visible) {
       queryDetail();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   return (
     <>
-      <Button onClick={() => setVisible(true)} size="small" type="link">
+      <Button
+        href="#"
+        onClick={() => setVisible(true)}
+        type="text"
+        style={{ padding: "0px" }}
+        className="color-anchor"
+      >
         {filePath}
       </Button>
 
@@ -81,12 +90,15 @@ const DataList = (props: Props) => {
         placement="right"
         onClose={() => setVisible(false)}
         title={
-          <>
-            <span onClick={() => writeTextToClipboard(filePath)}>
-              {filePath}
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span>
+              <span onClick={() => writeTextToClipboard(filePath)}>
+                {filePath}
+              </span>
+              <HeartIcon style={{ color: "hotpink", paddingLeft: "10px" }} />
             </span>
-            <HeartIcon style={{ color: "hotpink", paddingLeft: "10px" }} />
-          </>
+            <Button onClick={EditorInstance.current?.beautify}>Beautify</Button>
+          </div>
         }
         footer={
           <Space style={{ display: "flex", justifyContent: "flex-end" }}>
@@ -101,6 +113,7 @@ const DataList = (props: Props) => {
           <CodeEditor
             height="80vh"
             value={response}
+            ref={EditorInstance}
             onChange={setNewResponse}
           />
         </Spin>

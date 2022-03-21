@@ -1,4 +1,5 @@
 import axios from "axios";
+import { RecordItemType } from "./types";
 
 const service = axios.create({
   // 设置baseUr地址,如果通过proxy跨域可直接填写base地址
@@ -15,16 +16,8 @@ interface Response<T> {
   data: T;
 }
 
-type RecordInfo = {
-  url: string;
-  filePath: string;
-  hash: string;
-  tags: string[];
-  createTime: string;
-};
-
 /** 查询全部 */
-export const getAllApi = (): Promise<Response<RecordInfo[]>> =>
+export const getAllApi = (): Promise<Response<RecordItemType[]>> =>
   service.get("/query-all").then((res) => res.data);
 
 /** 查询接口详情数据 */

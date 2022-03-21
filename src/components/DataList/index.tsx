@@ -1,64 +1,83 @@
-import { useCallback, useEffect, useState } from "react";
-import { message } from "antd";
-import Table from "./Table";
+import { Space, message, Popconfirm } from "antd";
+import { List, Avatar } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
+import Tags from "./Tags";
+import moment from "moment";
 
-import { getAllApi } from "../../service";
+import DrawerDetail from "./DrawerDetail";
+import { deleteItemApi } from "../../service";
+import { RecordItemType } from "../../types";
 
-const backendName = "happy-service";
+const DataList = ({
+  dataSource,
+  updateList,
+  isLoading,
+}: {
+  dataSource: RecordItemType[];
+  updateList: any;
+  isLoading: boolean;
+}) => {
+  /** 删除一条记录 */
+  const onDelete = (hash: string) => {
+    if (!hash) {
+      message.error("hash不能为空");
+      return;
+    }
 
-type DataSourceItem = { url: string; filePath: string };
-
-const DataList = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  const [dataSource, setDataSource] = useState<DataSourceItem[]>([]);
-
-  /** update data */
-  const handleUpdate = useCallback(() => {
-    setIsLoading(true);
-    getAllApi()
-      .then(({ data, code }) => {
-        const res = data.map((it) => ({
-          ...it,
-          url: decodeURIComponent(it.url),
-          key: decodeURIComponent(it.url),
-          filePath: (it?.filePath || "").split(backendName)?.[1],
-        }));
-
-        setDataSource(res);
-        message.success("update successful");
+    deleteItemApi(hash)
+      .then(() => {
+        message.success("删除成功");
+        updateList();
       })
-      .catch((err) => message.error("error", err.message))
-      .finally(() => {
-        setIsLoading(false);
-      });
-
-    // TODO ??? Slower
-    // getAllApi()
-    //   .then(({ data, code }) =>
-    //     data.map(({ url, hash, filePath = "", tags = [] }) => ({
-    //       tags,
-    //       hash,
-    //       url: decodeURIComponent(url),
-    //       key: decodeURIComponent(url),
-    //       filePath: filePath.split(backendName)?.[1],
-    //     }))
-    //   )
-    //   .then((res) => setDataSource(res))
-    //   .then(() => message.success("update successful"))
-    //   .catch((err) => message.error("error", err.message))
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
-  }, []);
-
-  useEffect(() => handleUpdate(), [handleUpdate]);
+      .catch((err: any) => message.error(err.message));
+  };
 
   return (
-    <Table
-      isLoading={isLoading}
+    <List
+      style={{ height: "90vh", overflow: "auto" }}
+      itemLayout="horizontal"
       dataSource={dataSource}
-      onUpdate={handleUpdate}
+      loading={isLoading}
+      renderItem={(item) => {
+        const title = (
+          <div className="flex justify-between">
+            <span className="color-666 font-weight-400">{item.url}</span>
+            <Popconfirm
+              okText="Yes"
+              cancelText="No"
+              title="Are you sure to delete this record?"
+              placement="topRight"
+              onConfirm={() => onDelete(item.hash)}
+            >
+              <DeleteOutlined className="margin-right-12 red" />
+            </Popconfirm>
+          </div>
+        );
+
+        const description = (
+          <Space size={8}>
+            <span>{item.method}</span>
+            <span>{moment(item.createTime).format("YYYY-MM-DD HH:mm:ss")}</span>
+            <DrawerDetail hash={item.hash} filePath={item.filePath} />
+            <Tags hash={item.hash} defaultTags={item.tags} />
+          </Space>
+        );
+
+        return (
+          <List.Item key={item.hash}>
+            <List.Item.Meta
+              className="flex-align-center"
+              avatar={
+                <Avatar
+                  src={`https://joeschmoe.io/api/v1/random?${Math.random()}`}
+                />
+              }
+              title={title}
+              description={description}
+            />
+          </List.Item>
+        );
+      }}
     />
   );
 };
