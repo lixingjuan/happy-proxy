@@ -4,6 +4,7 @@ window.clearRunning = false;
 
 window.happyCookie = "";
 window.happyCookieDomain = "";
+window.happyCookieDomains = [];
 
 /* ****************************************************************************************************
  *                                    工具函数
@@ -60,6 +61,16 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       message: "success",
     });
   }
+
+  /** 更新cookie对应的域名列表 */
+  // if (action === "Update_Happy_Cookie_Domains") {
+  //   window.happyCookieDomain = value;
+  //   console.log("window.happyCookieDomains", value);
+
+  //   sendResponse({
+  //     message: "success",
+  //   });
+  // }
 
   /** 更新cookie */
   if (action === "Update_Happy_Cookie") {
