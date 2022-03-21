@@ -5,7 +5,7 @@ import styled from "styled-components";
 // import Morning from "./components/Morning";
 import Setting from "./components/Setting";
 import Editor from "./components/Editor";
-import DataList from "./components/DataList";
+import RecordList from "./components/RecordList";
 import I18nTransform from "./components/I18nTransform";
 import useFetchListData from "./hook";
 
@@ -56,7 +56,7 @@ const App = () => {
         <Editor />
       </TabPane>
       <TabPane tab="本地数据" key="本地数据">
-        <DataList {...{ dataSource, updateList, isLoading }} />
+        <RecordList {...{ dataSource, updateList, isLoading }} />
       </TabPane>
       {/* <TabPane tab="Morning" key="Morning">
         <Morning />
