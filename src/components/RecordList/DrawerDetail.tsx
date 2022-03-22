@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Space, Button, Spin, Drawer, message } from "antd";
 import Icon from "@ant-design/icons";
 
-import CodeEditor, { EditorRefType } from "../CodeEditor";
+import CodeEditor, { EditorRefType } from "src/components/Editor";
 import { getDetailApi, updateDetailApi } from "../../service";
 import { writeTextToClipboard } from "../../utils";
 
@@ -51,18 +51,23 @@ const DataList = (props: Props) => {
   /** 更新详情 */
   const updateDetail = () => {
     setIsLoading(true);
-    const theNewResponse = JSON.parse(newResponse);
-    updateDetailApi({ hash, response: theNewResponse })
-      .then(({ data }) => {
-        setResponse(JSON.stringify(data, undefined, 2));
-        message.success("更新成功");
-      })
-      .catch((err) => {
-        message.error(err.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    try {
+      const theNewResponse = JSON.parse(newResponse);
+      updateDetailApi({ hash, response: theNewResponse })
+        .then(({ data }) => {
+          setResponse(JSON.stringify(data, undefined, 2));
+          message.success("更新成功");
+        })
+        .catch((err) => {
+          message.error(err.message);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } catch (error: any) {
+      setIsLoading(false);
+      message.error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -111,10 +116,12 @@ const DataList = (props: Props) => {
       >
         <Spin spinning={isLoading}>
           <CodeEditor
-            height="80vh"
             value={response}
             ref={EditorInstance}
             onChange={setNewResponse}
+            style={{
+              height: "80vh",
+            }}
           />
         </Spin>
       </Drawer>

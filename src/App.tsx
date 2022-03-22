@@ -3,12 +3,12 @@ import { Tabs } from "antd";
 import styled from "styled-components";
 
 // import Morning from "./components/Morning";
-import Setting from "./components/Setting";
-import Editor from "./components/Editor";
-import RecordList from "./components/RecordList";
-import I18nTransform from "./components/I18nTransform";
-import useFetchListData from "./hook";
+import Setting from "src/components/Setting";
+import ProxyEditor from "src/components/ProxyEditor";
+import RecordList from "src/components/RecordList";
+import I18nTransform from "src/components/I18nTransform";
 
+import useFetchListData from "./hook";
 import { TopMenuType } from "./types";
 
 const { TabPane } = Tabs;
@@ -53,7 +53,7 @@ const App = () => {
       }
     >
       <TabPane tab="编辑器" key="编辑器">
-        <Editor />
+        <ProxyEditor />
       </TabPane>
       <TabPane tab="本地数据" key="本地数据">
         <RecordList {...{ dataSource, updateList, isLoading }} />
