@@ -39,7 +39,7 @@ const Editor = () => {
   const getConfig = (data: string) => {
     const config = stripJsonComments(data)
       .replace(/\s+/g, "")
-      .replace(cleanJSONReg, ($0, $1, $2) => $2);
+      .replace(cleanJSONReg, ($0: string, $1: string, $2: string) => $2);
     return config;
   };
 
