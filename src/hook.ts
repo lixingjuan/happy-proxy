@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { message } from "antd";
 // import moment from "moment";
-import sortBy from "lodash/sortBy";
+import sortBy from "lodash-es/sortBy";
 
 import { getAllApi } from "./service";
 import { RecordItemType } from "./types";

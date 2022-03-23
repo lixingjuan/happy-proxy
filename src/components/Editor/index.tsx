@@ -1,72 +1,53 @@
-import React, { useRef, useImperativeHandle } from "react";
-import Editor, { loader } from "@monaco-editor/react";
+import {
+  // VFC,
+  useRef,
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
-loader.config({
-  paths: {
-    vs: "./packages",
-  },
-});
-
-const options = {
-  selectOnLineNumbers: true,
-  minimap: {
-    enabled: false,
-  },
-  fontSize: 14,
-  fontFamily: "Fira Code, monospace",
-  fontLigatures: true,
-  contextmenu: false,
-  scrollBeyondLastLine: false,
-  folding: true,
-  useTabStops: true,
-  wordBasedSuggestions: true,
-  quickSuggestions: true,
-  suggestOnTriggerCharacters: true,
-};
-
-interface Props {
-  value: string;
-  defaultValue?: string;
-  theme?: "vs-dark" | "light";
-  height?: string | number;
-  onChange?: (value: string) => void;
-}
+import "./userWorker";
 
 export interface EditorRefType {
   beautify: () => void;
 }
 
-const CodeEditor = React.forwardRef<EditorRefType, Props>(
-  ({ onChange, value, height, defaultValue, theme = "light" }, ref) => {
-    const EditorRef = useRef<any>();
+interface Props {
+  style: React.CSSProperties;
+  onChange: (val: string) => void;
+  defaultValue?: string;
+}
+export const ProxyEditor = (props: Props, ref: any) => {
+  const { style, onChange, defaultValue = "" } = props;
 
-    const onMount = (editorInstance: any, editor: any) => {
-      EditorRef.current = editorInstance;
-      editor.languages.json.jsonDefaults.setDiagnosticsOptions({
-        allowComments: true,
+  const [editor, setEditor] =
+    useState<monaco.editor.IStandaloneCodeEditor | null>(null);
+
+  const monacoEl = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    beautify: editor?.getAction?.("editor.action.formatDocument")?.run?.(),
+  }));
+
+  useEffect(() => {
+    if (monacoEl && !editor) {
+      const theEditor = monaco.editor.create(monacoEl.current!, {
+        value: defaultValue,
+        language: "json",
+        formatOnPaste: true,
       });
-    };
+      setEditor(theEditor);
+      theEditor?.onKeyUp((a) => {
+        onChange?.(theEditor.getValue());
+      });
+    }
 
-    useImperativeHandle(ref, () => ({
-      beautify: EditorRef.current?.getAction?.(["editor.action.formatDocument"])
-        ?._run,
-    }));
+    return () => editor?.dispose?.();
+  }, [monacoEl.current]);
 
-    return (
-      <div>
-        <Editor
-          height={height}
-          theme={theme}
-          value={value}
-          language="json"
-          onChange={(val) => onChange?.(val || "")}
-          defaultValue={defaultValue}
-          onMount={onMount}
-          options={options}
-        />
-      </div>
-    );
-  }
-);
+  return <div style={style} ref={monacoEl}></div>;
+};
 
-export default CodeEditor;
+export default forwardRef(ProxyEditor);

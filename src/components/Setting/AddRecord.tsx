@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import isEmpty from "lodash/isEmpty";
+import isEmpty from "lodash-es/isEmpty";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, message, Input, Select, Tooltip, Drawer } from "antd";
 
