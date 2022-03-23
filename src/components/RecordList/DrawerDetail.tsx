@@ -116,7 +116,6 @@ const DataList = (props: Props) => {
       >
         <Spin spinning={isLoading}>
           <CodeEditor
-            value={response}
             ref={EditorInstance}
             onChange={setNewResponse}
             style={{

@@ -1,8 +1,16 @@
+# 性能
+
 内存占用记录
 ![](images/README-22-02-28-10-39-50.png)
 
-vite前的热编译
+## webpack 热编译速度
 ![](images/README-22-03-21-16-56-27.png)
+## webpack 生产包体积
+
+
+
+## vite 热编译
+## vite 包体积
 
 
 # TODO
@@ -20,3 +28,9 @@ vite前的热编译
    4. [ ] 全部
    5. [ ] 某个日期之前
 5. [ ] feature: 迁移vite
+
+
+
+## Question
+
+1. [ ] 为什么打包的时候提醒我安装 `@types/babel__core` ?

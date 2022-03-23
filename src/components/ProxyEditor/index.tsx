@@ -1,7 +1,7 @@
-import { useCallback, useState, useRef } from "react";
+import { useCallback, useRef } from "react";
 import { message } from "antd";
 import stripJsonComments from "strip-json-comments";
-import debounce from "lodash/debounce";
+import debounce from "lodash-es/debounce";
 
 import CodeEditor from "src/components/Editor";
 import { getDefaultCode, cleanJSONReg } from "./editor-config";
@@ -9,7 +9,7 @@ import { getDefaultCode, cleanJSONReg } from "./editor-config";
 const Editor = () => {
   const EditorInstance = useRef(null);
 
-  const [code, setCode] = useState<string>(getDefaultCode());
+  // const [code, setCode] = useState<string>(getDefaultCode());
 
   /** 更新本地 */
   const updateLocal = (val: string) => {
@@ -52,7 +52,7 @@ const Editor = () => {
 
   const onChange = useCallback(
     (newValue: string) => {
-      setCode(newValue);
+      // setCode(newValue);
 
       updateLocal(newValue);
 
@@ -63,10 +63,11 @@ const Editor = () => {
 
   return (
     <CodeEditor
-      value={code}
       ref={EditorInstance}
+      style={{
+        height: "calc(100vh - 46px)",
+      }}
       onChange={debounce(onChange, 700)}
-      height="calc(100vh - 46px)"
       defaultValue={getDefaultCode()}
     />
   );
