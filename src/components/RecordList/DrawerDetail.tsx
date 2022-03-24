@@ -102,7 +102,13 @@ const DataList = (props: Props) => {
               </span>
               <HeartIcon style={{ color: "hotpink", paddingLeft: "10px" }} />
             </span>
-            <Button onClick={EditorInstance.current?.beautify}>Beautify</Button>
+            <Button
+              onClick={() => {
+                EditorInstance.current?.beautify?.();
+              }}
+            >
+              Beautify
+            </Button>
           </div>
         }
         footer={
@@ -117,6 +123,7 @@ const DataList = (props: Props) => {
         <Spin spinning={isLoading}>
           <CodeEditor
             ref={EditorInstance}
+            defaultValue={response}
             onChange={setNewResponse}
             style={{
               height: "80vh",

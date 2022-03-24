@@ -9,8 +9,6 @@ import { getDefaultCode, cleanJSONReg } from "./editor-config";
 const Editor = () => {
   const EditorInstance = useRef(null);
 
-  // const [code, setCode] = useState<string>(getDefaultCode());
-
   /** 更新本地 */
   const updateLocal = (val: string) => {
     localStorage.setItem("proxyConfig", val);
@@ -50,16 +48,10 @@ const Editor = () => {
     updateBackground(config);
   }, []);
 
-  const onChange = useCallback(
-    (newValue: string) => {
-      // setCode(newValue);
-
-      updateLocal(newValue);
-
-      updateProxyConfig(newValue);
-    },
-    [updateProxyConfig]
-  );
+  const onChange = useCallback((newValue: string) => {
+    updateLocal(newValue);
+    updateProxyConfig(newValue);
+  }, []);
 
   return (
     <CodeEditor

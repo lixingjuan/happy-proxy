@@ -27,16 +27,13 @@ export const ProxyEditor = (props: Props, ref: any) => {
 
   const monacoEl = useRef(null);
 
-  useImperativeHandle(ref, () => ({
-    beautify: editor?.getAction?.("editor.action.formatDocument")?.run?.(),
-  }));
-
   useEffect(() => {
     if (monacoEl && !editor) {
       const theEditor = monaco.editor.create(monacoEl.current!, {
         value: defaultValue,
         language: "json",
         formatOnPaste: true,
+        automaticLayout: true,
       });
       setEditor(theEditor);
       theEditor?.onKeyUp((a) => {
@@ -44,10 +41,17 @@ export const ProxyEditor = (props: Props, ref: any) => {
       });
     }
 
-    return () => editor?.dispose?.();
+    // return () => editor?.dispose?.();
   }, [monacoEl.current]);
+
+  useImperativeHandle(ref, () => ({
+    beautify: () => editor?.getAction("editor.action.formatDocument").run?.(),
+  }));
+
+  useEffect(() => {
+    editor?.setValue(defaultValue);
+  }, [defaultValue]);
 
   return <div style={style} ref={monacoEl}></div>;
 };
-
 export default forwardRef(ProxyEditor);
