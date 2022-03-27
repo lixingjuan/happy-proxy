@@ -3,7 +3,7 @@ import { Tabs } from "antd";
 import styled from "styled-components";
 
 // import Morning from "./components/Morning";
-import Setting from "src/components/Setting";
+import Buttons from "src/components/Buttons";
 import ProxyEditor from "src/components/ProxyEditor";
 import RecordList from "src/components/RecordList";
 import I18nTransform from "src/components/I18nTransform";
@@ -44,7 +44,7 @@ const App = () => {
       activeKey={activeTab}
       defaultActiveKey={defaultActiveKey}
       tabBarExtraContent={
-        <Setting
+        <Buttons
           activeTab={activeTab}
           updateList={updateList}
           isLoading={isLoading}
