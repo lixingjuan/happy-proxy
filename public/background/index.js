@@ -1,4 +1,4 @@
-window.proxyDisabled = "on"; // 打开：on, 关闭：disabled
+window.proxyDisabled = false; // 打开：on, 关闭：disabled
 window.proxyConfig = [];
 window.clearRunning = false;
 
@@ -16,10 +16,10 @@ function setIcon() {
   const cba = chrome.browserAction;
 
   const showIconNumber =
-    window.proxyDisabled !== "disabled" && window?.proxyConfig?.proxy?.length;
+    window.proxyDisabled === false && window?.proxyConfig?.length;
 
   if (showIconNumber) {
-    text = window.proxyConfig.proxy.length;
+    text = window.proxyConfig.length;
   }
 
   if (cba) {
@@ -89,7 +89,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       sendResponse({ message: "success" });
       setIcon();
     } catch (error) {
-      window.proxyConfig = { proxy: [] };
+      window.proxyConfig = [];
       sendResponse({
         message: "fail",
       });
@@ -144,11 +144,11 @@ chrome.cookies.onChanged.addListener((res) => {
  ************************************************************************************************* */
 chrome.webRequest.onBeforeRequest.addListener(
   (details) => {
-    if (window.proxyDisabled !== "disabled") {
-      clearCache();
-      return window.onBeforeRequestCallback(details);
+    if (window.proxyDisabled === true) {
+      return {};
     }
-    return {};
+    clearCache();
+    return window.onBeforeRequestCallback(details);
   },
   {
     urls: ["<all_urls>"],

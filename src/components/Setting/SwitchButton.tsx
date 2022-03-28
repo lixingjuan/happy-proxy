@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Switch } from "antd";
+import { message, Switch } from "antd";
 
 const SwitchButton = () => {
   const [checked, setChecked] = useState(true);
@@ -9,11 +9,11 @@ const SwitchButton = () => {
       chrome.runtime.sendMessage(
         {
           action: "Update_Proxy_Disabled",
-          value: checked === true ? "on" : "disabled",
+          value: !checked,
         },
         (response) => {
           if (response.message === "success") {
-            console.log("Update_Proxy_Disabled", "更新成功");
+            message.success("关闭成功！");
           }
         }
       );

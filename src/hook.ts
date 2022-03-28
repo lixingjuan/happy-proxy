@@ -37,7 +37,7 @@ const useFetchListData = () => {
       })
       .catch((err) => {
         setLocaIsRunning(false);
-        message.error("error", err.message);
+        message.error("error", err.message || "本地服务未启动");
       })
       .finally(() => {
         setIsLoading(false);

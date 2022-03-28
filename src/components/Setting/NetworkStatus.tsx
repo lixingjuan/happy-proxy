@@ -32,7 +32,7 @@ const NetworkStatus = ({ locaIsRunning, updateList, isLoading }: any) => {
       </Tooltip>
 
       <Tooltip title="更新网络状态" mouseEnterDelay={1}>
-        <Button onClick={updateList} size="small">
+        <Button onClick={updateList} size="small" type="text">
           <SyncOutlined spin={isLoading} className="font-20" />
         </Button>
       </Tooltip>
