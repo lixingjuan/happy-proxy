@@ -4,12 +4,12 @@ import styled from "styled-components";
 
 // import Morning from "./components/Morning";
 import Buttons from "src/components/Buttons";
-import ProxyEditor from "src/components/ProxyEditor";
 import RecordList from "src/components/RecordList";
+import ProxyEditor from "src/components/ProxyEditor";
 import I18nTransform from "src/components/I18nTransform";
 
 import useFetchListData from "./hook";
-import { TopMenuType } from "./types";
+import { TopMenuType, FilterType } from "./types";
 
 const { TabPane } = Tabs;
 
@@ -30,7 +30,7 @@ const StyledTab = styled(Tabs)`
 const App = () => {
   const [activeTab, setActiveTab] = useState<TopMenuType>(defaultActiveKey);
 
-  const { isLoading, dataSource, updateList, locaIsRunning } =
+  const { isLoading, dataSource, updateList, locaIsRunning, updateFilter } =
     useFetchListData();
 
   const onChange = (val: TopMenuType) => {
@@ -48,6 +48,7 @@ const App = () => {
           activeTab={activeTab}
           updateList={updateList}
           isLoading={isLoading}
+          updateFilter={updateFilter}
           locaIsRunning={locaIsRunning}
         />
       }
@@ -56,7 +57,11 @@ const App = () => {
         <ProxyEditor />
       </TabPane>
       <TabPane tab="本地数据" key="本地数据">
-        <RecordList {...{ dataSource, updateList, isLoading }} />
+        <RecordList
+          isLoading={isLoading}
+          dataSource={dataSource}
+          updateList={updateList}
+        />
       </TabPane>
       {/* <TabPane tab="Morning" key="Morning">
         <Morning />

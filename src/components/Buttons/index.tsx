@@ -4,6 +4,7 @@ import ModalContent from "./ModalContent";
 import NetworkStatus from "./NetworkStatus";
 import SwitchButton from "./SwitchButton";
 import AddRecord from "./AddRecord";
+import Filters from "../Filters";
 import Icon from "../Icon";
 import { TopMenuType } from "../../types";
 import styled from "styled-components";
@@ -16,11 +17,13 @@ const StyledButton = styled.div`
 `;
 
 const Buttons = ({
+  updateFilter,
   activeTab,
   updateList,
   isLoading,
   locaIsRunning,
 }: {
+  updateFilter: any;
   activeTab: TopMenuType;
   updateList: any;
   isLoading: any;
@@ -43,6 +46,7 @@ const Buttons = ({
           className="font-24 cursor-pointer"
           onClick={() => setVisible(true)}
         />
+        {activeTab === "本地数据" && <Filters updateFilter={updateFilter} />}
       </StyledButton>
     );
   };

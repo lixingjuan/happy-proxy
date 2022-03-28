@@ -1,75 +1,93 @@
-// import React, { useState } from "react";
-import { Button, Popover, Divider } from "antd";
-
-import { Radio } from "antd";
+import { useState } from "react";
+import { Radio, Checkbox, Button, Popover, Divider } from "antd";
 import {
-  CaretDownOutlined,
-  CaretUpOutlined,
   FilterOutlined,
+  CaretUpOutlined,
+  CaretDownOutlined,
 } from "@ant-design/icons";
+import { TrendType, MethodType, UpdateFilterFn } from "src/types";
 
-const Content = () => {
-  // const [time, setTime] = useState(1);
-  // const [tags, settags] = useState(1);
+const CheckboxGroup = Checkbox.Group;
 
-  // const onChange = (e: any) => {
-  //   console.log("radio checked", e.target.value);
-  //   setTime(e.target.value);
-  // };
+const Filters = ({ updateFilter }: { updateFilter: UpdateFilterFn }) => {
+  const [timeTrend, setTimeTrend] = useState<TrendType>();
 
-  return (
-    <div style={{ width: "350px" }}>
-      <Radio.Group className="grid-4 margin-top-8">
-        <Radio value={1}>
-          时间
-          <CaretUpOutlined />
-        </Radio>
-        <Radio value={2}>
-          时间
-          <CaretDownOutlined />
-        </Radio>
-      </Radio.Group>
+  const [methods, setMethods] = useState<MethodType[]>([]);
 
-      <Radio.Group className="grid-4 margin-top-8">
-        <Radio value={1}>
-          tags
-          <CaretUpOutlined />
-        </Radio>
-        <Radio value={2}>
-          tags
-          <CaretDownOutlined />
-        </Radio>
-      </Radio.Group>
+  const onMethodChange = (val: any[]) => {
+    setMethods(val);
+  };
 
-      <Radio.Group className="grid-4 margin-top-8">
-        <Radio value={"GET"}>GET</Radio>
-        <Radio value={"POST"}>POST</Radio>
-        <Radio value={"DELETE"}>DELETE</Radio>
-        <Radio value={"PUT"}>PUT</Radio>
-      </Radio.Group>
+  const onTimeTrendChange = (e: any) => {
+    setTimeTrend(e.target.value);
+  };
 
-      <Divider className="margin-top-12 margin-bottom-12" />
+  const onConfirm = () =>
+    updateFilter({
+      methods,
+      timeTrend,
+    });
 
-      <div className="align-right">
-        <Button>重置</Button>
+  const onReset = () => {
+    setMethods([]);
+    setTimeTrend(undefined);
+  };
+
+  const Content = () => {
+    return (
+      <div style={{ width: "350px" }}>
+        <Radio.Group
+          className="grid-4 margin-top-8"
+          value={timeTrend}
+          onChange={onTimeTrendChange}
+        >
+          <Radio value="ascend">
+            时间
+            <CaretUpOutlined />
+          </Radio>
+          <Radio value="descend">
+            时间
+            <CaretDownOutlined />
+          </Radio>
+        </Radio.Group>
+
+        {/* <Radio.Group className="grid-4 margin-top-8">
+          <Radio value={1}>
+            Tags
+            <CaretUpOutlined />
+          </Radio>
+          <Radio value={2}>
+            Tags
+            <CaretDownOutlined />
+          </Radio>
+        </Radio.Group>
+        */}
+        <CheckboxGroup
+          value={methods}
+          options={["GET", "POST", "DELETE", "PUT"]}
+          onChange={onMethodChange}
+        />
+
+        <Divider className="margin-top-12 margin-bottom-12" />
+
+        <div className="align-right">
+          <Button onClick={onReset}>重置</Button>
+          <Button onClick={onConfirm}>确认</Button>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
-const Demo = () => {
   return (
-    <div>
-      <Popover
-        placement="bottom"
-        title={"排序"}
-        content={Content}
-        trigger="click"
-      >
-        <FilterOutlined />
-      </Popover>
-    </div>
+    <Popover
+      placement="bottom"
+      title={"排序"}
+      content={Content}
+      trigger="click"
+    >
+      <FilterOutlined className="font-24 color-purple" />
+    </Popover>
   );
 };
 
-export default Demo;
+export default Filters;
