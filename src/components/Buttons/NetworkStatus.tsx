@@ -1,9 +1,15 @@
 import { useMemo } from "react";
-import { Button, Tooltip } from "antd";
+import { Tooltip } from "antd";
 import { SyncOutlined } from "@ant-design/icons";
+
 import Icon from "../Icon";
 
-const NetworkStatus = ({ locaIsRunning, updateList, isLoading }: any) => {
+interface Props {
+  isLoading: boolean;
+  locaIsRunning: boolean;
+  updateList: () => void;
+}
+const NetworkStatus = ({ locaIsRunning, updateList, isLoading }: Props) => {
   const { title, iconHref, color } = useMemo(() => {
     if (locaIsRunning) {
       return {
@@ -21,20 +27,14 @@ const NetworkStatus = ({ locaIsRunning, updateList, isLoading }: any) => {
 
   return (
     <>
-      <Tooltip title={title}>
-        <span>
-          <Icon
-            href={iconHref}
-            className="cursor-pointer font-24"
-            style={{ color }}
-          />
+      <Tooltip title={title} color="#fff">
+        <span className="inline-flex align-items-center">
+          <Icon href={iconHref} className="cursor-pointer font-24" style={{ color }} />
         </span>
       </Tooltip>
 
-      <Tooltip title="更新网络状态" mouseEnterDelay={1}>
-        <Button onClick={updateList} size="small" type="text">
-          <SyncOutlined spin={isLoading} className="font-20" />
-        </Button>
+      <Tooltip title="更新网络状态" mouseEnterDelay={1} color="#fff">
+        <SyncOutlined spin={isLoading} className="font-22" onClick={updateList} />
       </Tooltip>
     </>
   );

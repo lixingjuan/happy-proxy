@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, message, Modal } from "antd";
-import { deleteAllApi } from "../service";
+import { DeleteFilled } from "@ant-design/icons";
+import { deleteAllApi } from "../../service";
 
 const DeleteAllButton = () => {
   const [visible, setVisible] = useState(false);
@@ -17,9 +18,10 @@ const DeleteAllButton = () => {
 
   return (
     <>
-      <Button onClick={() => setVisible((pre) => !pre)} size="small" danger>
+      <DeleteFilled className="color-red font-22 cursor-pointer" />
+      {/* <Button onClick={() => setVisible((pre) => !pre)} size="small" danger>
         Delete All
-      </Button>
+      </Button> */}
 
       <Modal
         visible={visible}

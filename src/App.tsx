@@ -9,12 +9,11 @@ import ProxyEditor from "src/components/ProxyEditor";
 import I18nTransform from "src/components/I18nTransform";
 
 import useFetchListData from "./hook";
-import { TopMenuType, FilterType } from "./types";
+import { TopMenuType } from "./types";
 
 const { TabPane } = Tabs;
 
-const defaultActiveKey = (localStorage.getItem("activeTab") ||
-  "编辑器") as TopMenuType;
+const defaultActiveKey = (localStorage.getItem("activeTab") || "编辑器") as TopMenuType;
 
 const StyledTab = styled(Tabs)`
   height: 100vh;
@@ -30,8 +29,7 @@ const StyledTab = styled(Tabs)`
 const App = () => {
   const [activeTab, setActiveTab] = useState<TopMenuType>(defaultActiveKey);
 
-  const { isLoading, dataSource, updateList, locaIsRunning, updateFilter } =
-    useFetchListData();
+  const { isLoading, dataSource, updateList, locaIsRunning, updateFilter } = useFetchListData();
 
   const onChange = (val: TopMenuType) => {
     setActiveTab(val);
@@ -46,8 +44,8 @@ const App = () => {
       tabBarExtraContent={
         <Buttons
           activeTab={activeTab}
-          updateList={updateList}
           isLoading={isLoading}
+          updateList={updateList}
           updateFilter={updateFilter}
           locaIsRunning={locaIsRunning}
         />
@@ -57,11 +55,7 @@ const App = () => {
         <ProxyEditor />
       </TabPane>
       <TabPane tab="本地数据" key="本地数据">
-        <RecordList
-          isLoading={isLoading}
-          dataSource={dataSource}
-          updateList={updateList}
-        />
+        <RecordList isLoading={isLoading} dataSource={dataSource} updateList={updateList} />
       </TabPane>
       {/* <TabPane tab="Morning" key="Morning">
         <Morning />

@@ -24,10 +24,6 @@
   margin-bottom: 12px;
 }
 
-.align-right {
-  text-align: right;
-}
-
 /* ****************************************************************************************************
  *                                    Font
  ************************************************************************************************* */
@@ -44,34 +40,35 @@
 .font-24 {
   font-size: 24px;
 }
-
-/* ****************************************************************************************************
-*                                    Color
-************************************************************************************************* */
-
-.red {
-  color: @red;
+.font-weight-400 {
+  font-weight: 400;
 }
 
+/* ****************************************************************************************************
+*                                    Font-Color
+************************************************************************************************* */
+.color-red {
+  color: @red;
+}
 .color-333 {
   color: @text;
 }
-
 .color-666 {
   color: #666;
 }
-
 .color-purple {
   color: @purple;
 }
-
+.color-orange {
+  color: @orange;
+}
+.color-pink {
+  color: @pink;
+}
 .color-anchor {
   color: @anchor;
 }
 
-.font-weight-400 {
-  font-weight: 400;
-}
 /* ****************************************************************************************************
  *                                    布局
  ************************************************************************************************* */
@@ -82,8 +79,18 @@
 
 .flex {
   display: flex;
+}
+.inline-flex {
+  display: inline-flex;
+}
+
+.flex,
+.inline-flex {
   &.justify-center {
     justify-content: center;
+  }
+  &.justify-end {
+    justify-content: flex-end;
   }
   &.justify-between {
     justify-content: space-between;
@@ -91,8 +98,11 @@
   &.align-center {
     align-items: center;
   }
-  &.flex-end {
-    justify-content: flex-end;
+  &.align-right {
+    align-items: flex-end;
+  }
+  &.gap-4 {
+    gap: 4px;
   }
   &.gap-8 {
     gap: 8px;

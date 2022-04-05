@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import isEmpty from "lodash-es/isEmpty";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, message, Input, Select, Tooltip, Drawer } from "antd";
 
 import { addItemApi } from "../../service";
@@ -69,10 +69,8 @@ const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
 
   return (
     <>
-      <Tooltip title="增加一条Mock Record" mouseEnterDelay={1}>
-        <Button size="small" onClick={() => setVisible((pre) => !pre)}>
-          <PlusOutlined className="font-22" />
-        </Button>
+      <Tooltip title="增加一条Mock Record" mouseEnterDelay={1} color="#fff">
+        <PlusCircleOutlined className="font-22" onClick={() => setVisible((pre) => !pre)} />
       </Tooltip>
 
       <Drawer
@@ -92,11 +90,7 @@ const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
       >
         <div style={{ display: "grid", gridRowGap: "10px" }}>
           <div style={{ display: "grid", gridTemplateColumns: "100px auto" }}>
-            <Select
-              defaultValue="Get"
-              onChange={onMethodChange}
-              value={params.method}
-            >
+            <Select defaultValue="Get" onChange={onMethodChange} value={params.method}>
               <Option value="GET">Get</Option>
               <Option value="POST">Post</Option>
               <Option value="PUT">Put</Option>
@@ -108,11 +102,7 @@ const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
 
           <ErrorStatus error={error} />
 
-          <Input.TextArea
-            style={{ height: "70vh" }}
-            onChange={onBodyChange}
-            placeholder="请输入mock参数"
-          />
+          <Input.TextArea style={{ height: "70vh" }} onChange={onBodyChange} placeholder="请输入mock参数" />
         </div>
       </Drawer>
     </>

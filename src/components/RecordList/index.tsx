@@ -17,14 +17,8 @@ interface Props {
 const Title = ({ url, hash, onDelete }: any) => (
   <div className="flex justify-between">
     <span className="color-666 font-weight-400">{url}</span>
-    <Popconfirm
-      okText="Yes"
-      cancelText="No"
-      title="确认删除?"
-      placement="topRight"
-      onConfirm={() => onDelete(hash)}
-    >
-      <DeleteOutlined className="margin-right-12 red font-14" />
+    <Popconfirm okText="Yes" cancelText="No" title="确认删除?" placement="topRight" onConfirm={() => onDelete(hash)}>
+      <DeleteOutlined className="margin-right-12 color-red font-14" />
     </Popconfirm>
   </div>
 );
