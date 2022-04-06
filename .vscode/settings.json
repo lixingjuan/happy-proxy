@@ -1,5 +1,6 @@
 {
   "liveServer.settings.port": 5501,
+  "prettier.printWidth": 100,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
