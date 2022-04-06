@@ -1,11 +1,11 @@
 window.lastRequestId = null;
-window.proxyConfig = {};
+window.proxyConfig = [];
 window.urls = new Array(200); // for cache
 
 isString = (string) => ({}.toString.call(string) === "[object String]");
 
 window.redirectToMatchingRule = (details) => {
-  const rules = window.proxyConfig.proxy;
+  const rules = window.proxyConfig;
   let redirectUrl = details.url;
 
   // in case of chrome-extension downtime
@@ -49,14 +49,9 @@ window.redirectToMatchingRule = (details) => {
 
   const { origin: happyDomain = "", search = "" } = new URL(details.url);
 
-  const params = search
-    ? `&happyDomain=${happyDomain}`
-    : `?happyDomain=${happyDomain}`;
+  const params = search ? `&happyDomain=${happyDomain}` : `?happyDomain=${happyDomain}`;
 
-  return redirectUrl === details.url
-    ? {}
-    : { redirectUrl: `${redirectUrl}${params}` };
+  return redirectUrl === details.url ? {} : { redirectUrl: `${redirectUrl}${params}` };
 };
 
-window.onBeforeRequestCallback = (details) =>
-  window.redirectToMatchingRule(details);
+window.onBeforeRequestCallback = (details) => window.redirectToMatchingRule(details);
