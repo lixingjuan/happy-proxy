@@ -24,7 +24,7 @@ const Editor = () => {
         },
         (response) => {
           if (response.message === "success") {
-            message.success("Update_Proxy_Config 更新成功");
+            message.success("proxy urls 更新成功");
           } else {
             message.error(response.message);
           }
