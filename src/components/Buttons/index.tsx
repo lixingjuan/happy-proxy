@@ -1,14 +1,15 @@
-import { useState } from "react";
-import { Space, Modal } from "antd";
+import styled from "styled-components";
+import { useEffect, useState } from "react";
+import { Space, Modal, message } from "antd";
+
+import Icon from "../Icon";
+import Filters from "../Filters";
+import DeleteAll from "./DeleteAll";
+import AddRecord from "./AddRecord";
 import ModalContent from "./ModalContent";
 import NetworkStatus from "./NetworkStatus";
 import SwitchButton from "./SwitchButton";
-import AddRecord from "./AddRecord";
-import DeleteAll from "./DeleteAll";
-import Filters from "../Filters";
-import Icon from "../Icon";
 import { TopMenuType, FilterType } from "src/types";
-import styled from "styled-components";
 
 const StyledButton = styled.div`
   height: 30px;
@@ -17,6 +18,13 @@ const StyledButton = styled.div`
   align-items: center;
   margin-right: 12px;
 `;
+
+const defaultDomain = ".datayes-stg.com";
+
+const getDefaultCookieDomain = () => {
+  const local = localStorage.getItem("cookieDomain");
+  return local || defaultDomain;
+};
 
 interface Props {
   updateFilter: (val: FilterType) => void;
@@ -29,22 +37,89 @@ interface Props {
 const Buttons = ({ updateFilter, activeTab, updateList, isLoading, locaIsRunning }: Props) => {
   const [visible, setVisible] = useState(false);
 
-  const buttons = () => {
-    return (
-      <StyledButton>
-        <NetworkStatus isLoading={isLoading} updateList={updateList} locaIsRunning={locaIsRunning} />
-        <AddRecord onUpdate={updateList} />
-        <SwitchButton key="SwitchButton" />
-        <Icon href="icon-setting" className="font-24 cursor-pointer" onClick={() => setVisible(true)} />
-        {activeTab === "本地数据" && <Filters updateFilter={updateFilter} />}
-        <DeleteAll />
-      </StyledButton>
+  const [cookieDomain, setCookieDomain] = useState<string>(getDefaultCookieDomain());
+
+  /** 通知background 更新 happyCookie */
+  const updateHappyCookie = (cookieDomain: string) => {
+    if (!chrome?.cookies?.getAll) {
+      return;
+    }
+
+    chrome.cookies.getAll({ domain: cookieDomain }, (res) => {
+      const theCookieArr = res.filter((it) => it.domain === cookieDomain);
+      if (!Object.keys(theCookieArr).length) {
+        return;
+      }
+
+      const happyCookie = theCookieArr.map((it) => `${it.name}=${it.value}`).join("; ");
+      chrome.runtime.sendMessage(
+        {
+          action: "Update_Happy_Cookie",
+          value: happyCookie,
+        },
+        (response) => {
+          if (response.message === "success") {
+            message.success("happy cookie 更新成功");
+          }
+        }
+      );
+    });
+  };
+
+  /** 通知background 更新 happyCookieDomain */
+  const updateHappyCookieDomain = (domain: string) => {
+    if (!chrome?.runtime?.sendMessage) {
+      return;
+    }
+
+    updateHappyCookie(domain);
+
+    chrome.runtime.sendMessage(
+      {
+        action: "Update_Happy_Cookie_Domain",
+        value: domain,
+      },
+      (response) => {
+        if (response.message === "success") {
+          message.success(response.message);
+        }
+      }
     );
   };
 
+  /** 更新本地 */
+  const updateLocal = (domain: string) => localStorage.setItem("cookieDomain", domain);
+
+  /** 成功回调函数 */
+  const onSuccess = (domain: string) => {
+    setCookieDomain(domain);
+    updateLocal(domain);
+    updateHappyCookieDomain(domain);
+    setVisible(false);
+  };
+
+  useEffect(() => {
+    onSuccess(cookieDomain);
+  }, []);
+
   return (
     <>
-      {buttons()}
+      <StyledButton>
+        <NetworkStatus
+          isLoading={isLoading}
+          updateList={updateList}
+          locaIsRunning={locaIsRunning}
+        />
+        <AddRecord onUpdate={updateList} />
+        <SwitchButton key="SwitchButton" />
+        <Icon
+          href="icon-setting"
+          className="font-24 cursor-pointer"
+          onClick={() => setVisible(true)}
+        />
+        {activeTab === "本地数据" && <Filters updateFilter={updateFilter} />}
+        <DeleteAll />
+      </StyledButton>
 
       <Modal
         visible={visible}
@@ -60,7 +135,11 @@ const Buttons = ({ updateFilter, activeTab, updateList, isLoading, locaIsRunning
         }
         onCancel={() => setVisible(false)}
       >
-        <ModalContent onClose={() => setVisible(false)} />
+        <ModalContent
+          value={cookieDomain}
+          onSuccess={onSuccess}
+          onCancel={() => setVisible(false)}
+        />
       </Modal>
     </>
   );

@@ -1,17 +1,4 @@
-import { useState } from "react";
-import { Input, message, Space, Form, Button, Divider } from "antd";
-
-const defaultDomain = ".datayes-stg.com";
-
-// const getDefaultCookieDomains = () => {
-//   const local = localStorage.getItem("cookieDomain");
-//   return local ? JSON.parse(local) : [defaultDomain];
-// };
-
-const getDefaultCookieDomain = () => {
-  const local = localStorage.getItem("cookieDomain");
-  return local || defaultDomain;
-};
+import { Input, Space, Form, Button, Divider } from "antd";
 
 const formItemLayout = {
   labelCol: {
@@ -30,84 +17,17 @@ const formItemLayoutWithOutLabel = {
   },
 };
 
-const SettingModal = ({ onClose }: any) => {
+interface Props {
+  value: string;
+  onSuccess: (val: string) => void;
+  onCancel: () => void;
+}
+const SettingModal = ({ value, onSuccess, onCancel }: Props) => {
   const [form] = Form.useForm();
 
-  const [cookieDomain, setCookieDomain] = useState<string>(
-    getDefaultCookieDomain()
-  );
-
-  /**
-   * 1. 更新组件值
-   * 2. 更新 本地domain值
-   * 3. 通知background 更新domain值
-   * 4. 通知background 更新cookie值
-   */
   const onFinish = () => {
     const domain = form.getFieldValue("domain");
-    console.log({ domain });
-    setCookieDomain(domain);
-
-    updateLocal(domain);
-
-    updateBackgroundHappyCookieDomain(domain);
-
-    updateBackgroundHappyCookie();
-
-    onClose();
-  };
-
-  // 更新本地
-  const updateLocal = (domain: string) => {
-    localStorage.setItem("cookieDomain", domain);
-  };
-
-  /** 通知background 更新happyCookieDomain */
-  const updateBackgroundHappyCookieDomain = (domains: string[]) => {
-    if (chrome?.runtime?.sendMessage) {
-      chrome.runtime.sendMessage(
-        {
-          action: "Update_Happy_Cookie_Domains",
-          value: domains,
-        },
-        (response) => {
-          if (response.message === "success") {
-            message.success(response.message);
-          }
-        }
-      );
-    }
-  };
-
-  /** 通知background 更新happyCookie */
-  const updateBackgroundHappyCookie = () => {
-    if (chrome?.cookies?.getAll) {
-      chrome.cookies.getAll({ domain: cookieDomain }, (res) => {
-        const theCookieArr = res.filter((it) => cookieDomain === it.domain);
-
-        console.log("httpOnlyItems", theCookieArr);
-
-        if (Object.keys(theCookieArr).length) {
-          const happyCookie = theCookieArr
-            .map((it) => `${it.name}=${it.value}`)
-            .join("; ");
-
-          console.log("happyCookie", happyCookie);
-
-          chrome.runtime.sendMessage(
-            {
-              action: "Update_Happy_Cookie",
-              value: happyCookie,
-            },
-            (response) => {
-              if (response.message === "success") {
-                console.log("Update_Happy_Cookie 更新成功", happyCookie);
-              }
-            }
-          );
-        }
-      });
-    }
+    onSuccess(domain);
   };
 
   return (
@@ -117,7 +37,7 @@ const SettingModal = ({ onClose }: any) => {
         name="dynamic_form_item"
         {...formItemLayoutWithOutLabel}
         initialValues={{
-          domain: cookieDomain,
+          domain: value,
         }}
       >
         {/* <Form.Item label="编辑器font-size" {...formItemLayout}>
@@ -139,11 +59,7 @@ const SettingModal = ({ onClose }: any) => {
         </Form.Item> */}
 
         <Form.Item label="http-only domain" {...formItemLayout} name="domain">
-          <Input
-            size="small"
-            value={cookieDomain}
-            placeholder="请输入http-only的cookie Domain"
-          />
+          <Input size="small" value={value} placeholder="请输入http-only的cookie Domain" />
         </Form.Item>
 
         {/* <Form.List name="domains">
@@ -206,7 +122,7 @@ const SettingModal = ({ onClose }: any) => {
           justifyContent: "right",
         }}
       >
-        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={onCancel}>Cancel</Button>
         <Button type="primary" onClick={onFinish}>
           Submit
         </Button>
