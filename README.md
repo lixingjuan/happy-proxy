@@ -50,3 +50,5 @@ git submodule update --init --recursive
 ## TODO
 
 1. [ ] MD5加密
+2. [ ] node端接吗gzip等一系列压缩过的内容
+
