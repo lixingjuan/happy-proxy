@@ -1,5 +1,5 @@
 {
-  "name": "antd-demo-ts",
+  "name": "happy-request",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,8 +12,8 @@
     "axios": "^0.26.1",
     "lodash-es": "^4.17.21",
     "monaco-editor": "^0.33.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-hot-toast": "^2.2.0",
     "strip-json-comments": "^4.0.0",
     "styled-components": "^5.3.3"
