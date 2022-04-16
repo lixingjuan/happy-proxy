@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { message, Switch } from "antd";
+import { Switch } from "antd";
+import toast from "react-hot-toast";
 
 const getDefault = () => {
   return localStorage.getItem("ExtensionIsOpen") === "true";
@@ -18,9 +19,9 @@ const SwitchButton = () => {
         (response) => {
           if (response.message === "success") {
             if (nextStatus) {
-              message.success("已打开");
+              toast.success("已打开");
             } else {
-              message.success("已关闭");
+              toast.success("已关闭");
             }
           }
         }

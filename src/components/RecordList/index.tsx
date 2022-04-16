@@ -1,8 +1,9 @@
-import { message, Popconfirm } from "antd";
+import { Popconfirm } from "antd";
 import { List, Avatar } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import Tags from "./Tags";
 import moment from "moment";
+import toast from "react-hot-toast";
 
 import DrawerDetail from "./DrawerDetail";
 import { deleteItemApi } from "../../service";
@@ -36,16 +37,16 @@ const RecordList = ({ dataSource, updateList, isLoading }: Props) => {
   /** 删除一条记录 */
   const onDelete = (hash: string) => {
     if (!hash) {
-      message.error("hash不能为空");
+      toast.error("hash不能为空");
       return;
     }
 
     deleteItemApi(hash)
       .then(() => {
-        message.success("删除成功");
+        toast.success("删除成功");
         updateList();
       })
-      .catch((err: any) => message.error(err.message));
+      .catch((err: any) => toast.error(err.message));
   };
 
   const renderItem = (item: any) => {

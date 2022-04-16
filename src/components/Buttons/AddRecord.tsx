@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
 import isEmpty from "lodash-es/isEmpty";
 import { PlusCircleOutlined } from "@ant-design/icons";
-import { Button, message, Input, Select, Tooltip, Drawer } from "antd";
+import { Button, Input, Select, Tooltip, Drawer } from "antd";
+import toast from "react-hot-toast";
 
 import { addItemApi } from "../../service";
 import ErrorStatus from "../ErrorStatus";
@@ -42,7 +43,7 @@ const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
     const { mockBody } = params;
 
     if (Object.prototype.toString.call(mockBody) !== "[object Object]") {
-      message.error("body 必须是json");
+      toast.error("body 必须是json");
       return;
     }
 
@@ -52,11 +53,11 @@ const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
         if (code < 0) {
           throw new Error(responseMsg);
         }
-        message.success(`add ${responseMsg}`);
+        toast.success(`add ${responseMsg}`);
         onUpdate?.();
       })
       .catch((error) => {
-        message.error(error.message);
+        toast.error(error.message);
       });
   };
 

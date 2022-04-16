@@ -1,7 +1,7 @@
 import { useCallback, useRef } from "react";
-import { message } from "antd";
 import stripJsonComments from "strip-json-comments";
 import debounce from "lodash-es/debounce";
+import toast from "react-hot-toast";
 
 import CodeEditor from "src/components/Editor";
 import { getDefaultCode, cleanJSONReg } from "./editor-config";
@@ -24,9 +24,9 @@ const Editor = () => {
         },
         (response) => {
           if (response.message === "success") {
-            message.success("proxy urls 更新成功");
+            toast.success("proxy urls 更新成功");
           } else {
-            message.error(response.message);
+            toast.error(response.message);
           }
         }
       );

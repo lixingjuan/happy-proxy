@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Button, message, Modal } from "antd";
+import { Modal } from "antd";
+import toast from "react-hot-toast";
 import { DeleteFilled } from "@ant-design/icons";
 import { deleteAllApi } from "../../service";
 
@@ -9,10 +10,10 @@ const DeleteAllButton = () => {
   const handleOk = () => {
     deleteAllApi()
       .then(() => {
-        message.success("删除成功");
+        toast.success("删除成功");
       })
       .catch((err) => {
-        message.error("删除失败", err.message);
+        toast.error("删除失败", err.message);
       });
   };
 
