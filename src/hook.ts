@@ -1,13 +1,11 @@
-// TODO 如果我使用热编译修改了代码，再次修改筛选条件，list不会重新渲染
-
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { message } from "antd";
+import moment from "moment";
 import sortBy from "lodash-es/sortBy";
+import toast from "react-hot-toast";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { getAllApi } from "./service";
 import { RecordItemType } from "./types";
 import { FilterType } from "./types";
-import moment from "moment";
 
 const backendName = "happy-service";
 
@@ -29,9 +27,7 @@ const useFetchListData = () => {
   const dataSource: RecordItemType[] = useMemo(() => {
     const { timeTrend, methods = [] } = filter;
     const filteredData =
-      methods.length > 0
-        ? fullData.filter((it) => it.method && methods.includes(it.method))
-        : fullData;
+      methods.length > 0 ? fullData.filter((it) => it.method && methods.includes(it.method)) : fullData;
 
     if (!timeTrend) {
       return filteredData;
@@ -60,11 +56,11 @@ const useFetchListData = () => {
 
         setFullData(res);
         setLocaIsRunning(true);
-        message.success("update successful");
+        toast.success("update successful");
       })
       .catch((err) => {
         setLocaIsRunning(false);
-        message.error("error", err.message || "本地服务未启动");
+        toast.error("error", err.message || "本地服务未启动");
       })
       .finally(() => {
         setIsLoading(false);

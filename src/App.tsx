@@ -7,7 +7,7 @@ import Buttons from "src/components/Buttons";
 import RecordList from "src/components/RecordList";
 import ProxyEditor from "src/components/ProxyEditor";
 import I18nTransform from "src/components/I18nTransform";
-
+import toast, { Toaster } from "react-hot-toast";
 import useFetchListData from "./hook";
 import { TopMenuType } from "./types";
 
@@ -51,6 +51,7 @@ const App = () => {
         />
       }
     >
+      <Toaster />
       <TabPane tab="编辑器" key="编辑器">
         <ProxyEditor />
       </TabPane>

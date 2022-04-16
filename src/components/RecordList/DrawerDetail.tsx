@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
-import { Space, Button, Spin, Drawer, message } from "antd";
+import { Space, Button, Spin, Drawer } from "antd";
 import Icon from "@ant-design/icons";
+import toast from "react-hot-toast";
 
 import CodeEditor, { EditorRefType } from "src/components/Editor";
 import { getDetailApi, updateDetailApi } from "../../service";
@@ -56,17 +57,17 @@ const DataList = (props: Props) => {
       updateDetailApi({ hash, response: theNewResponse })
         .then(({ data }) => {
           setResponse(JSON.stringify(data, undefined, 2));
-          message.success("更新成功");
+          toast.success("更新成功");
         })
         .catch((err) => {
-          message.error(err.message);
+          toast.error(err.message);
         })
         .finally(() => {
           setIsLoading(false);
         });
     } catch (error: any) {
       setIsLoading(false);
-      message.error(error.message);
+      toast.error(error.message);
     }
   };
 
@@ -79,13 +80,7 @@ const DataList = (props: Props) => {
 
   return (
     <>
-      <Button
-        href="#"
-        onClick={() => setVisible(true)}
-        type="text"
-        style={{ padding: "0px" }}
-        className="color-anchor"
-      >
+      <Button href="#" onClick={() => setVisible(true)} type="text" style={{ padding: "0px" }} className="color-anchor">
         {filePath}
       </Button>
 
@@ -97,9 +92,7 @@ const DataList = (props: Props) => {
         title={
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <span>
-              <span onClick={() => writeTextToClipboard(filePath)}>
-                {filePath}
-              </span>
+              <span onClick={() => writeTextToClipboard(filePath)}>{filePath}</span>
               <HeartIcon style={{ color: "hotpink", paddingLeft: "10px" }} />
             </span>
             <Button

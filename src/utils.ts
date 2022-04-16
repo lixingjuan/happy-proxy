@@ -1,17 +1,17 @@
-import { message } from "antd";
+import toast from "react-hot-toast";
 
 /** 将指定文本写入用户剪切板 */
 export const writeTextToClipboard = (text: string) => {
   if (!text) {
-    message.error("文本为空！");
+    toast.error("文本为空！");
     return;
   }
 
   if (navigator?.clipboard) {
     navigator?.clipboard
       ?.writeText(text)
-      .then(() => message.success("内容已复制到截切板"))
-      .catch((err) => message.error("复制失败！"));
+      .then(() => toast.success("内容已复制到截切板"))
+      .catch((err) => toast.error("复制失败！"));
     return;
   }
 
@@ -31,8 +31,8 @@ export const writeTextToClipboard = (text: string) => {
     // 移除输入框
     document.body.removeChild(textarea);
 
-    message.success("内容已复制到截切板");
+    toast.success("内容已复制到截切板");
   } catch (error) {
-    message.error("复制失败！");
+    toast.error("复制失败！");
   }
 };
