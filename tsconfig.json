@@ -21,6 +21,6 @@
     }
   },
   "include": ["src", "vite.config.ts"],
-  "exclude": ["public/*"],
+  "exclude": ["public/*", "node_modules/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

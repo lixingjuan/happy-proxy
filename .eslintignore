@@ -3,3 +3,4 @@ config
 public
 scripts
 src/assets/*
+node_modules/**/*
