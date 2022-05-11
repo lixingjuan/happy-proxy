@@ -15,8 +15,7 @@ function setIcon() {
   let text = "";
   const cba = chrome.browserAction;
 
-  const showIconNumber =
-    window.proxyDisabled === false && window?.proxyConfig?.length;
+  const showIconNumber = window.proxyDisabled === false && window?.proxyConfig?.length;
 
   if (showIconNumber) {
     text = window.proxyConfig.length;
@@ -51,60 +50,7 @@ function clearCache() {
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { action, value } = request;
   console.log({ action, value });
-
-  /** 更新cookie对应的域名 */
-  if (action === "Update_Happy_Cookie_Domain") {
-    window.happyCookieDomain = value;
-    console.log("window.happyCookieDomain", value);
-
-    sendResponse({
-      message: "success",
-    });
-  }
-
-  /** 更新cookie对应的域名列表 */
-  // if (action === "Update_Happy_Cookie_Domains") {
-  //   window.happyCookieDomain = value;
-  //   console.log("window.happyCookieDomains", value);
-
-  //   sendResponse({
-  //     message: "success",
-  //   });
-  // }
-
-  /** 更新cookie */
-  if (action === "Update_Happy_Cookie") {
-    window.happyCookie = value;
-    console.log("Update_Happy_Cookie", value);
-    sendResponse({
-      message: "success",
-    });
-  }
-
-  /** 更新转发配置 */
-  if (action === "Update_Proxy_Config") {
-    try {
-      window.proxyConfig = JSON.parse(value);
-      console.log("Update_Proxy_Config", value);
-      sendResponse({ message: "success" });
-      setIcon();
-    } catch (error) {
-      window.proxyConfig = [];
-      sendResponse({
-        message: "fail",
-      });
-    }
-  }
-
-  /** 禁止/开启 */
-  if (action === "Update_Proxy_Disabled") {
-    window.proxyDisabled = value;
-    console.log("Update_Proxy_Disabled", value);
-    setIcon();
-    sendResponse({
-      message: "success",
-    });
-  }
+  window.actionCallback[action]?.(value, sendResponse);
 });
 
 /* ****************************************************************************************************
@@ -179,9 +125,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
       details.url.startsWith("http://127.0.0.1:4000");
 
     if (needHappyCookie) {
-      const currentItemCookie = headers.find(
-        (h) => h.name.toLocaleLowerCase() === "cookie"
-      );
+      const currentItemCookie = headers.find((h) => h.name.toLocaleLowerCase() === "cookie");
       if (currentItemCookie) {
         happyCookie += currentItemCookie.value;
       }
