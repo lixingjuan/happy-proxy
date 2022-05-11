@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Tabs } from "antd";
 import styled from "styled-components";
 
-// import Morning from "./components/Morning";
 import Buttons from "src/components/Buttons";
+import ProxyList from "src/components/ProxyList";
 import RecordList from "src/components/RecordList";
-import ProxyEditor from "src/components/ProxyEditor";
 import I18nTransform from "src/components/I18nTransform";
-import toast, { Toaster } from "react-hot-toast";
+// import Morning from "./components/Morning";
+// import ProxyEditor from "src/components/ProxyEditor";
+
 import useFetchListData from "./hook";
 import { TopMenuType } from "./types";
 
@@ -18,6 +19,7 @@ const defaultActiveKey = (localStorage.getItem("activeTab") || "编辑器") as T
 const StyledTab = styled(Tabs)`
   height: 100vh;
   width: 100vw;
+
   .ant-tabs-nav {
     margin-bottom: 12px;
     .ant-tabs-tab {
@@ -51,10 +53,12 @@ const App = () => {
         />
       }
     >
-      <Toaster />
-      <TabPane tab="编辑器" key="编辑器">
-        <ProxyEditor />
+      <TabPane tab="代理配置" key="代理配置">
+        <ProxyList />
       </TabPane>
+      {/* <TabPane tab="编辑器" key="编辑器">
+        <ProxyEditor />
+      </TabPane> */}
       <TabPane tab="本地数据" key="本地数据">
         <RecordList isLoading={isLoading} dataSource={dataSource} updateList={updateList} />
       </TabPane>
