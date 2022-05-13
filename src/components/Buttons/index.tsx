@@ -105,11 +105,6 @@ const Buttons = ({ updateFilter, activeTab, updateList, isLoading, locaIsRunning
   return (
     <>
       <StyledButton>
-        <NetworkStatus
-          isLoading={isLoading}
-          updateList={updateList}
-          locaIsRunning={locaIsRunning}
-        />
         <AddRecord onUpdate={updateList} />
         <SwitchButton key="SwitchButton" />
         <Icon
