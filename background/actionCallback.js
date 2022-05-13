@@ -16,15 +16,13 @@ const actionCallback = {
   /** 更新转发配置 */
   Update_Proxy_Config: (value, sendResponse) => {
     try {
-      window.proxyConfig = JSON.parse(value);
+      window.proxyConfig = value;
       console.log("Update_Proxy_Config", value);
       sendResponse({ message: "success" });
       setIcon();
     } catch (error) {
       window.proxyConfig = [];
-      sendResponse({
-        message: "fail",
-      });
+      sendResponse({ message: error.message,});
     }
   },
 
