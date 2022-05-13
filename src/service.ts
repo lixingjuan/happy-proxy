@@ -3,8 +3,8 @@ import axios from "axios";
 export const backendName = "happy-service";
 
 /** 请求方式 */
-export const MethodArr = [ "GET" , "POST" , "DELETE" , "PUT"];
-export type MethodType = typeof MethodArr[number]
+export const MethodArr = ["GET", "POST", "DELETE", "PUT"];
+export type MethodType = typeof MethodArr[number];
 
 export interface RecordItemType {
   hash: string;
@@ -35,9 +35,7 @@ export const getAllApi = (): Promise<Response<RecordItemType[]>> =>
   service.get("/query-all").then((res) => res.data);
 
 /** 查询接口详情数据 */
-export const getDetailApi = (
-  hash: string
-): Promise<Response<Record<string, string>>> =>
+export const getDetailApi = (hash: string): Promise<Response<Record<string, any>>> =>
   service
     .get("/query-detail", {
       params: {
@@ -50,12 +48,10 @@ export const getDetailApi = (
 export const updateDetailApi = (props: {
   hash: string;
   response: any;
-}): Promise<Response<string>> =>
-  service.post("/update-detail", props).then((res) => res.data);
+}): Promise<Response<string>> => service.post("/update-detail", props).then((res) => res.data);
 
 /** 删除全部 record */
-export const deleteAllApi = () =>
-  service.delete("/delete-all-record").then((res) => res.data);
+export const deleteAllApi = () => service.delete("/delete-all-record").then((res) => res.data);
 
 /** 删除一条 record */
 export const deleteItemApi = (hash: string) =>

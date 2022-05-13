@@ -3,7 +3,7 @@ import { Popconfirm, List, Avatar } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import Tags from "./Tags";
-import DrawerDetail from "./DrawerDetail";
+import DrawerDetail from "../Detail";
 
 const Description = ({ method, createTime, hash, filePath, tags }: any) => (
   <div className="flex gap-8 align-center">
