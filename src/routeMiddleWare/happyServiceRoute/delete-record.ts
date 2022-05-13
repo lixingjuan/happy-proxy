@@ -1,7 +1,7 @@
 import fs from "fs";
 import omit from "lodash/omit";
 import jsonfile from "jsonfile";
-import { pathToFileMapPath } from "../../utils/constant";
+import { pathToFileMapPath } from "../../constant";
 
 /** 删除全部，制作备份文件 */
 const deleteAllRecord = async () => {

@@ -1,4 +1,3 @@
-import { queryPathMap, updateLocalPathMap } from "../../utils/fs-utils";
 import queryString from "query-string";
 import { addRecord } from "./add-record";
 import { deleteOneRecord, deleteAllRecord } from "./delete-record";

@@ -1,5 +1,5 @@
 import fsPromises from "fs/promises";
-import { pathToFileMapPath, rootPath } from "../utils/constant";
+import { pathToFileMapPath, rootPath } from "../constant";
 import join from "url-join";
 import jsonfile from "jsonfile";
 

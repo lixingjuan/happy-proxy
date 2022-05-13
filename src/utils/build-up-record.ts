@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import hash from "object-hash";
-import { responseBasePath } from "./constant";
+import { responseBasePath } from "../constant";
 
 /** 生成文件地址 */
 const generateLocalFilePath = () => {
@@ -32,6 +32,7 @@ type RecordInfo = {
   method: string;
   tags: string[] | undefined;
   createTime: string;
+  payload: any;
 };
 
 /** 输出一条记录 */
@@ -39,8 +40,9 @@ export const outputRecord = (props: {
   method: string;
   url: string;
   body: any;
+  payload?: any;
 }): Record<string, RecordInfo> => {
-  const { method, url, body } = props;
+  const { method, url, body, payload } = props;
   let theMethod = method.toLocaleLowerCase();
 
   const hashKey = generateHashKey({
@@ -54,9 +56,10 @@ export const outputRecord = (props: {
   return {
     [hashKey]: {
       url,
-      filePath: localFilePath,
-      tags: [],
       method,
+      payload,
+      tags: [],
+      filePath: localFilePath,
       createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     },
   };

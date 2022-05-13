@@ -25,18 +25,28 @@ export const queryAllRecordApi = async () => {
 
 /** query detail */
 export const queryRecordDetailApi = async (hash: string) => {
+  const res = queryPathMapSync();
+  const { filePath, url, method, payload } = res[hash];
   try {
-    const res = queryPathMapSync();
-    const filePath = res[hash].filePath;
     const data = jsonfile.readFileSync(filePath);
     return {
-      data: data,
+      data: {
+        url,
+        method,
+        payload,
+        data,
+      },
       message: "查询成功",
       code: 1,
     };
   } catch (error) {
     return {
-      data: {},
+      data: {
+        url,
+        method,
+        payload,
+        data: {},
+      },
       message: "查询失败",
       code: -1,
     };

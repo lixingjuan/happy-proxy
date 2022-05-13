@@ -2,7 +2,7 @@ import Koa from "koa";
 import "dotenv/config";
 import cors from "koa2-cors";
 import bodyParser from "koa-bodyparser";
-import routeMiddleWare from "./routes";
+import routeMiddleWare from "./routeMiddleWare";
 
 const app = new Koa();
 

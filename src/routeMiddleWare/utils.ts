@@ -1,5 +1,5 @@
 import jsonfile from "jsonfile";
-import { pathToFileMapPath } from "../utils/constant";
+import { pathToFileMapPath } from "../constant";
 import { queryPathMapSync } from "../utils/fs-utils";
 
 type RecordInfo = {
