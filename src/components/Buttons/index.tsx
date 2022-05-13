@@ -3,13 +3,12 @@ import { useEffect, useState } from "react";
 import { Space, Modal, message } from "antd";
 
 import Icon from "../Icon";
-import Filters from "../Filters";
 import DeleteAll from "./DeleteAll";
 import AddRecord from "./AddRecord";
-import ModalContent from "./ModalContent";
-import NetworkStatus from "./NetworkStatus";
+import ModalContent from "../CookieDomainSetup";
 import SwitchButton from "./SwitchButton";
-import { TopMenuType, FilterType } from "src/types";
+import { TopMenuType, } from "src/types";
+import { defaultHappyCookieDomain} from 'src/constants';
 
 const StyledButton = styled.div`
   height: 30px;
@@ -19,22 +18,20 @@ const StyledButton = styled.div`
   margin-right: 12px;
 `;
 
-const defaultDomain = ".datayes-stg.com";
 
 const getDefaultCookieDomain = () => {
   const local = localStorage.getItem("cookieDomain");
-  return local || defaultDomain;
+  return local || defaultHappyCookieDomain;
 };
 
 interface Props {
-  updateFilter: (val: FilterType) => void;
   activeTab: TopMenuType;
   updateList: () => void;
   isLoading: boolean;
   locaIsRunning: boolean;
 }
 
-const Buttons = ({ updateFilter, activeTab, updateList, isLoading, locaIsRunning }: Props) => {
+const Buttons = ({   activeTab, updateList, isLoading, locaIsRunning }: Props) => {
   const [visible, setVisible] = useState(false);
 
   const [cookieDomain, setCookieDomain] = useState<string>(getDefaultCookieDomain());
@@ -112,7 +109,6 @@ const Buttons = ({ updateFilter, activeTab, updateList, isLoading, locaIsRunning
           className="font-24 cursor-pointer"
           onClick={() => setVisible(true)}
         />
-        {activeTab === "本地数据" && <Filters updateFilter={updateFilter} />}
         <DeleteAll />
       </StyledButton>
 

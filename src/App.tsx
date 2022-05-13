@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Tabs } from "antd";
 import styled from "styled-components";
 
+import { getAllApi } from "./service";
 import Icon from "src/components/Icon";
 import Buttons from "src/components/Buttons";
 import ProxyList from "src/components/ProxyList";
 import RecordList from "src/components/RecordList";
 import I18nTransform from "src/components/I18nTransform";
-
-import useFetchListData from "./hook";
 import { TopMenuType } from "./types";
 
 const { TabPane } = Tabs;
@@ -28,9 +27,15 @@ const StyledTab = styled(Tabs)`
 `;
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState<TopMenuType>(defaultActiveKey);
+  const [localServiceIsRunning, setLocalServiceIsRunning] = useState(false);
 
-  const { isLoading, dataSource, updateList, locaIsRunning, updateFilter } = useFetchListData();
+  useEffect(() => {
+    getAllApi()
+      .then(() => setLocalServiceIsRunning(true))
+      .catch(() => setLocalServiceIsRunning(false));
+  }, []);
+
+  const [activeTab, setActiveTab] = useState<TopMenuType>(defaultActiveKey);
 
   const onChange = (val: string) => {
     setActiveTab(val as TopMenuType);
@@ -39,42 +44,25 @@ const App = () => {
 
   return (
     <StyledApp>
-      {/* <Buttons
-        activeTab={activeTab}
-        isLoading={isLoading}
-        updateList={updateList}
-        updateFilter={updateFilter}
-        locaIsRunning={locaIsRunning}
-      /> */}
-
       <StyledTab
         onChange={onChange}
         activeKey={activeTab}
         defaultActiveKey={defaultActiveKey}
         tabPosition={"left"}
       >
-        <TabPane
-          key="代理配置"
-          /* title="代理配置" */ tab={<Icon className="font-16" href="icon-proxy" />}
-        >
+        <TabPane key="代理配置" tab={<Icon className="font-16" href="icon-proxy" />}>
           <>
-            {!locaIsRunning && <ServiceError />}
+            {!localServiceIsRunning && <ServiceError />}
             <ProxyList />
           </>
         </TabPane>
-        <TabPane
-          key="本地数据"
-          /* title="本地数据" */ tab={<Icon className="font-16" href="icon-bendishuju" />}
-        >
+        <TabPane key="本地数据" tab={<Icon className="font-16" href="icon-bendishuju" />}>
           <>
-            {!locaIsRunning && <ServiceError />}
-            <RecordList isLoading={isLoading} dataSource={dataSource} updateList={updateList} />
+            {!localServiceIsRunning && <ServiceError />}
+            <RecordList />
           </>
         </TabPane>
-        <TabPane
-          key="国际化"
-          /* title="国际化" */ tab={<Icon className="font-16" href="icon-guojihua" />}
-        >
+        <TabPane key="国际化" tab={<Icon className="font-16" href="icon-guojihua" />}>
           <I18nTransform />
         </TabPane>
       </StyledTab>

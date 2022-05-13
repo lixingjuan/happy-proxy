@@ -1,5 +1,19 @@
 import axios from "axios";
-import { RecordItemType } from "./types";
+
+export const backendName = "happy-service";
+
+/** 请求方式 */
+export const MethodArr = [ "GET" , "POST" , "DELETE" , "PUT"];
+export type MethodType = typeof MethodArr[number]
+
+export interface RecordItemType {
+  hash: string;
+  url: string;
+  filePath: string;
+  tags: string[];
+  createTime: string;
+  method?: MethodType;
+}
 
 const service = axios.create({
   // 设置baseUr地址,如果通过proxy跨域可直接填写base地址

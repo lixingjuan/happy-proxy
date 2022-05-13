@@ -36,3 +36,20 @@ export const writeTextToClipboard = (text: string) => {
     toast.error("复制失败！");
   }
 };
+
+/**
+ * @desc 关键字高亮
+ * @param {string} text
+ * @param {string} keyword 搜索词
+ * @param {boolean} allHighlight 是否全部高亮，默认false
+ */
+export const highlightString = (text: string, keyword = "", allHighlight = false): string => {
+  if (text && keyword) {
+    const reg = new RegExp(`${keyword}`.replace(/([()[{*+.$^\\|?])/g, "\\$1"), "g");
+    const result = allHighlight
+      ? text.replace(reg, `<em class="highlight">${keyword}</em>`)
+      : text.replaceAll(reg, `<em class="highlight">${keyword}</em>`);
+    return result;
+  }
+  return text;
+};

@@ -1,51 +1,84 @@
-import { Form, Button, Popover } from "antd";
-import toast from "react-hot-toast";
-import styled from "styled-components";
-import Content from "./Content";
+import { useEffect, useState } from "react";
+import { message, Input } from "antd";
+import { defaultHappyCookieDomain } from "src/constants";
 
-type ValueItem = {
-  original: string;
-  target: string;
-  open: boolean;
+const getDefaultCookieDomain = () => {
+  const local = localStorage.getItem("cookieDomain");
+  return local || defaultHappyCookieDomain;
 };
 
-/** 更新background */
-const updateBackground = (config: string) => {
-  if (chrome?.runtime) {
-    chrome.runtime.sendMessage(
-      {
-        action: "Update_Proxy_Config",
-        value: config,
-      },
-      (response) => {
-        if (response.message === "success") {
-          toast.success("proxy urls 更新成功");
-        } else {
-          toast.error(response.message);
-        }
-      }
-    );
+/** 更新本地，用于下次打开读取默认值 */
+const updateLocal = (domain: string) => localStorage.setItem("cookieDomain", domain);
+
+/** 通知background 更新 happyCookieDomain */
+const updateHappyCookieDomain = (domain: string) => {
+  if (!chrome?.runtime?.sendMessage) {
+    return;
   }
-};
 
-/** 更新本地 */
-const updateLocal = (val: string) => {
-  localStorage.setItem("proxyConfig", val);
-};
-
-const Demo = () => {
-  return (
-    <Popover
-      placement="topLeft"
-      content={<Content />}
-      trigger="click"
-      overlayStyle={{ width: "500px" }}
-    >
-      <Button style={{ position: "absolute", left: "10px", top: "60px", zIndex: 5 }}>
-        需要携带http-only的domain
-      </Button>
-    </Popover>
+  chrome.runtime.sendMessage(
+    {
+      action: "Update_Happy_Cookie_Domain",
+      value: domain,
+    },
+    (response) => {
+      if (response.message === "success") {
+        message.success(response.message);
+      }
+    }
   );
 };
 
-export default Demo;
+/** 通知background 更新 happyCookie */
+const updateHappyCookie = (cookieDomain: string) => {
+  if (!chrome?.cookies?.getAll) {
+    return;
+  }
+
+  chrome.cookies.getAll({ domain: cookieDomain }, (res) => {
+    const theCookieArr = res.filter((it) => it.domain === cookieDomain);
+    if (!Object.keys(theCookieArr).length) {
+      return;
+    }
+
+    const happyCookie = theCookieArr.map((it) => `${it.name}=${it.value}`).join("; ");
+    chrome.runtime.sendMessage(
+      {
+        action: "Update_Happy_Cookie",
+        value: happyCookie,
+      },
+      (response) => {
+        if (response.message === "success") {
+          message.success("happy cookie 更新成功");
+        }
+      }
+    );
+  });
+};
+
+const SettingModal = () => {
+  const [cookieDomain, setCookieDomain] = useState<string>(getDefaultCookieDomain());
+
+  /** 成功回调函数 */
+  const onSuccess = (domain: string) => {
+    setCookieDomain(domain);
+    updateLocal(domain);
+    updateHappyCookie(domain);
+    updateHappyCookieDomain(domain);
+  };
+
+  useEffect(() => {
+    onSuccess(getDefaultCookieDomain());
+  }, []);
+
+  return (
+    <Input
+      value={cookieDomain}
+      style={{ width: "200px" }}
+      placeholder="请输入http-only的cookie-domain"
+      onChange={(e) => onSuccess(e.target.value as string)}
+    />
+  );
+};
+
+export default SettingModal;

@@ -2,10 +2,14 @@ import { Form, Input, Button, Space, Switch } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import toast from "react-hot-toast";
 import styled from "styled-components";
-import { useEffect } from "react";
-// import CookieDomainSetup from "../CookieDomainSetup";
+import { useMemo, useEffect } from "react";
+import { happyService } from "src/constants";
+import CookieDomainSetup from "../CookieDomainSetup";
 
-const happyService = "http://localhost:4000";
+const isUrl = (val: string) =>
+  /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/.test(
+    val
+  );
 
 const StyledForm = styled(Form)`
   padding: 10px;
@@ -21,7 +25,10 @@ const StyledForm = styled(Form)`
   }
 
   .form-buttons {
+    position: sticky;
     right: 0px;
+    top: 22px;
+    z-index: 3;
   }
 `;
 
@@ -59,7 +66,7 @@ const updateBackground = (proxyList: ValueItem[]) => {
   }
 
   // 过滤当前为真的
-  const formattedValues = proxyList.reduce((tol, cur) => {
+  const formattedValues = (proxyList || []).reduce((tol, cur) => {
     if (cur.open) {
       tol.push([cur.original, cur.target]);
     }
@@ -75,7 +82,7 @@ const updateBackground = (proxyList: ValueItem[]) => {
       if (response.message === "success") {
         toast.success("proxy urls 更新成功");
       } else {
-        toast.error(response.message);
+        toast.error(`更新失败${response.message}`);
       }
     }
   );
@@ -91,20 +98,31 @@ const ProxyList = () => {
     console.log("更新 proxyList", proxyList);
   };
 
+  const isAllOpen = useMemo(
+    () => proxyList && proxyList.every((it: ValueItem) => it.open),
+    [proxyList]
+  );
+
   const disableAll = () => {
     form.setFieldsValue({
-      proxyList: proxyList.map((it: ValueItem) => ({ ...it, open: false })),
+      proxyList: proxyList.map((it: ValueItem) => ({ ...it, open: !isAllOpen })),
     });
   };
 
   const fillTarget = (key: number) => {
     const newProxyList = proxyList.map((it: ValueItem, index: number) => {
       if (index === key && it.original) {
-        const theOrigin = new URL(it.original).origin;
-        const theTarget = it.original.replace(theOrigin, happyService);
+        const originIsUrl = isUrl(it.original);
+        const theOrigin = originIsUrl ? new URL(it.original).origin : "";
+
+        const target =
+          originIsUrl && theOrigin
+            ? it.original.replace(theOrigin, happyService)
+            : `${happyService}/${it.original}`;
+
         return {
           ...it,
-          target: theTarget,
+          target,
         };
       }
       return it;
@@ -120,7 +138,6 @@ const ProxyList = () => {
 
   return (
     <div>
-      {/* <CookieDomainSetup /> */}
       <StyledForm form={form} autoComplete="off" initialValues={{ proxyList: getDefault() }}>
         <Form.List name="proxyList">
           {(fields, { add, remove }) => (
@@ -130,32 +147,38 @@ const ProxyList = () => {
                   style={{
                     width: "100%",
                     display: "flex",
-                    justifyContent: "right",
                     gap: "16px",
+                    alignItems: "center",
+                    justifyContent: "right",
                   }}
                 >
+                  <CookieDomainSetup />
                   <Button
                     style={{ width: "120px" }}
                     type="dashed"
-                    onClick={() => add({ ...initialValueItem }, 0)}
+                    onClick={() => add({ ...initialValueItem })}
                     icon={<PlusOutlined />}
                   >
                     Add field
                   </Button>
-                  <Button type="primary" onClick={() => disableAll()}>
-                    Disable All
-                  </Button>
+                  <Switch
+                    size="default"
+                    checked={isAllOpen}
+                    onChange={disableAll}
+                    checkedChildren="全部开启"
+                    unCheckedChildren="全部关闭"
+                  />
                 </div>
               </Form.Item>
 
-              {fields.map(({ key, name, ...restField }) => (
+              {fields.map(({ key, name, ...restField }, index) => (
                 <div className="field-item" key={key}>
                   <Form.Item
                     {...restField}
                     name={[name, "original"]}
                     rules={[{ required: true, message: "Missing original" }]}
                   >
-                    <Input placeholder="被转发url" />
+                    <Input placeholder="被转发url" allowClear />
                   </Form.Item>
 
                   <Form.Item
@@ -163,14 +186,14 @@ const ProxyList = () => {
                     name={[name, "target"]}
                     rules={[{ required: true, message: "Missing target" }]}
                   >
-                    <Input placeholder="目标url" />
+                    <Input placeholder="目标url" allowClear />
                   </Form.Item>
 
                   <Form.Item {...restField} name={[name, "open"]} valuePropName="checked">
                     <Switch checkedChildren="开启" unCheckedChildren="关闭" />
                   </Form.Item>
 
-                  <Button type="primary" onClick={() => fillTarget(key)}>
+                  <Button type="primary" onClick={() => fillTarget(index)}>
                     填充目标
                   </Button>
                   {fields.length > 1 ? <MinusCircleOutlined onClick={() => remove(name)} /> : null}
