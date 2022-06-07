@@ -1,51 +1,54 @@
 @import "./colors.less";
 
-.margin-top-4 {
-  margin-top: 4px;
-}
+/* ****************************************************************************************************
+ *                                    Margin
+ ************************************************************************************************* */
 
-.margin-top-8 {
-  margin-top: 8px;
-}
+each(range(4, 20, 4), {
+  .mt-@{value} {
+    margin-top: (@value + 0px);
+  }
+  .mr-@{value} {
+    margin-right: (@value + 0px);
+  }
+  .mb-@{value} {
+    margin-bottom: (@value + 0px);
+  }
+  .ml-@{value} {
+    margin-left: (@value + 0px);
+  }
+});
 
-.margin-right-12 {
-  margin-right: 12px;
-}
+/* ****************************************************************************************************
+ *                                    Padding
+ ************************************************************************************************* */
 
-.margin-right-4 {
-  margin-right: 4px;
-}
-
-.margin-top-12 {
-  margin-top: 12px;
-}
-
-.margin-bottom-12 {
-  margin-bottom: 12px;
-}
+each(range(4, 20, 4), {
+  .pt-@{value} {
+    padding-top: (@value + 0px);
+  }
+  .pr-@{value} {
+    padding-right: (@value + 0px);
+  }
+  .pb-@{value} {
+    padding-bottom: (@value + 0px);
+  }
+  .pl-@{value} {
+    padding-left: (@value + 0px);
+  }
+});
 
 /* ****************************************************************************************************
  *                                    Font
  ************************************************************************************************* */
-
-.font-14 {
-  font-size: 14px;
-}
-.font-20 {
-  font-size: 20px;
-}
-.font-22 {
-  font-size: 22px;
-}
-.font-24 {
-  font-size: 24px;
-}
-.font-weight-400 {
-  font-weight: 400;
-}
+each(range(14, 24, 2), {
+  .ft-@{value} {
+    font-size: (@value + 0px);
+  }
+});
 
 /* ****************************************************************************************************
-*                                    Font-Color
+*                                    font-color
 ************************************************************************************************* */
 .color-red {
   color: @red;
@@ -96,15 +99,21 @@
   &.align-right {
     align-items: flex-end;
   }
-  &.gap-4 {
-    gap: 4px;
-  }
-  &.gap-8 {
-    gap: 8px;
-  }
-  &.gap-12 {
-    gap: 12px;
-  }
+
+  each(range(4, 12, 4), {
+    &.gap-@{value} {
+      gap: (@value + 0px);
+    }
+  });
+}
+
+.grid {
+  display: grid;
+  each(range(4, 12, 4), {
+    &.gap-@{value} {
+      gap: (@value + 0px);
+    }
+  });
 }
 
 .flex-align-center {
@@ -117,4 +126,14 @@
  ************************************************************************************************* */
 .cursor-pointer {
   cursor: pointer;
+}
+
+/* ****************************************************************************************************
+ *                                    Position
+ ************************************************************************************************* */
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
 }

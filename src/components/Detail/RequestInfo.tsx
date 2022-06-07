@@ -6,7 +6,7 @@ const StyledRequestInfo = styled.ul`
   li {
     span:nth-child(1) {
       width: 60px;
-      font-weight: 500;
+      ft-weight: 500;
       display: inline-block;
     }
     span:nth-child(2) {

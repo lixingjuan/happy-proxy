@@ -7,8 +7,8 @@ import DeleteAll from "./DeleteAll";
 import AddRecord from "./AddRecord";
 import ModalContent from "../CookieDomainSetup";
 import SwitchButton from "./SwitchButton";
-import { TopMenuType, } from "src/types";
-import { defaultHappyCookieDomain} from 'src/constants';
+import { TopMenuType } from "src/types";
+import { defaultHappyCookieDomain } from "src/constants";
 
 const StyledButton = styled.div`
   height: 30px;
@@ -17,7 +17,6 @@ const StyledButton = styled.div`
   align-items: center;
   margin-right: 12px;
 `;
-
 
 const getDefaultCookieDomain = () => {
   const local = localStorage.getItem("cookieDomain");
@@ -31,7 +30,7 @@ interface Props {
   locaIsRunning: boolean;
 }
 
-const Buttons = ({   activeTab, updateList, isLoading, locaIsRunning }: Props) => {
+const Buttons = ({ activeTab, updateList, isLoading, locaIsRunning }: Props) => {
   const [visible, setVisible] = useState(false);
 
   const [cookieDomain, setCookieDomain] = useState<string>(getDefaultCookieDomain());
@@ -106,7 +105,7 @@ const Buttons = ({   activeTab, updateList, isLoading, locaIsRunning }: Props) =
         <SwitchButton key="SwitchButton" />
         <Icon
           href="icon-setting"
-          className="font-24 cursor-pointer"
+          className="ft-24 cursor-pointer"
           onClick={() => setVisible(true)}
         />
         <DeleteAll />
@@ -118,7 +117,7 @@ const Buttons = ({   activeTab, updateList, isLoading, locaIsRunning }: Props) =
         width={600}
         title={
           <Space size={4} align="center">
-            <span className="margin-right-4">修改proxy配置</span>
+            <span className="mr-4">修改proxy配置</span>
             <svg className="icon" aria-hidden="true" style={{ fontSize: "20px" }}>
               <use xlinkHref="#icon-taiyang"></use>
             </svg>

@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+service/node_modules
+service/chrome
 /.pnp
 .pnp.js
 yarn.lock

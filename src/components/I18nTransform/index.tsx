@@ -10,8 +10,12 @@ import { Card } from "antd";
 const { TextArea } = Input;
 
 const StyledWrapper = styled.div`
-  width: calc(100vw - 20px);
-  padding: 0px 10px;
+  width: 100%;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 1fr 600px;
+  grid-gap: 20px;
+
   .header {
     height: 40px;
     display: flex;
@@ -37,14 +41,6 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const StyledCard = styled(Card)`
-  height: max-content;
-  .ant-card-body {
-    padding: 1px 0px 0px 0px;
-    height: max-content;
-  }
-`;
-
 const StyledTextArea = styled(TextArea)`
   border: none;
   height: 100%;
@@ -65,13 +61,16 @@ const placeholder = `[
 /**
  * @desc 生成项目国际化中英文配置json
  */
-const getUpperStr = (val: string, maxKeyLength: number = 5) =>
-  val.toLocaleUpperCase().split(" ").slice(0, maxKeyLength).join("_").trim();
+const getUpperStr = (val: string, maxKeyLength: number = 5) => {
+  const splited = val.toLocaleUpperCase().split(" ");
 
-const getResultStr = (
-  arr: [string, string][],
-  maxKeyLength: number
-): string => {
+  return splited
+    .slice(0, maxKeyLength || splited.length)
+    .join("_")
+    .trim();
+};
+
+const getResultStr = (arr: [string, string][], maxKeyLength: number): string => {
   const enRes = arr.reduce(
     (tol, [zhStr, enStr]) =>
       (tol += `"${getUpperStr(enStr, maxKeyLength)}": "${enStr}",
@@ -93,14 +92,8 @@ ${zhRes}
   `;
 };
 
-const getResultArr = (
-  arr: [string, string][],
-  maxKeyLength: number
-): string[][] => {
-  const res = arr.map(([zhStr, enStr]) => [
-    getUpperStr(enStr, maxKeyLength),
-    zhStr,
-  ]);
+const getResultArr = (arr: [string, string][], maxKeyLength: number): string[][] => {
+  const res = arr.map(([zhStr, enStr]) => [getUpperStr(enStr, maxKeyLength), zhStr]);
   const sortedRes = res.sort((a, b) => b[1].length - a[1].length);
 
   return sortedRes;
@@ -110,9 +103,7 @@ export default function I18nTransform() {
   /** 解析错误 */
   const [error, setError] = useState("");
 
-  const { sourceData, codeInput, setCodeInput, setSourceData } =
-    useMemoryInput();
-
+  const { sourceData, codeInput, setCodeInput, setSourceData } = useMemoryInput();
   /** key 截取单词数 */
   const [maxKeyLength, setMaxKeyLength] = useState(5);
   /** i18n-result */
@@ -189,73 +180,68 @@ export default function I18nTransform() {
   }, [codeInput, updateCodeResult]);
 
   return (
-    <>
-      <StyledWrapper>
-        <div id="i18-transform-container" className="card-list">
-          <StyledCard
-            size="small"
-            title={
-              <div className="result-card-title">
-                <span>原始数组</span>
-                <div className="right">
-                  <ErrorStatus error={error} />
-                </div>
+    <StyledWrapper>
+      <div className="grid gap-12">
+        <Card
+          size="small"
+          title={
+            <div className="result-card-title">
+              <span>原始数组</span>
+              <div className="right">
+                <ErrorStatus error={error} />
               </div>
-            }
-          >
-            <StyledTextArea
-              id="source"
-              rows={10}
-              onChange={onChange}
-              value={sourceData}
-              placeholder={placeholder}
-            />
-          </StyledCard>
+            </div>
+          }
+        >
+          <StyledTextArea
+            id="source"
+            rows={10}
+            onChange={onChange}
+            value={sourceData}
+            placeholder={placeholder}
+          />
+        </Card>
 
-          <StyledCard
-            size="small"
-            title={
-              <div className="result-card-title">
-                <span>格式化后的结果</span>
-                <div className="right">
-                  <Space size="small">
-                    <span>key length:</span>
-                    <InputNumber
-                      min={1}
-                      max={10}
-                      size="small"
-                      value={maxKeyLength}
-                      onChange={(val) => setMaxKeyLength(val)}
-                    />
-                    <Button onClick={onCopyResult} size="small">
-                      Copy Result
-                    </Button>
-                  </Space>
-                </div>
+        <Card
+          size="small"
+          title={
+            <div className="result-card-title">
+              <span>i18 local-json</span>
+              <div className="right">
+                <Space size="small">
+                  <span>key length:</span>
+                  <InputNumber
+                    min={1}
+                    max={10}
+                    size="small"
+                    type="number"
+                    value={maxKeyLength}
+                    onChange={(val) => setMaxKeyLength(val)}
+                  />
+                  <Button onClick={onCopyResult} size="small">
+                    Copy Result
+                  </Button>
+                </Space>
               </div>
-            }
-          >
-            <StyledTextArea rows={10} value={resultData} />
-          </StyledCard>
+            </div>
+          }
+        >
+          <StyledTextArea rows={10} value={resultData} />
+        </Card>
 
-          <StyledCard size="small" title="输入要执行替换的代码">
-            <StyledTextArea
-              rows={10}
-              value={codeInput}
-              onChange={onCodeChange}
-              placeholder={"输入要执行替换的代码"}
-            />
-          </StyledCard>
+        <Card size="small" title="输入要执行替换的代码">
+          <StyledTextArea
+            rows={10}
+            value={codeInput}
+            onChange={onCodeChange}
+            placeholder={"输入要执行替换的代码"}
+          />
+        </Card>
+      </div>
 
-          <StyledCard size="small" title="替换后的代码">
-            <StyledTextArea
-              rows={10}
-              value={codeResult}
-              placeholder={"替换后的代码"}
-            />
-          </StyledCard>
-        </div>
-      </StyledWrapper>
-    </>
+      <Card size="small" title="替换后的代码">
+        <StyledTextArea rows={10} value={codeResult} placeholder={"替换后的代码"} />
+      </Card>
+    </StyledWrapper>
   );
 }

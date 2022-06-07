@@ -19,7 +19,7 @@ const DeleteAllButton = () => {
 
   return (
     <>
-      <DeleteFilled className="color-red font-22 cursor-pointer" />
+      <DeleteFilled className="color-red ft-22 cursor-pointer" />
       {/* <Button onClick={() => setVisible((pre) => !pre)} size="small" danger>
         Delete All
       </Button> */}

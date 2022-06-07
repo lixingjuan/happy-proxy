@@ -1,5 +1,4 @@
 import {
-  // VFC,
   useRef,
   useState,
   useEffect,
@@ -54,4 +53,5 @@ export const ProxyEditor = (props: Props, ref: any) => {
 
   return <div style={style} ref={monacoEl}></div>;
 };
+
 export default forwardRef(ProxyEditor);

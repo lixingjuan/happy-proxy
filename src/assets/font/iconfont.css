@@ -1,16 +1,16 @@
-@font-face {
-  font-family: "iconfont"; /* Project id 3397553 */
-  src: url('iconfont.woff2?t=1652400571361') format('woff2'),
-       url('iconfont.woff?t=1652400571361') format('woff'),
-       url('iconfont.ttf?t=1652400571361') format('truetype');
+@ft-face {
+  ft-family: "iconfont"; /* Project id 3397553 */
+  src: url("iconfont.woff2?t=1652400571361") format("woff2"),
+    url("iconfont.woff?t=1652400571361") format("woff"),
+    url("iconfont.ttf?t=1652400571361") format("truetype");
 }
 
 .iconfont {
-  font-family: "iconfont" !important;
+  ft-family: "iconfont" !important;
   font-size: 16px;
-  font-style: normal;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  ft-style: normal;
+  -webkit-ft-smoothing: antialiased;
+  -moz-osx-ft-smoothing: grayscale;
 }
 
 .icon-wangluocuowu:before {
@@ -40,4 +40,3 @@
 .icon-proxy:before {
   content: "\e600";
 }
-

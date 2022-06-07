@@ -71,7 +71,7 @@ const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
   return (
     <>
       <Tooltip title="增加一条Mock Record" mouseEnterDelay={1} color="#fff">
-        <PlusCircleOutlined className="font-22" onClick={() => setVisible((pre) => !pre)} />
+        <PlusCircleOutlined className="ft-22" onClick={() => setVisible((pre) => !pre)} />
       </Tooltip>
 
       <Drawer
@@ -103,7 +103,11 @@ const AddRecord = ({ onUpdate }: { onUpdate: () => void }) => {
 
           <ErrorStatus error={error} />
 
-          <Input.TextArea style={{ height: "70vh" }} onChange={onBodyChange} placeholder="请输入mock参数" />
+          <Input.TextArea
+            style={{ height: "70vh" }}
+            onChange={onBodyChange}
+            placeholder="请输入mock参数"
+          />
         </div>
       </Drawer>
     </>

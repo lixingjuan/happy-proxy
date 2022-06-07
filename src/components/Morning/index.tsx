@@ -17,7 +17,7 @@ const Wrapper = styled.div`
       border-bottom-right-radius: 15px;
       border-bottom-left-radius: 15px;
       border-top-left-radius: 20px;
-      font-weight: 600;
+      ft-weight: 600;
       text-align: center;
       a {
         color: #333;
@@ -49,9 +49,7 @@ const Demo = () => {
     <Wrapper style={{ marginTop: "10px", display: "grid" }}>
       <Anchor
         className="menu"
-        getContainer={() =>
-          document.getElementById("container") || document.body
-        }
+        getContainer={() => document.getElementById("container") || document.body}
       >
         {arr.map((it) => (
           <Link title={it} href={`#${it}`} />

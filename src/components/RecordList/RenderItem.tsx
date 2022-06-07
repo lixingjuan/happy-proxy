@@ -29,7 +29,7 @@ export const renderItem = (item: any, onDelete: any) => {
           placement="topRight"
           onConfirm={() => onDelete(hash)}
         >
-          <DeleteOutlined className="margin-right-12 color-red font-14" />
+          <DeleteOutlined className="mr-12 color-red ft-14" />
         </Popconfirm>,
       ]}
     >
@@ -37,10 +37,7 @@ export const renderItem = (item: any, onDelete: any) => {
         className="flex-align-center"
         avatar={<Avatar src={avatarSrc} />}
         title={
-          <span
-            className="color-666 font-weight-400"
-            dangerouslySetInnerHTML={{ __html: highlightUrl || url }}
-          />
+          <span className="color-666" dangerouslySetInnerHTML={{ __html: highlightUrl || url }} />
         }
         description={<Description {...item} />}
       />
