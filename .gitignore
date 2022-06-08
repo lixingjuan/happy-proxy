@@ -4,6 +4,7 @@
 /node_modules
 service/node_modules
 service/chrome
+service/DB
 /.pnp
 .pnp.js
 yarn.lock

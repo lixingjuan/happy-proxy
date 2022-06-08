@@ -1,7 +1,6 @@
 import { Empty, Tabs } from "antd";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-
 import { getAllApi } from "./service";
 import Icon from "src/components/Icon";
 import ProxyList from "src/components/ProxyList";
@@ -53,7 +52,6 @@ const App = () => {
       activeKey={activeTab}
       defaultActiveKey={activeTab}
       tabPosition={"left"}
-      // tabBarStyle={{ height: "100vh" }}
     >
       <Tabs.TabPane key="代理配置" tab={<Icon className="ft-16" href="icon-proxy" />}>
         {localServiceIsRunning ? <ProxyList /> : <ServiceError />}

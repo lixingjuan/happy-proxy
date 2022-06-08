@@ -1,4 +1,5 @@
-import { List, Modal } from "antd";
+import { memo } from "react";
+import { Button, List, Modal } from "antd";
 import toast from "react-hot-toast";
 import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
@@ -48,6 +49,9 @@ const RecordList = () => {
         <Filters updateFilter={updateFilter} filter={filter} />
         <AddRecord onUpdate={updateList} />
         <DeleteOutlined onClick={deleteAll} style={{ fontSize: "20px" }} />
+        <Button size="small" loading={isLoading} onClick={updateList}>
+          Refresh
+        </Button>
       </div>
 
       <List
@@ -61,4 +65,4 @@ const RecordList = () => {
   );
 };
 
-export default RecordList;
+export default RecordList

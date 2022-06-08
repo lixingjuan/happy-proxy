@@ -1,57 +1,17 @@
-import {
-  useRef,
-  useState,
-  useEffect,
-  forwardRef,
-  useImperativeHandle,
-} from "react";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import { memo } from "react";
+import EditorReact, { loader } from "@monaco-editor/react";
+import { EditorProps, Monaco } from "@monaco-editor/react/lib/types.d";
 
-import "./userWorker";
+loader.config({ paths: { vs: "./vs" } });
 
-export interface EditorRefType {
-  beautify: () => void;
+function handleEditorWillMount(monaco: Monaco) {
+  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+    allowComments: true,
+  });
 }
 
-interface Props {
-  style: React.CSSProperties;
-  onChange: (val: string) => void;
-  defaultValue?: string;
-}
-export const ProxyEditor = (props: Props, ref: any) => {
-  const { style, onChange, defaultValue = "" } = props;
-
-  const [editor, setEditor] =
-    useState<monaco.editor.IStandaloneCodeEditor | null>(null);
-
-  const monacoEl = useRef(null);
-
-  useEffect(() => {
-    if (monacoEl && !editor) {
-      const theEditor = monaco.editor.create(monacoEl.current!, {
-        value: defaultValue,
-        language: "json",
-        formatOnPaste: true,
-        automaticLayout: true,
-      });
-      setEditor(theEditor);
-      theEditor?.onKeyUp((a) => {
-        onChange?.(theEditor.getValue());
-      });
-    }
-
-    // return () => editor?.dispose?.();
-  }, [monacoEl.current]);
-
-  useImperativeHandle(ref, () => ({
-    beautify: () => editor?.getAction("editor.action.formatDocument").run?.(),
-  }));
-
-  useEffect(() => {
-    editor?.setValue(defaultValue);
-  }, [defaultValue]);
-
-  return <div style={style} ref={monacoEl}></div>;
+export const ProxyEditor = (props: EditorProps) => {
+  return <EditorReact {...props} language="json" beforeMount={handleEditorWillMount} />;
 };
 
-export default forwardRef(ProxyEditor);
+export default memo(ProxyEditor);
