@@ -1,11 +1,4 @@
-import Koa from "koa";
 import axios from "axios";
-import join from "url-join";
-import qs from "query-string";
-import jsonfile from "jsonfile";
-import omit from "lodash/omit";
-
-import { queryPathMap } from "../../utils/fs-utils";
 import { saveResponseToLocal } from "../utils";
 import { outputRecord } from "../../utils/build-up-record";
 
@@ -22,16 +15,20 @@ const queryRealData = (props: {
   payload: any;
 }): Promise<any> => {
   const { url, method, headers, body, payload } = props;
+
   const queryParams = {
     url,
     method,
-    headers,
+    headers: {
+      cookie: headers.cookie,
+    },
     data: body,
   };
 
   return axios(queryParams)
     .then((res) => {
-      const isOk = res.status === 200 && res.data.code >= 0;
+      const isOk = res.status === 200;
+      // const isOk = res.status === 200 && res.data.code >= 0; // for DataYes, request success condition
 
       if (!isOk) {
         throw Error(res.data.message);

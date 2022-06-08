@@ -14,10 +14,7 @@ type RecordInfo = {
  * @param {string} path 请求完整接口
  * @param {any} resData 接口响应数据
  */
-const saveResponseToLocal = (
-  record: Record<string, RecordInfo>,
-  response: any
-) => {
+const saveResponseToLocal = (record: Record<string, RecordInfo>, response: any) => {
   const { data: responseData } = response;
 
   // 更新 映射文件
