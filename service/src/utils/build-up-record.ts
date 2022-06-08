@@ -33,6 +33,7 @@ type RecordInfo = {
   tags: string[] | undefined;
   createTime: string;
   payload: any;
+  body: any;
 };
 
 /** 输出一条记录 */
@@ -59,6 +60,7 @@ export const outputRecord = (props: {
       method,
       payload,
       tags: [],
+      body,
       filePath: localFilePath,
       createTime: dayjs().format("YYYY-MM-DD HH:mm:ss"),
     },

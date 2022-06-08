@@ -1,5 +1,4 @@
 import jsonfile from "jsonfile";
-import fs from "fs";
 import { toArray } from "json-function";
 
 import { queryPathMapSync } from "../../utils/fs-utils";

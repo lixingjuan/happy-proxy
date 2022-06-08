@@ -2,6 +2,7 @@ import Koa from "koa";
 import join from "url-join";
 import qs from "query-string";
 import jsonfile from "jsonfile";
+import omit from "lodash/omit";
 
 import fetchRealData from "./fetchRealData";
 import { queryPathMap } from "../../utils/fs-utils";
@@ -23,7 +24,8 @@ const queryLocalJson = (hash: string) =>
     });
 
 const proxyRoute = (ctx: Koa.Context) => {
-  const { url, method, headers, body, query: payload } = ctx.request;
+  // @ts-ignore-next-line
+  const { url, method, headers, body, payload } = ctx.request;
 
   const { query } = qs.parseUrl(url);
 
@@ -48,7 +50,7 @@ const proxyRoute = (ctx: Koa.Context) => {
         url: completeUrl,
         headers,
         body,
-        payload,
+        payload: omit(payload, "happyDomain"),
       });
     })
     .then((res: any) => (ctx.body = res));
