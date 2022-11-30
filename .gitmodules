@@ -1,4 +1,0 @@
-[submodule "service/chrome"]
-	path = service/chrome
-	url = git@github.com:lixingjuan/happy-proxy.git
-	branch = gh-pages

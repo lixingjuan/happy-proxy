@@ -1,12 +1,215 @@
 {
-  "liveServer.settings.port": 5501,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
   "prettier.printWidth": 100,
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/node_modules": false
-  }
+  "[vue]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[react]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    } // 打开markdown文件的智能感知提示，解决markdown文件代码片段不生效问题
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.formatOnSave": true,
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    }
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.formatOnSave": true,
+    "editor.quickSuggestions": {
+      "comments": "on",
+      "strings": "on",
+      "other": "on"
+    }
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "fcrespo82.markdown-table-formatter",
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": {
+      "comments": "off",
+      "strings": "off",
+      "other": "off"
+    }
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+  },
+  "emmet.showSuggestionsAsSnippets": true,
+  "markdown.extension.syntax.plainTheme": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.suggestSelection": "first", // 默认选择推荐值的第一个
+  "markdown-table-formatter.markdownGrammarScopes": ["markdown", "vue"],
+  "javascript.format.insertSpaceAfterSemicolonInForStatements": true,
+  "sync.gist": "824a5807444cb570c9c9cfbf85bed4ed",
+  "javascript.validate.enable": true,
+  "files.associations": {
+    "*.vue": "vue",
+    "*.md": "markdown",
+    "*.tpl": "html"
+  },
+  "files.trimTrailingWhitespace": true,
+  "emmet.triggerExpansionOnTab": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "git.autofetch": true,
+  "workbench.editor.enablePreview": false,
+  "quicktype.justTypes": true,
+  "quicktype.inferDateTimes": true,
+  "pasteImage.path": "${projectRoot}/source/images",
+  "pasteImage.insertPattern": "![](images/${imageFileName})",
+  "pasteImage.defaultName": "${currentFileNameWithoutExt}-YY-MM-DD-HH-mm-ss",
+  "editor.linkedEditing": true,
+  "timeline.excludeSources": [],
+  "explorer.confirmDragAndDrop": false,
+
+  "redhat.telemetry.enabled": true,
+  "sync.autoUpload": true,
+  "sync.forceUpload": true,
+  "workbench.iconTheme": "vscode-icons",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "bash": {
+      "path": "bash",
+      "icon": "terminal-bash"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    },
+    "csh": {
+      "path": "/bin/csh"
+    }
+  },
+  "security.workspace.trust.untrustedFiles": "open",
+  "eslint.alwaysShowStatus": true,
+  "eslint.format.enable": true,
+  "eslint.probe": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "html",
+    "vue",
+    "markdown",
+    "react"
+  ],
+  "leetcode.workspaceFolder": "/Users/xingjuan.li/.leetcode",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "px-to-rpx.fixedDigits": 4,
+  "px-to-rpx.baseWidth": 624,
+  "gitlens.gitCommands.search.showResultsInSideBar": false,
+  "workbench.editorAssociations": {
+    "*.md": "default",
+    "*.pages": "default"
+  },
+  "tabnine.experimentalAutoImports": true,
+  "leetcode.endpoint": "leetcode-cn",
+  "editor.formatOnSave": true,
+  "vscodeGoogleTranslate.preferredLanguage": "English",
+  "editor.accessibilitySupport": "off",
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "typescript.tsserver.log": "off",
+
+  "update.mode": "manual",
+  "editor.acceptSuggestionOnEnter": "smart",
+  "css.lint.important": "warning",
+  "html-css-class-completion.CSSLanguages": ["css", "sass", "scss", "typescriptreact"],
+  "editor.guides.bracketPairs": true,
+  "todohighlight.keywords": [
+    // {
+    //   "text": "TODO:",
+    //   "color": "#fff",
+    //   "backgroundColor": "#e16c96",
+    //   "borderRadius": "5px"
+    // },
+    {
+      "text": "SEE-HERE:",
+      "color": "#000",
+      "backgroundColor": "#fa7e23",
+      "borderRadius": "5px"
+    },
+    {
+      "text": "？？",
+      "color": "#fff",
+      "backgroundColor": "#5bae23",
+      "borderRadius": "5px"
+    },
+    {
+      "text": "??",
+      "color": "#fff",
+      "backgroundColor": "#5bae23",
+      "borderRadius": "5px"
+    },
+    {
+      "text": "!!",
+      "color": "#ffeb3b",
+      "backgroundColor": "#000"
+    },
+    {
+      "text": "debugger",
+      "color": "#000",
+      "backgroundColor": "#fcd337",
+      "borderRadius": "5px"
+    }
+  ],
+  "editor.quickSuggestionsDelay": 0,
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "editor.formatOnType": true,
+  "terminal.integrated.localEchoLatencyThreshold": -1,
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "explorer.confirmDelete": false,
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "git.confirmSync": false,
+  "workbench.startupEditor": "none",
+  "editor.inlineSuggest.enabled": true,
+  "code-runner.runInTerminal": true,
+  "editor.minimap.maxColumn": 10,
+  "editor.minimap.renderCharacters": false,
+  "workbench.colorTheme": "Default Dark+",
+  "editor.autoIndent": "advanced",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "git.ignoreRebaseWarning": true,
+  "typescript.tsc.autoDetect": "off",
+  "compile-hero.disable-compile-files-on-did-save-code": true
 }

@@ -1,0 +1,5 @@
+build
+src/assets/*
+node_modules/**/*
+public/vs/**/*
+chrome/**/*
