@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { FloatButton, message } from 'antd';
 
-import AddUrl from './AddModal';
-import CloseAll from './CloseAll';
+import AddUrl from '../AddModal';
 import ListItem from './ListItem';
+import CloseAll from '../SwtchAllStatus';
 
-import type { LocalProxyItem } from './utils';
-import { getLocalProxy, updateLocalProxy, updateBackground } from './utils';
+import type { LocalProxyItem } from '../../types';
+import { getLocalProxy, setLocalProxy, updateBackground } from './utils';
 
 const ProxyList = () => {
   const [dataSource, setDataSource] = useState<LocalProxyItem[]>(getLocalProxy);
 
   const updateDataSource = (nextDataSoutce: LocalProxyItem[]) => {
     setDataSource(nextDataSoutce);
-    updateLocalProxy(nextDataSoutce);
+    setLocalProxy(nextDataSoutce);
     updateBackground(nextDataSoutce);
     console.log('更新 dataSource', nextDataSoutce);
   };

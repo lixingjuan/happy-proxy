@@ -1,13 +1,11 @@
+import { useRequest } from 'ahooks';
 import { useState, useMemo } from 'react';
-import { Space, Button, Drawer, Tabs, message } from 'antd';
+import { Space, Button, Drawer, Tabs, message, Popconfirm } from 'antd';
 
 import Info from './Info';
+import Title from './Title';
 import CodeEditor from 'src/components/Editor';
 import { updateDetailApi, getDetailByUrlApi, DetailInterface } from '../../service';
-import { useRequest } from 'ahooks';
-import Title from './Title';
-
-const { TabPane } = Tabs;
 
 const Detail = (props: { url: string }) => {
   const { url } = props;
@@ -15,8 +13,6 @@ const Detail = (props: { url: string }) => {
   const [isSaving, setIsSaving] = useState(false);
 
   const [open, setOpen] = useState(false);
-
-  const [tabVal, setTabVal] = useState<'Paload' | 'Preview'>('Preview');
 
   const [detail, setDetail] = useState<Partial<DetailInterface>>();
 
@@ -45,8 +41,6 @@ const Detail = (props: { url: string }) => {
       responseString: response ? JSON.stringify(response, undefined, 2) : ''
     };
   }, [detail]);
-
-  const onTabChange = (val: any) => setTabVal(val);
 
   /** 修改存储在本地的内容 */
   const updateDetail = () => {
@@ -99,34 +93,45 @@ const Detail = (props: { url: string }) => {
         title={<Title proxyUrl={url} onSuccess={refreshDetail} />}
         footer={
           <Space style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Button onClick={() => setOpen(false)}>取消</Button>
-            {tabVal === 'Preview' && (
-              <Button onClick={updateDetail} type="primary" loading={isSaving}>
+            <Popconfirm title="确认删除？" okText="Yes" cancelText="No" onConfirm={updateDetail}>
+              <Button type="primary" loading={isSaving}>
                 确认修改
               </Button>
-            )}
+            </Popconfirm>
+
+            <Button onClick={() => setOpen(false)}>取消</Button>
           </Space>
         }
       >
         <Info url={url} method={method} onMethodChange={onMethodChange} />
-        <Tabs onChange={onTabChange} activeKey={tabVal} style={{ height: '100%' }}>
-          <TabPane tab="Preview" key="Preview">
-            <CodeEditor
-              height="80vh"
-              value={responseString}
-              defaultValue={responseString}
-              onChange={onPreviewChange}
-            />
-          </TabPane>
-
-          <TabPane tab="Paload" key="Paload">
-            <CodeEditor
-              onChange={() => console.log('1')}
-              height="80vh"
-              defaultValue={typeof payload === 'object' ? JSON.stringify(payload) : ''}
-            />
-          </TabPane>
-        </Tabs>
+        <Tabs
+          style={{ height: '100%' }}
+          items={[
+            {
+              label: 'Preview',
+              key: 'Preview',
+              children: (
+                <CodeEditor
+                  height="80vh"
+                  value={responseString}
+                  defaultValue={responseString}
+                  onChange={onPreviewChange}
+                />
+              )
+            },
+            {
+              label: 'Paload',
+              key: 'Paload',
+              children: (
+                <CodeEditor
+                  onChange={() => console.log('1')}
+                  height="80vh"
+                  defaultValue={typeof payload === 'object' ? JSON.stringify(payload) : ''}
+                />
+              )
+            }
+          ]}
+        />
       </Drawer>
     </>
   );

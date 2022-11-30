@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { FloatButton, Input, message, Modal, Tooltip } from 'antd';
-import { happyService } from 'src/constants';
-import { getLocalProxy, LocalProxyItem, updateLocalProxy, isUrl, getCookieDomain } from './utils';
 import { PlusOutlined } from '@ant-design/icons';
+
+import { happyService } from 'src/constants';
+import { isUrl, getCookieDomain, setLocalProxy, getLocalProxy } from '../utils';
+import type { LocalProxyItem } from '../types';
 
 const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
   const [visible, setVisible] = useState(false);
@@ -40,7 +42,7 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
     const local = getLocalProxy();
     // 更新本地
     const newLocal = [...local, obj];
-    updateLocalProxy(newLocal);
+    setLocalProxy(newLocal);
     setVisible(false);
 
     // 通知父组件更新列表

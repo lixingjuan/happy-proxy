@@ -1,6 +1,8 @@
 import { Button, Popconfirm, Switch } from 'antd';
+
 import Detail from '../Detail';
-import type { LocalProxyItem } from './utils';
+
+import type { LocalProxyItem } from 'src/types';
 
 const ListItem = ({
   it,

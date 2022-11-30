@@ -1,6 +1,6 @@
 import { Radio } from 'antd';
 import styled from 'styled-components';
-import { writeTextToClipboard } from '../../utils';
+import { writeTextToClipboard } from '../../utils/utils';
 
 const StyledRequestInfo = styled.div`
   & > div {

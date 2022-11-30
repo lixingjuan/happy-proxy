@@ -3,7 +3,7 @@ import { Input, Button, Space, InputNumber } from 'antd';
 import ErrorStatus from './ErrorStatus';
 import styled from 'styled-components';
 import stripJsonComments from 'strip-json-comments';
-import { writeTextToClipboard } from '../../utils';
+import { writeTextToClipboard } from '../../utils/utils';
 import useMemoryInput from './hook';
 import { Card } from 'antd';
 

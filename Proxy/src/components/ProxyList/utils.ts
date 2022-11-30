@@ -1,17 +1,5 @@
 import { message } from 'antd';
-
-export type LocalProxyItem = {
-  original: string;
-  target: string;
-  open: boolean;
-  tags: string[];
-  cookiesMap: Record<string, string>;
-};
-
-export const isUrl = (val: string) =>
-  /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/.test(
-    val
-  );
+import type { LocalProxyItem } from 'src/types';
 
 export const getLocalProxy = (): LocalProxyItem[] => {
   try {
@@ -30,24 +18,11 @@ export const getLocalProxy = (): LocalProxyItem[] => {
 };
 
 /** 更新本地 proxy-config */
-export const updateLocalProxy = (val: LocalProxyItem[]) => {
+export const setLocalProxy = (val: LocalProxyItem[]) => {
   try {
     localStorage.setItem('proxyConfig', JSON.stringify(val));
   } catch (error) {
     localStorage.setItem('proxyConfig', '[]');
-  }
-};
-
-/**
- * 获取二级域名
- * "gw.datayes-stg.com" => '.datayes-stg.com'
- */
-export const getCookieDomain = (url: string): string => {
-  try {
-    const origin = new URL(url).origin;
-    return `.${origin.split('.').slice(-2).join('.')}`;
-  } catch {
-    return '';
   }
 };
 

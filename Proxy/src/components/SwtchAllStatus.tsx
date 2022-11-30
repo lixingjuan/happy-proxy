@@ -1,5 +1,5 @@
 import { FloatButton, Tooltip } from 'antd';
-import { getLocalProxy, updateLocalProxy } from './utils';
+import { getLocalProxy, setLocalProxy } from 'src/utils';
 import { StopOutlined, AlertOutlined } from '@ant-design/icons';
 
 const StopAllIcon = () => (
@@ -17,7 +17,7 @@ const CloseAll = ({ onOkCb }: { onOkCb: () => void }) => {
   const handleChangeAll = (open: boolean) => {
     const local = getLocalProxy();
     const newLocal = local.map((it) => ({ ...it, open }));
-    updateLocalProxy(newLocal);
+    setLocalProxy(newLocal);
     onOkCb?.();
   };
 

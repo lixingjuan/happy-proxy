@@ -53,19 +53,3 @@ export const highlightString = (text: string, keyword = '', allHighlight = false
   }
   return text;
 };
-
-export const getLocalProxy = (): LocalProxyItem[] => {
-  try {
-    const local = localStorage.getItem('proxyConfig');
-
-    const parseLocal = local ? JSON.parse(local) : '';
-
-    if (local && Array.isArray(parseLocal) && parseLocal.length > 0) {
-      return parseLocal;
-    }
-
-    return [];
-  } catch (error) {
-    return [];
-  }
-};
