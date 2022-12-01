@@ -6,7 +6,8 @@ import ListItem from './ListItem';
 import CloseAll from '../SwtchAllStatus';
 
 import type { LocalProxyItem } from '../../types';
-import { getLocalProxy, setLocalProxy, updateBackground } from './utils';
+import { updateBackground } from './utils';
+import { getLocalProxy, setLocalProxy } from 'src/utils';
 
 const ProxyList = () => {
   const [dataSource, setDataSource] = useState<LocalProxyItem[]>(getLocalProxy);
