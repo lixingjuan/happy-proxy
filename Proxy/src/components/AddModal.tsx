@@ -3,7 +3,7 @@ import { FloatButton, Input, message, Modal, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
 import { happyService } from 'src/constants';
-import { isUrl, getCookieDomain, setLocalProxy, getLocalProxy } from '../utils';
+import { isUrl, setLocalProxy, getLocalProxy } from '../utils';
 import type { LocalProxyItem } from '../types';
 
 const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
@@ -60,35 +60,13 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
         ? original.replace(theOrigin, happyService)
         : `${happyService}/${original}`;
 
-    if (chrome.cookies.getAll) {
-      const cookieDomain = getCookieDomain(original);
-      chrome.cookies.getAll({ domain: cookieDomain }, (resArr) => {
-        // TODO: cookie的逻辑需要跳转，目前是把所有http-only的都加了
-        const cookiesStr = resArr
-          .filter((it) => it.httpOnly)
-          .map(({ name, value }) => `${name}=${value}`)
-          .join('; ');
-
-        setObj((pre) => ({
-          ...pre,
-          original,
-          target,
-          open: true,
-          cookies: cookiesStr,
-          cookiesMap: {
-            [original]: cookiesStr
-          }
-        }));
-      });
-    } else {
-      setObj((pre) => ({
-        ...pre,
-        original,
-        target,
-        open: true,
-        cookiesMap: {}
-      }));
-    }
+    setObj((pre) => ({
+      ...pre,
+      original,
+      target,
+      open: true,
+      cookiesMap: {}
+    }));
   };
 
   return (

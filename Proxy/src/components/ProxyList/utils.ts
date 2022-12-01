@@ -7,7 +7,6 @@ export const updateBackground = (proxyList: LocalProxyItem[]) => {
     return;
   }
 
-  // FIXME:
   const proxyConfigMap = proxyList.reduce(
     (tol, cur) => ({
       ...tol,
@@ -22,7 +21,7 @@ export const updateBackground = (proxyList: LocalProxyItem[]) => {
       value: proxyConfigMap
     },
     (response) => {
-      if (response.message === 'success') {
+      if (response?.message === 'success') {
         message.success('proxy urls 更新成功');
       } else {
         message.error(`更新失败${response.message}`);

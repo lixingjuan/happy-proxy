@@ -28,16 +28,3 @@ export const setLocalProxy = (val: LocalProxyItem[]) => {
     localStorage.setItem('proxyConfig', '[]');
   }
 };
-
-/**
- * 获取二级域名
- * "gw.datayes-stg.com" => '.datayes-stg.com'
- */
-export const getCookieDomain = (url: string): string => {
-  try {
-    const origin = new URL(url).origin;
-    return `.${origin.split('.').slice(-2).join('.')}`;
-  } catch {
-    return '';
-  }
-};
