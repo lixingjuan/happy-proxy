@@ -12,7 +12,7 @@ import {
 } from './utils';
 
 const routeMiddleWare = (ctx: Koa.Context) => {
-  const { url, method } = ctx.request;
+  const { url, method, body } = ctx.request;
   // 接口合法性校验
   if (!validateUrl(url)) {
     return (ctx.body = {
@@ -47,7 +47,7 @@ const routeMiddleWare = (ctx: Koa.Context) => {
       saveResponseToLocalNew(completeUrl, {
         response: res,
         method: method,
-        payload: {},
+        payload: body,
         proxyUrl: completeUrl
       });
       ctx.body = res;

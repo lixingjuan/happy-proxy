@@ -36,12 +36,13 @@ const Detail = (props: { url: string }) => {
     }
   });
 
-  const { method, payload, responseString } = useMemo(() => {
+  const { method, responseString, payloadString } = useMemo(() => {
     const response = detail?.response;
+    const payload = detail?.payload;
     return {
       method: detail?.method,
-      payload: detail?.payload,
-      responseString: response ? JSON.stringify(response, undefined, 2) : ''
+      responseString: response ? JSON.stringify(response, undefined, 2) : '',
+      payloadString: response ? JSON.stringify(payload, undefined, 2) : ''
     };
   }, [detail]);
 
@@ -129,7 +130,7 @@ const Detail = (props: { url: string }) => {
                 <CodeEditor
                   onChange={() => console.log('1')}
                   height="80vh"
-                  defaultValue={typeof payload === 'object' ? JSON.stringify(payload) : ''}
+                  defaultValue={payloadString}
                 />
               )
             }
