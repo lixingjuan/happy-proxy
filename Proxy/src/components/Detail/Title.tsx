@@ -14,7 +14,7 @@ const Title = ({ proxyUrl, onSuccess }: { proxyUrl: string; onSuccess: () => voi
   return (
     <Button danger onClick={handleDelete} size="small">
       <HeartIcon />
-      删除该记录
+      删除本地数据
     </Button>
   );
 };

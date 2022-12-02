@@ -1,47 +1,62 @@
-import { useState } from 'react';
-import { FloatButton, Input, message, Modal, Tooltip } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
+import { FloatButton, Input, Modal, Tooltip } from 'antd';
 
 import { happyService } from 'src/constants';
+import { LocalProxyItem } from '../types';
 import { isUrl, setLocalProxy, getLocalProxy } from '../utils';
-import type { LocalProxyItem } from '../types';
+
+const defaultObj = {
+  original: '',
+  target: '',
+  tags: [],
+  open: true
+};
+
+const getErrorMsg = (val: string) => {
+  if (!val) {
+    return '不能为空';
+  }
+
+  if (!isUrl(val)) {
+    return '非合法url';
+  }
+
+  const local = getLocalProxy();
+  if (local.find((it) => it.original === val)) {
+    return '该配置已存在！';
+  }
+
+  return '';
+};
 
 const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
   const [visible, setVisible] = useState(false);
-  const [obj, setObj] = useState<LocalProxyItem>({
-    original: '',
-    target: '',
-    tags: [],
-    open: true,
-    cookiesMap: {}
-  });
+  const [proxyItem, setProxyItem] = useState<LocalProxyItem>({ ...defaultObj });
 
-  const validateUniq = (): boolean => {
-    const local = getLocalProxy();
-    if (local.find((it) => it.original === obj.original)) {
-      message.error('该配置已存在！');
-      return false;
-    }
-    return true;
-  };
+  const { disableOk, errorMsg } = useMemo(() => {
+    const msg = getErrorMsg(proxyItem.original);
+    return {
+      disableOk: !!msg,
+      errorMsg: msg
+    };
+  }, [proxyItem]);
 
-  const valiteEmpty = () => {
-    if (!obj.original) {
-      message.error('不能为空！');
-      return false;
+  useEffect(() => {
+    if (!visible) {
+      setProxyItem({ ...defaultObj });
     }
-    return true;
-  };
+  }, [visible]);
 
   const onOk = () => {
-    if (!valiteEmpty() || !validateUniq()) {
+    if (disableOk) {
       return;
     }
 
     // 获取本地
     const local = getLocalProxy();
     // 更新本地
-    const newLocal = [...local, obj];
+    const newLocal = [...local, proxyItem];
     setLocalProxy(newLocal);
     setVisible(false);
 
@@ -60,12 +75,11 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
         ? original.replace(theOrigin, happyService)
         : `${happyService}/${original}`;
 
-    setObj((pre) => ({
+    setProxyItem((pre) => ({
       ...pre,
       original,
       target,
-      open: true,
-      cookiesMap: {}
+      open: true
     }));
   };
 
@@ -84,18 +98,23 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
         onOk={onOk}
         open={visible}
         width={800}
+        destroyOnClose
         bodyStyle={{ padding: '20px' }}
+        okButtonProps={{ disabled: disableOk }}
         onCancel={() => setVisible(false)}
       >
         <div>
           <div className="flex gap-12">
             <span style={{ width: '70px' }}>被代理url</span>
-            <Input onChange={onChange} />
+            <div className="flex-2">
+              <Input onChange={onChange} status={errorMsg ? 'error' : ''} />
+              {errorMsg && <span className="color-red font-12">{errorMsg}</span>}
+            </div>
           </div>
 
           <div className="flex gap-12">
             <span style={{ width: '70px' }}>目标url</span>
-            <span>{obj.target}</span>
+            <span>{proxyItem?.target}</span>
           </div>
         </div>
       </Modal>

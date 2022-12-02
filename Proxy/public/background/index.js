@@ -30,7 +30,8 @@ chrome.webRequest.onBeforeRequest.addListener(
     // 3. 组装转发请求
     const target = proxyItem.target;
     const { search = '' } = new URL(url);
-    const params = search ? `originalUrl=${url}` : `?originalUrl=${url}`;
+    const encodeURI = encodeURIComponent(url);
+    const params = search ? `&originalUrl=${encodeURI}` : `?originalUrl=${encodeURI}`;
 
     const redirectUrl = `${target}${params}`;
 
@@ -52,7 +53,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
       console.log(details.url);
 
       // 解析出原始url，拼接在search中
-      const { originalUrl } = new URL(details.url).search
+      const { originalUrl: encodeOriginalUrl } = new URL(details.url).search
         .slice(1)
         .split('&')
         .reduce((tol, cur) => {
@@ -61,6 +62,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
           return tol;
         }, {});
 
+      const originalUrl = decodeURIComponent(encodeOriginalUrl);
       if (!Object.keys(proxyConfigMap).includes(originalUrl)) {
         return { requestHeaders: details.requestHeaders };
       }

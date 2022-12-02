@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import { FloatButton, message } from 'antd';
+import { useMount } from 'ahooks';
 
 import AddUrl from '../AddModal';
 import ListItem from './ListItem';
 import CloseAll from '../SwtchAllStatus';
 
-import type { LocalProxyItem } from '../../types';
 import { updateBackground } from './utils';
+import { deleteRecordApi } from 'src/service';
+import type { LocalProxyItem } from 'src/types';
 import { getLocalProxy, setLocalProxy } from 'src/utils';
 
 const ProxyList = () => {
   const [dataSource, setDataSource] = useState<LocalProxyItem[]>(getLocalProxy);
 
+  /** 更新state、local、background */
   const updateDataSource = (nextDataSoutce: LocalProxyItem[]) => {
     setDataSource(nextDataSoutce);
     setLocalProxy(nextDataSoutce);
@@ -39,10 +42,22 @@ const ProxyList = () => {
 
   const onDelete = (index: number) => {
     const tempDataSource = getLocalProxy();
-    tempDataSource.splice(index, 1);
-    updateDataSource(tempDataSource);
-    message.success('删除成功');
+    const [toBeDeleteItem] = tempDataSource.splice(index, 1);
+
+    const url = toBeDeleteItem?.original;
+    if (url) {
+      deleteRecordApi(url)
+        .then((res) => {
+          updateDataSource(tempDataSource);
+          message.success('删除成功');
+        })
+        .catch((err) => message.error(`删除失败${err.message}`));
+    } else {
+      message.error(`删除失败original为空`);
+    }
   };
+
+  useMount(() => updateDataSource(getLocalProxy()));
 
   return (
     <>

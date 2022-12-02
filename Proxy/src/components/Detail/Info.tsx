@@ -40,7 +40,6 @@ const RequestInfo = ({
           <Radio value="put">put</Radio>
           <Radio value="delete">delete</Radio>
         </Radio.Group>
-        {/* <Input value={methodProp} size="small" onChange={(e) => onMethodChange(e.target.value)} /> */}
       </div>
     </StyledRequestInfo>
   );

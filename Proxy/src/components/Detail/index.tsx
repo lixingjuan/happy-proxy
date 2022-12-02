@@ -7,6 +7,13 @@ import Title from './Title';
 import CodeEditor from 'src/components/Editor';
 import { updateDetailApi, getDetailByUrlApi, DetailInterface } from '../../service';
 
+const getDefaultDetail = (url: string) => ({
+  response: undefined,
+  method: undefined,
+  payload: undefined,
+  proxyUrl: url
+});
+
 const Detail = (props: { url: string }) => {
   const { url } = props;
 
@@ -18,17 +25,13 @@ const Detail = (props: { url: string }) => {
 
   /** 查询详情 */
   const { run: refreshDetail } = useRequest(() => getDetailByUrlApi(url), {
-    onFinally: (a, ressss) => {
-      const content = ressss?.content;
+    manual: true,
+    onFinally: (a, response) => {
+      const content = response?.content;
       if (content) {
         setDetail(content);
       } else {
-        setDetail({
-          response: undefined,
-          method: undefined,
-          payload: undefined,
-          proxyUrl: url
-        });
+        setDetail(getDefaultDetail(url));
       }
     }
   });

@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: '../Chrome',
-    sourcemap: true
+    sourcemap: false
   },
   resolve: {
     alias: {
