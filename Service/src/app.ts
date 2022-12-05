@@ -16,7 +16,7 @@ const routeMiddleWare = (ctx: Koa.Context) => {
   // 接口合法性校验
   if (!validateUrl(url)) {
     return (ctx.body = {
-      message: 'completeUrl获取失败'
+      message: 'proxyRoute err: completeUrl获取失败'
     });
   }
 

@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
  ************************************************************************************************* */
 chrome.webRequest.onBeforeRequest.addListener(
   (details) => {
-    const url = details.url;
+    const url = decodeURIComponent(details.url);
     // 1. 校验, 过滤浏览器请求
     if (/^chrome-extension:\/\//i.test(url)) {
       return {};

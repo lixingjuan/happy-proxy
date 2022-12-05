@@ -6,7 +6,7 @@ const proxyRoute = (request: Koa.Context['Request'], completeUrl: string) => {
   const { method, headers, body } = request;
 
   const queryParamsForAxios = {
-    url: completeUrl,
+    url: encodeURI(completeUrl),
     method,
     headers: { cookie: headers.cookie },
     data: body

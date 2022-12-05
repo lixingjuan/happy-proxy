@@ -107,14 +107,20 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
           <div className="flex gap-12">
             <span style={{ width: '70px' }}>被代理url</span>
             <div className="flex-2">
-              <Input onChange={onChange} status={errorMsg ? 'error' : ''} />
+              <Input.TextArea
+                autoSize
+                allowClear
+                onChange={onChange}
+                status={errorMsg ? 'error' : ''}
+                style={{ wordBreak: 'break-all' }}
+              />
               {errorMsg && <span className="color-red font-12">{errorMsg}</span>}
             </div>
           </div>
 
           <div className="flex gap-12">
-            <span style={{ width: '70px' }}>目标url</span>
-            <span>{proxyItem?.target}</span>
+            <span style={{ flex: '0 0 70px' }}>目标url</span>
+            <span style={{ wordBreak: 'break-all' }}>{proxyItem?.target}</span>
           </div>
         </div>
       </Modal>
