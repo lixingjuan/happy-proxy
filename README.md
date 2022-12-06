@@ -29,5 +29,8 @@
 
 1. [ ] 升级chrome extension到v3(解决同步获取cookie的问题)
 2. [x] 增加proxy-url支持打tag
+3. [ ] 加一个Popover, 展示按钮
+   1. [ ] 当前proxy list(switch、删除、tag)
+   2. [ ] 打开tab页
 
 
