@@ -20,9 +20,11 @@ jobs:
           cd ./Proxy
           npm install
           npm run-script build
+          rm -rf build
+          mkdir build
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
+          BRANCH: main
           FOLDER: build
