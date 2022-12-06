@@ -1,8 +1,10 @@
-import { Button, Popconfirm, Switch } from 'antd';
+import { Tag, Button, Popconfirm, Switch } from 'antd';
 
 import Detail from '../Detail';
 
 import type { LocalProxyItem } from 'src/types';
+
+const colors = ['cyan', 'green', 'geekblue', 'magenta', 'purple', 'blue'];
 
 const ListItem = ({
   it,
@@ -21,6 +23,11 @@ const ListItem = ({
         {original}
       </span>
       <div className="flex items-center gap-10">
+        {(it.tags || []).map((it, index) => (
+          <Tag key={it} color={colors[index]}>
+            {it}
+          </Tag>
+        ))}
         <Popconfirm
           title="确认删除？"
           okText="Yes"

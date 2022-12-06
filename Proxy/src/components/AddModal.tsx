@@ -5,6 +5,8 @@ import { FloatButton, Input, Modal, Tooltip } from 'antd';
 import { happyService } from 'src/constants';
 import { LocalProxyItem } from '../types';
 import { isUrl, setLocalProxy, getLocalProxy } from '../utils';
+import TagsGroup from './TagsGroup';
+import styled from 'styled-components';
 
 const defaultObj = {
   original: '',
@@ -13,6 +15,24 @@ const defaultObj = {
   open: true
 };
 
+const StyledFormItem = styled.div`
+  display: flex;
+  column-gap: 10;
+  margin-bottom: 10px;
+
+  > :first-child {
+    width: 70px;
+    flex-shrink: 0;
+  }
+  > :nth-child(2) {
+    flex-grow: 1;
+  }
+
+  input,
+  span {
+    word-break: break-all;
+  }
+`;
 const getErrorMsg = (val: string) => {
   if (!val) {
     return '不能为空';
@@ -64,6 +84,13 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
     onOkCb?.();
   };
 
+  const onTagsChange = (val: string[]) => {
+    setProxyItem((pre) => ({
+      ...pre,
+      tags: val
+    }));
+  };
+
   const onChange = (e: any) => {
     const original = e.target.value;
 
@@ -104,24 +131,30 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
         onCancel={() => setVisible(false)}
       >
         <div>
-          <div className="flex gap-12">
-            <span style={{ width: '70px' }}>被代理url</span>
-            <div className="flex-2">
+          <StyledFormItem>
+            <span>被代理url</span>
+            <div>
               <Input.TextArea
                 autoSize
                 allowClear
                 onChange={onChange}
                 status={errorMsg ? 'error' : ''}
-                style={{ wordBreak: 'break-all' }}
               />
               {errorMsg && <span className="color-red font-12">{errorMsg}</span>}
             </div>
-          </div>
+          </StyledFormItem>
 
-          <div className="flex gap-12">
-            <span style={{ flex: '0 0 70px' }}>目标url</span>
-            <span style={{ wordBreak: 'break-all' }}>{proxyItem?.target}</span>
-          </div>
+          <StyledFormItem>
+            <span>目标url</span>
+            <span>{proxyItem?.target}</span>
+          </StyledFormItem>
+
+          <StyledFormItem>
+            <span>tags</span>
+            <div className="flex">
+              <TagsGroup onChange={onTagsChange} />
+            </div>
+          </StyledFormItem>
         </div>
       </Modal>
     </>

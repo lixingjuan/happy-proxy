@@ -27,6 +27,7 @@
 
 ## TODO
 
-1. 升级chrome extension到v3(解决同步获取cookie的问题)
+1. [ ] 升级chrome extension到v3(解决同步获取cookie的问题)
+2. [x] 增加proxy-url支持打tag
 
 
