@@ -1,4 +1,4 @@
 node_modules
 Service/DB
 Service/logs
-*/**/.DS_Store
+.DS_Store
