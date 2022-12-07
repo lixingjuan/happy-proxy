@@ -1,14 +1,31 @@
-import { getRelationMap, updateOneResposne } from '../utils';
+import { getRelationMap, saveResponseToLocalNew, updateOneResposne } from '../utils';
 
 /** update detail */
-const updateRecordDetailApi = async (newFileContent: any) => {
+const updateRecordDetailApi = async (newFileContent: {
+  proxyUrl: string;
+  response: Record<string, any>;
+  method: string;
+}) => {
+  const { proxyUrl, response, method } = newFileContent;
   try {
     const relationMap = getRelationMap();
 
-    const filePath = relationMap[newFileContent.proxyUrl];
+    const filePath = relationMap[proxyUrl];
 
     if (!filePath) {
-      throw new Error('本地没有该文件');
+      const localFileContent = {
+        response,
+        method,
+        payload: null,
+        proxyUrl: proxyUrl
+      };
+      saveResponseToLocalNew(proxyUrl, localFileContent);
+
+      return {
+        content: localFileContent,
+        message: '本地无该接口对应response文件，已创建',
+        code: 1
+      };
     }
 
     updateOneResposne(filePath, newFileContent);

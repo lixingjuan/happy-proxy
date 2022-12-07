@@ -46,22 +46,26 @@ const Detail = (props: { url: string }) => {
     };
   }, [detail]);
 
+  const validateUpdateParams = () => {
+    if (!detail?.method) {
+      message.error('Request Method不能为空！');
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   /** 修改存储在本地的内容 */
   const updateDetail = () => {
-    setIsSaving(true);
-    try {
-      updateDetailApi(detail as DetailInterface)
-        .then((res) => {
-          message.success(res.message);
-        })
-        .catch((err) => {
-          message.success(err.message);
-        });
-    } catch (error: any) {
-      message.error(error?.message);
-    } finally {
-      setIsSaving(false);
+    if (!validateUpdateParams()) {
+      return;
     }
+
+    setIsSaving(true);
+    updateDetailApi(detail as DetailInterface)
+      .then((res) => message.success(res.message))
+      .catch((err) => message.error(err.message))
+      .finally(() => setIsSaving(false));
   };
 
   const onMethodChange = (val: string) => setDetail((pre) => ({ ...pre, method: val }));
