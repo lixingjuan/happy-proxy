@@ -29,7 +29,8 @@
 
 1. [ ] 升级chrome extension到v3(解决同步获取cookie的问题)
 2. [x] 增加proxy-url支持打tag
-3. [ ] 加一个Popover, 展示按钮
+3. [ ] 更新接口对应的本地response时，现在是会报错“本地没有该文件”， 修改为若没有没有缓存过改接口对应response, 则创建，并响应“本地无该接口对应response ，已创建”
+4. [ ] 加一个Popover, 展示按钮
    1. [ ] 当前proxy list(switch、删除、tag)
    2. [ ] 打开tab页
 
