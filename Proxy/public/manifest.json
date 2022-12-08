@@ -1,11 +1,11 @@
 {
   "name": "Happy-Request",
-  "description": "转发http请求到指定地址",
-  "version": "1.0.0",
+  "description": "转发http到local-Service",
+  "version": "1.0.1",
   "manifest_version": 2,
   "browser_action": {
     "default_icon": "images/icon48.png",
-    "default_title": "转发请求",
+    "default_title": "proxy mock",
     "default_popup": "popup.html"
   },
   "permissions": [

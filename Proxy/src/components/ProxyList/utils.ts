@@ -2,7 +2,7 @@ import { message } from 'antd';
 import type { LocalProxyItem } from 'src/types';
 
 /** 更新background */
-export const updateBackground = (proxyList: LocalProxyItem[]) => {
+export const updateBackground = (proxyList: LocalProxyItem[], showMessage = true) => {
   if (!chrome?.runtime || !chrome.runtime.sendMessage) {
     return;
   }
@@ -25,9 +25,13 @@ export const updateBackground = (proxyList: LocalProxyItem[]) => {
     (response) => {
       if (response?.message === 'success') {
         console.log({ proxyConfigMap });
-        message.success('background proxyUrls 更新成功');
+        if (showMessage) {
+          message.success('background proxyUrls 更新成功');
+        }
       } else {
-        message.error(`background 更新失败 ${response.message}`);
+        if (showMessage) {
+          message.error(`background 更新失败 ${response.message}`);
+        }
       }
     }
   );

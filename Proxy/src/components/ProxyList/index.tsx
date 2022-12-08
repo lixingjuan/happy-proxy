@@ -5,20 +5,22 @@ import { useMount } from 'ahooks';
 import AddUrl from '../AddModal';
 import ListItem from './ListItem';
 import CloseAll from '../SwtchAllStatus';
+import OpenNewTabButton from '../OpenNewTabButton';
 
 import { updateBackground } from './utils';
 import { deleteRecordApi } from 'src/service';
 import type { LocalProxyItem } from 'src/types';
 import { getLocalProxy, setLocalProxy } from 'src/utils';
 
-const ProxyList = () => {
+const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }) => {
+  const [open, setOpen] = useState(false);
   const [dataSource, setDataSource] = useState<LocalProxyItem[]>(getLocalProxy);
 
   /** 更新state、local、background */
-  const updateDataSource = (nextDataSoutce: LocalProxyItem[]) => {
+  const updateDataSource = (nextDataSoutce: LocalProxyItem[], showMessage = true) => {
     setDataSource(nextDataSoutce);
     setLocalProxy(nextDataSoutce);
-    updateBackground(nextDataSoutce);
+    updateBackground(nextDataSoutce, showMessage);
     console.log('更新 dataSource', nextDataSoutce);
   };
 
@@ -57,13 +59,14 @@ const ProxyList = () => {
     }
   };
 
-  useMount(() => updateDataSource(getLocalProxy()));
+  useMount(() => updateDataSource(getLocalProxy(), false));
 
   return (
     <>
-      <FloatButton.Group shape="square" open={false}>
+      <FloatButton.Group shape="square" trigger="click" open={open} onOpenChange={setOpen}>
         <AddUrl onOkCb={onAddSuccess} />
         <CloseAll onOkCb={onAddSuccess} />
+        {showOpenTabButton && <OpenNewTabButton />}
       </FloatButton.Group>
 
       <div className="flex flex-col row-gap-10 mt-10">

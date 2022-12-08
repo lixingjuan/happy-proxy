@@ -18,7 +18,7 @@ const ListItem = ({
   const { index, original } = it;
 
   return (
-    <div className="flex justify-between">
+    <div className="flex justify-between items-center font-14">
       <span key={original} className="line-clamp-1" title={original}>
         {original}
       </span>
