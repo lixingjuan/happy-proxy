@@ -4,6 +4,23 @@
 - chrome插件：负责转发请求
 - 本地service：负责**请求的转发**和**数据的存储**
 
+
+## 项目目录
+
+
+```
+.
+├── .github               github action
+├── .vscode
+├── Chrome                chrome插件包，可直接安装到浏览器
+├── Proxy                 chrome插件源码
+├── Service               本地node.js服务, 进入该目录，执行 `npm run start` 或  `npm run pm2`
+├── .gitignore
+└── README.md
+
+```
+
+
 ## Info
 
 1. 代理请求到 `http://127.0.0.1:4000/xxxxxx`
