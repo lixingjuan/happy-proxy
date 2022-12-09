@@ -63,7 +63,7 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
 
   return (
     <>
-      <FloatButton.Group shape="square" trigger="click" open={open} onOpenChange={setOpen}>
+      <FloatButton.Group shape="square" trigger="hover" open={open} onOpenChange={setOpen}>
         <AddUrl onOkCb={onAddSuccess} />
         <CloseAll onOkCb={onAddSuccess} />
         {showOpenTabButton && <OpenNewTabButton />}
