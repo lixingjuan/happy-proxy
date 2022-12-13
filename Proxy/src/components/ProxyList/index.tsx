@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FloatButton, message } from 'antd';
+import { FloatButton, message, Empty } from 'antd';
 import { useMount } from 'ahooks';
 
 import AddUrl from '../AddModal';
@@ -78,6 +78,7 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
             toggleItemStatus={onToggleItemOpen}
           />
         ))}
+        {dataSource.length === 0 ? <Empty /> : null}
       </div>
     </>
   );
