@@ -4,6 +4,7 @@ import Detail from '../Detail';
 
 import type { LocalProxyItem } from 'src/types';
 import styled from 'styled-components';
+import { writeTextToClipboard } from 'src/utils/utils';
 
 const colors = ['cyan', 'green', 'geekblue', 'magenta', 'purple', 'blue'];
 
@@ -31,7 +32,7 @@ const ListItem = ({
   const { index, original } = it;
 
   return (
-    <StyledItem>
+    <StyledItem onDoubleClick={() => writeTextToClipboard(original)}>
       <span key={original} className="text">
         {original}
       </span>
