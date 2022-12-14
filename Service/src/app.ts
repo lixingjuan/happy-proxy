@@ -16,7 +16,7 @@ const routeMiddleWare = (ctx: Koa.Context) => {
   // 接口合法性校验
   if (!validateUrl(url)) {
     return (ctx.body = {
-      message: 'proxyRoute err: completeUrl获取失败'
+      message: 'happy-proxy Service报错: errorMsg: completeUrl获取失败'
     });
   }
 
@@ -54,7 +54,7 @@ const routeMiddleWare = (ctx: Koa.Context) => {
     })
     .catch((err) => {
       ctx.body = {
-        message: `proxyRoute err: ${err.message}`
+        message: `happy-proxy Service报错: errorMsg: 请求真实接口失败，原因: ${err.message}`
       };
     });
 };
