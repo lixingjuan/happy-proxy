@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './style/index.less';
-import './assets/font/iconfont';
 
 import App from './App';
 
