@@ -1,3 +1,5 @@
+import './style/index.less';
+
 import { Tabs } from 'antd';
 import Error from 'src/components/Error';
 import ProxyList from 'src/components/ProxyList';

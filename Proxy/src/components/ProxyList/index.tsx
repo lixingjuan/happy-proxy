@@ -12,6 +12,17 @@ import { deleteRecordApi } from 'src/service';
 import type { LocalProxyItem } from 'src/types';
 import { getLocalProxy, setLocalProxy } from 'src/utils';
 
+const HrLine = () => (
+  <hr
+    style={{
+      border: 'none',
+      height: '0px',
+      width: '100%',
+      borderBottom: '1px dotted #ddd'
+    }}
+  />
+);
+
 const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }) => {
   const [open, setOpen] = useState(false);
   const [dataSource, setDataSource] = useState<LocalProxyItem[]>(getLocalProxy);
@@ -69,14 +80,17 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
         {showOpenTabButton && <OpenNewTabButton />}
       </FloatButton.Group>
 
-      <div className="flex flex-col row-gap-10 mt-10">
+      <div className="flex flex-col row-gap-5 mt-10">
         {dataSource.map((it, index) => (
-          <ListItem
-            it={{ ...it, index }}
-            key={it.original}
-            onDelete={onDelete}
-            toggleItemStatus={onToggleItemOpen}
-          />
+          <>
+            <ListItem
+              it={{ ...it, index }}
+              key={it.original}
+              onDelete={onDelete}
+              toggleItemStatus={onToggleItemOpen}
+            />
+            <HrLine />
+          </>
         ))}
         {dataSource.length === 0 ? <Empty /> : null}
       </div>
