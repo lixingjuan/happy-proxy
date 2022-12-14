@@ -3,7 +3,7 @@ import { LocalProxyItem } from 'src/types';
 export const isUrl = (val: string) =>
   /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/.test(
     val
-  );
+  ) || /^((https?):\/\/)?(localhost:\d)/.test(val);
 
 export const getLocalProxy = (): LocalProxyItem[] => {
   try {
