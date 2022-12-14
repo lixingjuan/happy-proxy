@@ -57,9 +57,10 @@
 1. [ ] 将node(Service)服务做成可运行包
 2. [ ] 升级chrome extension到v3(解决同步获取cookie的问题)
 3. [x] 增加proxy-url支持打tag
-4. [ ] 更新接口对应的本地response时，现在是会报错“本地没有该文件”， 修改为若没有没有缓存过改接口对应response, 则创建，并响应“本地无该接口对应response ，已创建”
+4. [x] 更新接口对应的本地response时，现在是会报错“本地没有该文件”， 修改为若没有没有缓存过改接口对应response, 则创建，并响应“本地无该接口对应response ，已创建”
 5. [x] 加一个Popup, 展示按钮
    1. [x] 当前proxy list(switch、删除、tag)
    2. [x] 打开tab页
+6. [ ] ? MacBook Pro (13-inch, M1, 2020) 版本:11.2.3 => pm2启动，电脑频繁紫屏重启
 
 
