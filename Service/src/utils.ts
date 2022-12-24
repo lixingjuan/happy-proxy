@@ -15,8 +15,8 @@ const checkDBFolder = () => {
   }
 };
 
-/** 检查DB/response文件夹 */
-const checkDBResponseFolder = () => {
+/** 检查并修复DB文件夹 */
+const checkAndRepairDBFolder = () => {
   try {
     fs.accessSync(responseBasePath);
   } catch (error) {
@@ -41,6 +41,7 @@ export const getRelationMap = () => {
   }
 };
 
+/** 保存map文件 */
 export const setRelationMap = (content: Record<string, string>) => {
   checkDBFolder();
   try {
@@ -66,7 +67,7 @@ export const addOneResposne = (filePath: string, content: Record<string, any>) =
     return;
   }
 
-  checkDBResponseFolder();
+  checkAndRepairDBFolder();
 
   try {
     jsonfile.writeFileSync(filePath, content, { spaces: 2 });
@@ -81,7 +82,7 @@ export const updateOneResposne = (filePath: string, fileContent: Record<string, 
     return;
   }
 
-  checkDBResponseFolder();
+  checkAndRepairDBFolder();
 
   try {
     fs.accessSync(filePath);
@@ -98,7 +99,7 @@ export const deleteOneResposne = (filePath: string) => {
     return;
   }
 
-  checkDBResponseFolder();
+  checkAndRepairDBFolder();
 
   // 删除对应的本地数据文件
   if (filePath) {
@@ -125,23 +126,26 @@ export const saveResponseToLocalNew = (
   if (!proxyUrl) {
     return;
   }
-  const localFilePath = generateLocalFilePath();
 
+  const localFilePath = generateLocalFilePath();
   updateRelationMap({ [proxyUrl]: localFilePath });
   addOneResposne(localFilePath, responseAndRequest);
 };
 
-export const getCompleteRequestUrl = (url: string) => {
+/** 获取路径拼接的 originalUrl 参数 */
+export const getCompleteUrlByUrl = (url: string) => {
   const { query } = qs.parseUrl(url);
 
   return (query?.originalUrl || '') as string;
 };
 
-export const validateUrl = (url: string) => {
-  // 合法校验
-  const completeUrl = getCompleteRequestUrl(url);
-  if (completeUrl || url.includes(happyServiceFlag)) {
-    return true;
-  }
-  return false;
+/** 请求url合法校验：拼接了originalUrl 或者是 本服务自己的请求 */
+export const validateUrl = (url: string) =>
+  getCompleteUrlByUrl(url) || url.includes(happyServiceFlag);
+
+/** 获取url指定的本地response文件地址 */
+export const getLocalFilePathByUrl = (url: string): string | undefined => {
+  const localMap = getRelationMap();
+  const completeUrl = getCompleteUrlByUrl(url);
+  return localMap[completeUrl];
 };

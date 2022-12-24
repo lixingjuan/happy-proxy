@@ -6,13 +6,14 @@ import { happyServiceFlag } from './constant';
 import happyServiceApi from './happyService';
 import {
   validateUrl,
-  getRelationMap,
-  saveResponseToLocalNew,
-  getCompleteRequestUrl
+  getCompleteUrlByUrl,
+  getLocalFilePathByUrl,
+  saveResponseToLocalNew
 } from './utils';
 
 const routeMiddleWare = (ctx: Koa.Context) => {
   const { url, method, body } = ctx.request;
+
   // 接口合法性校验
   if (!validateUrl(url)) {
     return (ctx.body = {
@@ -31,10 +32,8 @@ const routeMiddleWare = (ctx: Koa.Context) => {
       });
   }
 
-  // 2. 本地是有该接口的缓存文件
-  const localMap = getRelationMap();
-  const completeUrl = getCompleteRequestUrl(url);
-  const localFilePath = localMap[completeUrl];
+  // 2. 本地有该接口的缓存文件
+  const localFilePath = getLocalFilePathByUrl(url);
   if (localFilePath) {
     const content = jsonfile.readFileSync(localFilePath);
     ctx.body = content?.response;
@@ -42,6 +41,7 @@ const routeMiddleWare = (ctx: Koa.Context) => {
   }
 
   // 3. 接口响应
+  const completeUrl = getCompleteUrlByUrl(url);
   return proxyRoute(ctx.request, completeUrl)
     .then((res) => {
       saveResponseToLocalNew(completeUrl, {

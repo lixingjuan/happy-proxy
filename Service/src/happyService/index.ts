@@ -19,7 +19,7 @@ const happyServiceApi = (request: Context['request']) => {
       return queryDetail(proxyUrl as string);
 
     case '/happy-service/update-detail':
-      return updateRecordDetailApi(body);
+      return updateRecordDetailApi(body as Parameters<typeof updateRecordDetailApi>[0]);
 
     case '/happy-service/delete-record':
       return deleteOneRecord(proxyUrl as string);
