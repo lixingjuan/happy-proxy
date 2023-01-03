@@ -3,9 +3,11 @@
   "version": "0.0.2",
   "description": "",
   "main": "src/index.ts",
+  "bin": "src/index.ts",
   "scripts": {
     "start": "nodemon src/index.ts",
     "pm2": "pm2 start pm2.config.json",
+    "pkg": "pkg . -t node16-linux --out-path=dist/",
     "stop": "pm2 stop all",
     "pm2-clean": "pm2 delete all",
     "pm2-list": "pm2 list",
@@ -24,6 +26,7 @@
     "koa-bodyparser": "^3.2.0",
     "koa2-cors": "^2.0.6",
     "object-hash": "^3.0.0",
+    "pkg": "^5.8.0",
     "query-string": "^7.1.1"
   },
   "devDependencies": {
