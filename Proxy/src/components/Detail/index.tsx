@@ -99,7 +99,7 @@ const Detail = (props: { url: string }) => {
       <Drawer
         open={open}
         width="80vw"
-        placement="right"
+        placement="left"
         onClose={() => setOpen(false)}
         bodyStyle={{ padding: '0 12px' }}
         title={<Title proxyUrl={url} onSuccess={refreshDetail} />}
