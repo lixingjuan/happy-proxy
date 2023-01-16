@@ -104,7 +104,7 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
 
     setProxyItem((pre) => ({
       ...pre,
-      original,
+      original: decodeURIComponent(original),
       target,
       open: true
     }));
