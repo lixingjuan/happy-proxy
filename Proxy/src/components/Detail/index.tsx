@@ -63,8 +63,12 @@ const Detail = (props: { url: string }) => {
 
     setIsSaving(true);
     updateDetailApi(detail as DetailInterface)
-      .then((res) => message.success(res.message))
-      .catch((err) => message.error(err.message))
+      .then((res) => {
+        message.success(res.message);
+      })
+      .catch((err) => {
+        message.error(err.message);
+      })
       .finally(() => setIsSaving(false));
   };
 
