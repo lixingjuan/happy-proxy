@@ -74,12 +74,6 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
 
   return (
     <>
-      <FloatButton.Group shape="square" trigger="hover" open={open} onOpenChange={setOpen}>
-        <AddUrl onOkCb={onAddSuccess} />
-        <CloseAll onOkCb={onAddSuccess} />
-        {showOpenTabButton && <OpenNewTabButton />}
-      </FloatButton.Group>
-
       <div className="flex flex-col row-gap-5 mt-10">
         {dataSource.map((it, index) => (
           <>
@@ -93,6 +87,11 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
           </>
         ))}
         {dataSource.length === 0 ? <Empty /> : null}
+      </div>
+      <div style={{ position: 'fixed', bottom: 10, right: 20, display: 'flex', columnGap: 5 }}>
+        <AddUrl onOkCb={onAddSuccess} />
+        <CloseAll onOkCb={onAddSuccess} />
+        {showOpenTabButton && <OpenNewTabButton />}
       </div>
     </>
   );

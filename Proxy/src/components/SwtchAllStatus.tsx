@@ -1,14 +1,14 @@
-import { FloatButton, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 import { getLocalProxy, setLocalProxy } from 'src/utils';
 import { StopOutlined, AlertOutlined } from '@ant-design/icons';
 
 const StopAllIcon = () => (
-  <Tooltip title="全部关闭" placement="left">
+  <Tooltip title="全部关闭">
     <StopOutlined />
   </Tooltip>
 );
 const OpenAllIcon = () => (
-  <Tooltip title="全部打开" placement="left">
+  <Tooltip title="全部打开">
     <AlertOutlined />
   </Tooltip>
 );
@@ -26,8 +26,8 @@ const CloseAll = ({ onOkCb }: { onOkCb: () => void }) => {
 
   return (
     <>
-      <FloatButton onClick={handleCloseAll} icon={<StopAllIcon />} />
-      <FloatButton onClick={handleOpenAll} icon={<OpenAllIcon />} />
+      <Button onClick={handleCloseAll} icon={<StopAllIcon />} />
+      <Button onClick={handleOpenAll} icon={<OpenAllIcon />} />
     </>
   );
 };

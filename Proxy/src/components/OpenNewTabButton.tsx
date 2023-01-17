@@ -1,5 +1,5 @@
 import { RightSquareOutlined } from '@ant-design/icons';
-import { FloatButton, Tooltip } from 'antd';
+import { Button, Tooltip } from 'antd';
 
 const OpenNewTabButton = () => {
   const openTab = () => {
@@ -11,10 +11,10 @@ const OpenNewTabButton = () => {
   };
 
   return (
-    <FloatButton
+    <Button
       onClick={openTab}
       icon={
-        <Tooltip title="新页面打开" placement="left">
+        <Tooltip title="新页面打开">
           <RightSquareOutlined onClick={openTab} />
         </Tooltip>
       }

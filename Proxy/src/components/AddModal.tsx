@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { FloatButton, Input, Modal, Tooltip } from 'antd';
+import { Button, Input, Modal, Tooltip } from 'antd';
 
 import { happyService } from 'src/constants';
 import { LocalProxyItem } from '../types';
@@ -113,10 +113,10 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
 
   return (
     <>
-      <FloatButton
+      <Button
         onClick={() => setVisible(!visible)}
         icon={
-          <Tooltip title="Add" placement="left">
+          <Tooltip title="Add">
             <PlusOutlined />
           </Tooltip>
         }
