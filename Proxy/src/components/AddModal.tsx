@@ -76,8 +76,9 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
     // 获取本地
     const local = getLocalProxy();
     // 更新本地
-    const newLocal = [...local, proxyItem];
+    const newLocal = [proxyItem, ...local];
     setLocalProxy(newLocal);
+
     setVisible(false);
 
     // 通知父组件更新列表
@@ -122,12 +123,12 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
       />
 
       <Modal
-        onOk={onOk}
         open={visible}
         width={800}
         destroyOnClose
         bodyStyle={{ padding: '20px' }}
         okButtonProps={{ disabled: disableOk }}
+        onOk={onOk}
         onCancel={() => setVisible(false)}
       >
         <div>
