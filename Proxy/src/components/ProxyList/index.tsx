@@ -88,7 +88,7 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
         ))}
         {dataSource.length === 0 ? <Empty /> : null}
       </div>
-      <div style={{ position: 'fixed', bottom: 10, right: 20, display: 'flex', columnGap: 5 }}>
+      <div style={{ position: 'fixed', top: 2, right: 20, display: 'flex', columnGap: 5 }}>
         <AddUrl onOkCb={onAddSuccess} />
         <CloseAll onOkCb={onAddSuccess} />
         {showOpenTabButton && <OpenNewTabButton />}

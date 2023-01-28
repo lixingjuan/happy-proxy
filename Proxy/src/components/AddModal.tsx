@@ -115,6 +115,7 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
     <>
       <Button
         onClick={() => setVisible(!visible)}
+        size="small"
         icon={
           <Tooltip title="Add">
             <PlusOutlined />

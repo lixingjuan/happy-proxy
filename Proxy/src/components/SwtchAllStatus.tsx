@@ -26,8 +26,8 @@ const CloseAll = ({ onOkCb }: { onOkCb: () => void }) => {
 
   return (
     <>
-      <Button onClick={handleCloseAll} icon={<StopAllIcon />} />
-      <Button onClick={handleOpenAll} icon={<OpenAllIcon />} />
+      <Button size="small" onClick={handleCloseAll} icon={<StopAllIcon />} />
+      <Button size="small" onClick={handleOpenAll} icon={<OpenAllIcon />} />
     </>
   );
 };
