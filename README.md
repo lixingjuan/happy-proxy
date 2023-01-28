@@ -62,5 +62,6 @@
    1. [x] 当前proxy list(switch、删除、tag)
    2. [x] 打开tab页
 6. [ ] ? MacBook Pro (13-inch, M1, 2020) 版本:11.2.3 => pm2启动，电脑频繁紫屏重启
+7. [ ] 两个接口支持使用一份mock-data
 
 
