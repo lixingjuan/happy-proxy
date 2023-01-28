@@ -31,10 +31,10 @@ const routeMiddleWare = (ctx: Koa.Context) => {
       });
   }
 
-  // 2. 本地是有该接口的缓存文件
-  const localMap = getRelationMap();
+  // 2. 本地有该接口的mock-data, 则读取本地mock-data返回前端
+  const localUrlToFilePostionMap = getRelationMap();
   const completeUrl = getCompleteRequestUrl(url);
-  const localFilePath = localMap[completeUrl];
+  const localFilePath = localUrlToFilePostionMap[completeUrl];
   if (localFilePath) {
     const content = jsonfile.readFileSync(localFilePath);
     ctx.body = content?.response;
