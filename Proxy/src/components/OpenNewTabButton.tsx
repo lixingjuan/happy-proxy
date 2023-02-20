@@ -13,6 +13,7 @@ const OpenNewTabButton = () => {
   return (
     <Button
       onClick={openTab}
+      size="small"
       icon={
         <Tooltip title="新页面打开">
           <RightSquareOutlined onClick={openTab} />
