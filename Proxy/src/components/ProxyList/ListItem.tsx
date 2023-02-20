@@ -32,7 +32,7 @@ const ListItem = ({
   const { index, original } = it;
 
   return (
-    <StyledItem onDoubleClick={() => writeTextToClipboard(original)}>
+    <StyledItem>
       <span key={original} className="text">
         {original}
       </span>
