@@ -1,16 +1,20 @@
-import { Radio } from 'antd';
+import { Button, Radio } from 'antd';
 import styled from 'styled-components';
 import { writeTextToClipboard } from '../../utils/utils';
 
 const StyledRequestInfo = styled.div`
   & > div {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     column-gap: 10px;
-    margin-top: 10px;
+    .url {
+      flex: 1;
+    }
     b {
       font-weight: 800;
       white-space: nowrap;
+      width: 70px;
+      text-align: right;
     }
   }
 `;
@@ -28,12 +32,15 @@ const RequestInfo = ({
 
   return (
     <StyledRequestInfo>
-      <div>
-        <b>Request URL:</b>
-        <span onClick={() => writeTextToClipboard(url)}>{url}</span>
+      <div className="mb-5">
+        <b>URL:</b>
+        <span className="url">{url}</span>
+        <Button size="small" onClick={() => writeTextToClipboard(url)}>
+          copy
+        </Button>
       </div>
       <div>
-        <b>Request Method:</b>
+        <b>Method:</b>
         <Radio.Group onChange={(e) => onMethodChange(e.target.value)} value={value}>
           <Radio value="get">get</Radio>
           <Radio value="post">post</Radio>

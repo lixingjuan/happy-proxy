@@ -101,21 +101,21 @@ const Detail = (props: { url: string }) => {
         width="80vw"
         placement="left"
         onClose={() => setOpen(false)}
-        bodyStyle={{ padding: '0 12px' }}
+        bodyStyle={{ padding: '8px 12px' }}
         title={<Title proxyUrl={url} onSuccess={refreshDetail} />}
-        footer={
-          <Space style={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <Popconfirm title="确认删除？" okText="Yes" cancelText="No" onConfirm={updateDetail}>
-              <Button type="primary" loading={isSaving}>
-                确认修改
-              </Button>
-            </Popconfirm>
-
-            <Button onClick={() => setOpen(false)}>取消</Button>
-          </Space>
-        }
+        footer={null}
       >
-        <Info url={url} method={method} onMethodChange={onMethodChange} />
+        <div className="flex justify-between items-start gap-10">
+          <Info url={url} method={method} onMethodChange={onMethodChange} />
+          <Space size={4}>
+            <Button size="small" type="primary" loading={isSaving} onClick={updateDetail}>
+              确认修改
+            </Button>
+            <Button size="small" onClick={() => setOpen(false)}>
+              取消
+            </Button>
+          </Space>
+        </div>
         <Tabs
           style={{ height: '100%' }}
           items={[
