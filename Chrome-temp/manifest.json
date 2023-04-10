@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "拦截指定请求并存储在indexDB中",
+  "version": "1.0",
+
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "options_page": "options.html",
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
