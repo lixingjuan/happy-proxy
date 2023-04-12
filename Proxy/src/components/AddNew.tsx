@@ -7,9 +7,10 @@ import { LocalProxyItem } from '../types';
 import { isUrl, setLocalProxy, getLocalProxy } from '../utils';
 import TagsGroup from './TagsGroup';
 import styled from 'styled-components';
+import { databaseName, tableUrls } from 'src/utils/indexDB';
 
 const defaultObj = {
-  original: '',
+  beProxyUrl: '',
   target: '',
   tags: [],
   open: true
@@ -73,13 +74,32 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
       return;
     }
 
-    // 获取本地
-    const local = getLocalProxy();
-    // 更新本地
-    const newLocal = [proxyItem, ...local];
-    setLocalProxy(newLocal);
+    console.log({ proxyItem });
+    const { open, beProxyUrl: beProxyUrl, tags, target: targetUrl } = proxyItem;
 
-    setVisible(false);
+    let request = indexedDB.open(databaseName, 1);
+
+    request.onupgradeneeded = function (event: any) {
+      const db = event?.target?.result;
+      db.createObjectStore(tableUrls, { keyPath: 'beProxyUrl' });
+    };
+
+    request.onsuccess = function (event: any) {
+      let db = event.target.result;
+
+      const transaction = db.transaction(tableUrls, 'readwrite');
+      const store = transaction.objectStore(tableUrls);
+      store.add({
+        open,
+        tags,
+        targetUrl,
+        beProxyUrl,
+        responseBody: {}
+      });
+      transaction.oncomplete = function () {
+        console.log('add success!');
+      };
+    };
 
     // 通知父组件更新列表
     onOkCb?.();
@@ -118,7 +138,7 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
         size="small"
         icon={
           <Tooltip title="Add">
-            <PlusOutlined />
+            <PlusOutlined />1
           </Tooltip>
         }
       />

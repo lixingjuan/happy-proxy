@@ -29,7 +29,7 @@ const ListItem = ({
   onDelete: (val: number) => void;
   toggleItemStatus: (val: string) => void;
 }) => {
-  const { index, original } = it;
+  const { index, beProxyUrl: original } = it;
 
   return (
     <StyledItem>

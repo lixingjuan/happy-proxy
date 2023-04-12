@@ -12,7 +12,7 @@ export const updateBackground = (proxyList: LocalProxyItem[], showMessage = true
     .reduce(
       (tol, cur) => ({
         ...tol,
-        [cur.original]: cur
+        [cur.beProxyUrl]: cur
       }),
       {}
     );
