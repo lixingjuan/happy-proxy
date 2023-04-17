@@ -38,7 +38,7 @@ chrome.webRequest.onBeforeRequest.addListener(
 
     const redirectUrl = `${target}${params}`;
 
-    return { redirectUrl };
+    return { redirectUrl, body };
   },
   {
     urls: ['<all_urls>']
