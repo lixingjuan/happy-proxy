@@ -53,6 +53,31 @@ const actionCallback = {
       window.proxyConfigMap = {};
       sendResponse({ message: error.message });
     }
+  },
+  Update_Config_Arr: () => {
+    const databaseName = 'happyProxy';
+    const tableUrls = 'tableUrls';
+
+    let request = indexedDB.open(databaseName, 1);
+
+    request.onupgradeneeded = function (event) {
+      let db = event.target.result;
+      db.createObjectStore(tableUrls, { keyPath: 'beProxyUrl' });
+    };
+
+    let getRequest = indexedDB.open(databaseName, 1);
+    getRequest.onsuccess = function (event) {
+      const db = event.target.result;
+      const transaction = db.transaction([tableUrls], 'readonly');
+
+      const objectStore = transaction.objectStore(tableUrls);
+      const getRequest = objectStore.getAll();
+
+      getRequest.onsuccess = function () {
+        window.proxyUrlsArr = (getRequest.result || []).map((it) => it.open);
+        console.log('proxyUrlsArr更新成功', proxyUrlsArr);
+      };
+    };
   }
 };
 

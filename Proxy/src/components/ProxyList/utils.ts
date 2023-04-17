@@ -35,4 +35,8 @@ export const updateBackground = (proxyList: LocalProxyItem[], showMessage = true
       }
     }
   );
+
+  chrome.runtime.sendMessage({
+    action: 'Update_Config_Arr'
+  });
 };

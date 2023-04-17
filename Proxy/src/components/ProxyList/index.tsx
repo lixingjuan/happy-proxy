@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FloatButton, message, Empty } from 'antd';
+import { message, Empty } from 'antd';
 import { useMount } from 'ahooks';
 
 import AddUrl from '../AddModal';
@@ -41,7 +41,7 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
 
     request.onupgradeneeded = function (event: any) {
       let db = event.target.result;
-      let objectStore = db.createObjectStore(tableUrls, { keyPath: 'beProxyUrl' });
+      db.createObjectStore(tableUrls, { keyPath: 'beProxyUrl' });
     };
 
     let getRequest = indexedDB.open(databaseName, 1);
@@ -55,6 +55,8 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
       };
     };
   };
+
+  useMount(onAddSuccess);
 
   const onToggleItemOpen = (url: string) => {
     const nextDataSoutce = dataSource.map((inner) => {
@@ -85,8 +87,6 @@ const ProxyList = ({ showOpenTabButton = false }: { showOpenTabButton: boolean }
       message.error(`删除失败original为空`);
     }
   };
-
-  useMount(onAddSuccess);
 
   return (
     <>

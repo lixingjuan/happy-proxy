@@ -85,7 +85,6 @@
   "pasteImage.insertPattern": "![](images/${imageFileName})",
   "pasteImage.defaultName": "${currentFileNameWithoutExt}-YY-MM-DD-HH-mm-ss",
   "editor.linkedEditing": true,
-  "timeline.excludeSources": [],
   "explorer.confirmDragAndDrop": false,
 
   "redhat.telemetry.enabled": true,

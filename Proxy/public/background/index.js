@@ -1,8 +1,10 @@
 window.proxyDisabled = false; // 打开：on, 关闭：disabled
 window.proxyConfigMap = {};
+// 需要代理的请求数组
+window.proxyUrlsArr = [];
 
 /* ****************************************************************************************************
- *                                    初始化监听前台发送的信息
+ *                                    更新 proxyUrlsArr
  ************************************************************************************************* */
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { action, value } = request;
@@ -16,19 +18,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 chrome.webRequest.onBeforeRequest.addListener(
   (details) => {
     const url = decodeURIComponent(details.url);
-    // 1. 校验, 过滤浏览器请求
+
+    // 1. 校验, 过滤浏览器插件请求
     if (/^chrome-extension:\/\//i.test(url)) {
       return {};
     }
 
-    // 2. 过滤无配置请求
-    const proxyItem = window.proxyConfigMap[url];
+    // 2. 判断是否需要代理处理
+    const proxyItem = window.proxyUrlsArr.find((it) => it.beProxyUrl === url);
     if (!proxyItem) {
       return {};
     }
 
-    // 3. 组装转发请求
-    const target = proxyItem.target;
+    // 3. 判断是否已存储过数据
+    const target = window.proxyUrlsArr.find((it) => it.beProxyUrl === url).targetUrl;
     const { search = '' } = new URL(url);
     const encodeURI = encodeURIComponent(url);
     const params = search ? `&originalUrl=${encodeURI}` : `?originalUrl=${encodeURI}`;

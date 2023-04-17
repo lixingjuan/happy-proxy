@@ -3,17 +3,18 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Tooltip } from 'antd';
 
 import { happyService } from 'src/constants';
-import { LocalProxyItem } from '../types';
-import { isUrl, setLocalProxy, getLocalProxy } from '../utils';
+import { ProxyItem } from '../types';
+import { isUrl, getLocalProxy } from '../utils';
 import TagsGroup from './TagsGroup';
 import styled from 'styled-components';
 import { databaseName, tableUrls } from 'src/utils/indexDB';
 
 const defaultObj = {
   beProxyUrl: '',
-  target: '',
+  targetUrl: '',
   tags: [],
-  open: true
+  open: true,
+  responseBody: {}
 };
 
 const StyledFormItem = styled.div`
@@ -34,6 +35,7 @@ const StyledFormItem = styled.div`
     word-break: break-all;
   }
 `;
+
 const getErrorMsg = (val: string) => {
   if (!val) {
     return '不能为空';
@@ -53,7 +55,7 @@ const getErrorMsg = (val: string) => {
 
 const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
   const [visible, setVisible] = useState(false);
-  const [proxyItem, setProxyItem] = useState<LocalProxyItem>({ ...defaultObj });
+  const [proxyItem, setProxyItem] = useState<ProxyItem>({ ...defaultObj });
 
   const { disableOk, errorMsg } = useMemo(() => {
     const msg = getErrorMsg(proxyItem.beProxyUrl);
@@ -69,13 +71,13 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
     }
   }, [visible]);
 
-  const onOk = () => {
+  /** 保存代理 item 到indexDB */
+  const saveProxyItemToIndexDb = () => {
     if (disableOk) {
       return;
     }
 
-    console.log({ proxyItem });
-    const { open, beProxyUrl: beProxyUrl, tags, target: targetUrl } = proxyItem;
+    const { beProxyUrl, targetUrl, tags, open } = proxyItem;
 
     let request = indexedDB.open(databaseName, 1);
 
@@ -149,7 +151,7 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
         destroyOnClose
         bodyStyle={{ padding: '20px' }}
         okButtonProps={{ disabled: disableOk }}
-        onOk={onOk}
+        onOk={saveProxyItemToIndexDb}
         onCancel={() => setVisible(false)}
       >
         <div>
@@ -168,7 +170,7 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
 
           <StyledFormItem>
             <span>目标url</span>
-            <span>{proxyItem?.target}</span>
+            <span>{proxyItem?.targetUrl}</span>
           </StyledFormItem>
 
           <StyledFormItem>

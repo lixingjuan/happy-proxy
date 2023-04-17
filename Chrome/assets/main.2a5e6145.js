@@ -4,6 +4,9 @@ import{c as e,j as t,R as o,A as c}from"./App.b3261ac9.js";const r=document.getE
 const databaseName = 'happyProxy';
 const tableUrls = 'tableUrls';
 
+window.databaseName = databaseName;
+window.tableUrls = tableUrls;
+
 // 数据库引用
 let db = null;
 let request = indexedDB.open(databaseName, 1);
