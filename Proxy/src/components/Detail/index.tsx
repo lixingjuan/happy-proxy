@@ -88,6 +88,7 @@ const Detail = (props: { url: string }) => {
       <Button
         size="small"
         type="primary"
+        className="mr-10"
         onClick={() => {
           refreshDetail();
           setOpen(true);
@@ -107,6 +108,7 @@ const Detail = (props: { url: string }) => {
       >
         <div className="flex justify-between items-start gap-10">
           <Info url={url} method={method} onMethodChange={onMethodChange} />
+
           <Space size={4}>
             <Button size="small" type="primary" loading={isSaving} onClick={updateDetail}>
               确认修改

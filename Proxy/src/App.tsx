@@ -1,32 +1,71 @@
+import { useMemo, useState } from 'react';
+import { Empty } from 'antd';
+import { useMount } from 'ahooks';
+
+import AddUrl from './components/AddModal';
+import ListItem from './components/ListItem';
+import CloseAll from './components/SwtchAllStatus';
+import OpenNewTabButton from './components/OpenNewTabButton';
 import './style/index.less';
 
-import { Tabs } from 'antd';
-import Error from 'src/components/Error';
-import ProxyList from 'src/components/ProxyList';
-import { I18Icon, ProxyIcon } from 'src/components/Icon';
-import I18nTransform from 'src/components/I18nTransform';
+import type { LocalProxyItem } from 'src/types';
+import * as dbUtils from './utils/dbUtils';
+import { updateBackground } from './utils/updateBackground';
 
-export const IndexApp = ({ showOpenTabButton = false }: { showOpenTabButton?: boolean }) => (
-  <>
-    <Error />
-    <ProxyList showOpenTabButton={showOpenTabButton} />
-  </>
-);
+const App = () => {
+  const [dataSource, setDataSource] = useState<LocalProxyItem[]>([]);
 
-const items = [
-  {
-    label: <ProxyIcon />,
-    key: '代理配置',
-    style: { padding: 15 },
-    children: <IndexApp />
-  },
-  {
-    label: <I18Icon />,
-    key: '国际化',
-    children: <I18nTransform />
-  }
-];
+  const originalUrlSet = useMemo(
+    () => dataSource.reduce((pre, cur) => pre.add(cur.originalUrl), new Set<string>()),
+    [dataSource]
+  );
 
-const App = () => <Tabs tabPosition={'left'} style={{ height: '100vh' }} items={items} />;
+  const updateDataSource = () => {
+    dbUtils.getAll().then((res) => {
+      const nextListData = res.reverse();
+      setDataSource(nextListData as LocalProxyItem[]);
+      updateBackground(nextListData);
+    });
+  };
+
+  const onToggleItemOpen = (id: string) => {
+    dbUtils
+      .get(id)
+      .then((itemDetail) =>
+        dbUtils.set(id, {
+          ...itemDetail,
+          open: !itemDetail.open
+        })
+      )
+      .then(() => {
+        updateDataSource();
+      });
+  };
+
+  const onDelete = (id: string) => {
+    dbUtils.del(id).then(() => {
+      updateDataSource();
+    });
+  };
+
+  useMount(updateDataSource);
+
+  return (
+    <div className="px-10">
+      <div style={{ position: 'sticky', top: 4, right: 10 }} className="flex justify-end gap-10">
+        <AddUrl onOkCb={updateDataSource} originalUrlSet={originalUrlSet} />
+        <CloseAll onOkCb={updateDataSource} />
+        <OpenNewTabButton />
+      </div>
+
+      <div className="flex flex-col row-gap-5 mt-10">
+        {(dataSource || []).map((it) => (
+          <ListItem itemData={it} key={it.id} onDelete={onDelete} toggleStatus={onToggleItemOpen} />
+        ))}
+        {Array.isArray(dataSource) && !dataSource.length ? <Empty /> : null}
+      </div>
+    </div>
+  );
+};
 
 export default App;

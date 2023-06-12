@@ -28,12 +28,10 @@ chrome.webRequest.onBeforeRequest.addListener(
     }
 
     // 3. 组装转发请求
-    const target = proxyItem.target;
     const { search = '' } = new URL(url);
     const encodeURI = encodeURIComponent(url);
     const params = search ? `&originalUrl=${encodeURI}` : `?originalUrl=${encodeURI}`;
-
-    const redirectUrl = `${target}${params}`;
+    const redirectUrl = `${proxyItem.targetUrl}${params}`;
 
     return { redirectUrl };
   },

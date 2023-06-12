@@ -9,6 +9,7 @@ const StyledRequestInfo = styled.div`
     column-gap: 10px;
     .url {
       flex: 1;
+      word-break: break-all;
     }
     b {
       font-weight: 800;

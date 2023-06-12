@@ -7,15 +7,15 @@ export const updateBackground = (proxyList: LocalProxyItem[], showMessage = true
     return;
   }
 
-  const proxyConfigMap = proxyList
-    .filter((it) => it.open)
-    .reduce(
-      (tol, cur) => ({
-        ...tol,
-        [cur.original]: cur
-      }),
-      {}
-    );
+  const proxyConfigMap = proxyList.reduce((pre, cur) => {
+    if (cur.open) {
+      return {
+        ...pre,
+        [cur.originalUrl]: cur
+      };
+    }
+    return pre;
+  }, {});
 
   chrome.runtime.sendMessage(
     {
@@ -24,14 +24,7 @@ export const updateBackground = (proxyList: LocalProxyItem[], showMessage = true
     },
     (response) => {
       if (response?.message === 'success') {
-        console.log({ proxyConfigMap });
-        if (showMessage) {
-          message.success('background proxyUrls 更新成功');
-        }
-      } else {
-        if (showMessage) {
-          message.error(`background 更新失败 ${response.message}`);
-        }
+        console.log('更新后的', proxyConfigMap);
       }
     }
   );

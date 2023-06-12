@@ -1,38 +1,36 @@
 import { useEffect, useMemo, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Input, Modal, Tooltip } from 'antd';
+import { Button, Input, Modal, Tooltip, message } from 'antd';
 
 import { happyService } from 'src/constants';
-import { LocalProxyItem } from '../types';
-import { isUrl, setLocalProxy, getLocalProxy } from '../utils';
+import { isUrl, getLocalProxy } from '../utils';
 import TagsGroup from './TagsGroup';
 import styled from 'styled-components';
+import * as dbUtils from '../utils/dbUtils';
 
-const defaultObj = {
-  original: '',
-  target: '',
-  tags: [],
-  open: true
-};
+const StyledContent = styled.div`
+  > div {
+    display: flex;
+    column-gap: 10;
+    margin-bottom: 10px;
 
-const StyledFormItem = styled.div`
-  display: flex;
-  column-gap: 10;
-  margin-bottom: 10px;
+    > :first-child {
+      width: 80px;
+      flex-shrink: 0;
+      text-align: right;
+      padding-right: 12px;
+    }
+    > :nth-child(2) {
+      flex-grow: 1;
+    }
 
-  > :first-child {
-    width: 70px;
-    flex-shrink: 0;
-  }
-  > :nth-child(2) {
-    flex-grow: 1;
-  }
-
-  input,
-  span {
-    word-break: break-all;
+    input,
+    span {
+      word-break: break-all;
+    }
   }
 `;
+
 const getErrorMsg = (val: string) => {
   if (!val) {
     return '不能为空';
@@ -43,73 +41,75 @@ const getErrorMsg = (val: string) => {
   }
 
   const local = getLocalProxy();
-  if (local.find((it) => it.original === val)) {
+  if (local.find((it) => it.originalUrl === val)) {
     return '该配置已存在！';
   }
 
   return '';
 };
 
-const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
+const AddProxyModal = ({
+  onOkCb,
+  originalUrlSet
+}: {
+  onOkCb: () => void;
+  originalUrlSet: Set<string>;
+}) => {
   const [visible, setVisible] = useState(false);
-  const [proxyItem, setProxyItem] = useState<LocalProxyItem>({ ...defaultObj });
+  const [originalUrl, setOriginalUrl] = useState('');
+  const [tags, setTags] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const { disableOk, errorMsg } = useMemo(() => {
-    const msg = getErrorMsg(proxyItem.original);
-    return {
-      disableOk: !!msg,
-      errorMsg: msg
-    };
-  }, [proxyItem]);
+  const targetUrl = useMemo(() => {
+    let target = happyService;
+    try {
+      const theOrigin = originalUrl && new URL(originalUrl).origin;
+      target = originalUrl.replace(theOrigin, happyService);
+    } catch (error) {}
 
-  useEffect(() => {
-    if (!visible) {
-      setProxyItem({ ...defaultObj });
+    return target;
+  }, [originalUrl]);
+
+  const isNotUrl = useMemo(() => isUrl(originalUrl) === false, [originalUrl]);
+
+  const errorMsg = useMemo(() => {
+    if (originalUrlSet.has(originalUrl)) {
+      return '该配置已存在';
     }
-  }, [visible]);
+
+    if (!isUrl(originalUrl)) {
+      return '非合法url';
+    }
+
+    return '';
+  }, [originalUrlSet, originalUrl]);
 
   const onOk = () => {
-    if (disableOk) {
-      return;
-    }
-
-    // 获取本地
-    const local = getLocalProxy();
-    // 更新本地
-    const newLocal = [proxyItem, ...local];
-    setLocalProxy(newLocal);
-
-    setVisible(false);
-
-    // 通知父组件更新列表
-    onOkCb?.();
+    setLoading(true);
+    const nextItem = {
+      id: String(+new Date()),
+      targetUrl: targetUrl,
+      originalUrl,
+      open: true,
+      tags
+    };
+    console.log({ nextItem });
+    dbUtils
+      .set(nextItem.id, nextItem)
+      .then((res) => {
+        message.success('增加成功');
+        onOkCb();
+      })
+      .finally(() => {
+        setLoading(false);
+        setVisible(false);
+      });
   };
 
-  const onTagsChange = (val: string[]) => {
-    setProxyItem((pre) => ({
-      ...pre,
-      tags: val
-    }));
-  };
-
-  const onChange = (e: any) => {
-    const original = e.target.value;
-
-    const originIsUrl = isUrl(original);
-    const theOrigin = originIsUrl ? new URL(original).origin : '';
-
-    const target =
-      originIsUrl && theOrigin
-        ? original.replace(theOrigin, happyService)
-        : `${happyService}/${original}`;
-
-    setProxyItem((pre) => ({
-      ...pre,
-      original: decodeURIComponent(original),
-      target,
-      open: true
-    }));
-  };
+  useEffect(() => {
+    setOriginalUrl('');
+    setTags([]);
+  }, [visible]);
 
   return (
     <>
@@ -126,38 +126,39 @@ const AddProxyModal = ({ onOkCb }: { onOkCb: () => void }) => {
       <Modal
         open={visible}
         width={800}
+        onOk={onOk}
         destroyOnClose
         bodyStyle={{ padding: '20px' }}
-        okButtonProps={{ disabled: disableOk }}
-        onOk={onOk}
+        okButtonProps={{ disabled: isNotUrl || !!errorMsg, loading }}
         onCancel={() => setVisible(false)}
       >
-        <div>
-          <StyledFormItem>
+        <StyledContent>
+          <div>
             <span>被代理url</span>
             <div>
               <Input.TextArea
                 autoSize
                 allowClear
-                onChange={onChange}
-                status={errorMsg ? 'error' : ''}
+                onChange={(e) => setOriginalUrl(e.target.value || '')}
               />
-              {errorMsg && <span className="color-red font-12">{errorMsg}</span>}
+              {errorMsg && originalUrl.length > 0 && (
+                <span className="color-red font-12">{errorMsg}</span>
+              )}
             </div>
-          </StyledFormItem>
+          </div>
 
-          <StyledFormItem>
+          <div className="flex">
             <span>目标url</span>
-            <span>{proxyItem?.target}</span>
-          </StyledFormItem>
+            <span>{targetUrl}</span>
+          </div>
 
-          <StyledFormItem>
+          <div className="flex">
             <span>tags</span>
             <div className="flex">
-              <TagsGroup onChange={onTagsChange} />
+              <TagsGroup onChange={setTags} />
             </div>
-          </StyledFormItem>
-        </div>
+          </div>
+        </StyledContent>
       </Modal>
     </>
   );
