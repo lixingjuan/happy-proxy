@@ -3,7 +3,7 @@ import { useRequest } from 'ahooks';
 
 import { getServiceStatus } from '../service';
 
-const App = () => {
+const ErrorTip = () => {
   const { error, run } = useRequest(getServiceStatus);
 
   if (error) {
@@ -11,8 +11,7 @@ const App = () => {
       <Alert
         showIcon
         type="error"
-        message="本地代理服务未开启"
-        className="mb-10"
+        message="本地代理Service未开启"
         action={
           <Button onClick={run} className="ml-30" size="small" type="primary">
             重试
@@ -25,4 +24,4 @@ const App = () => {
   return null;
 };
 
-export default App;
+export default ErrorTip;

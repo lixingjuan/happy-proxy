@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Input, Modal, Tooltip, message } from 'antd';
 
-import { happyService } from 'src/constants';
-import { isUrl, getLocalProxy } from '../utils';
+import { isUrl, getProxyTarget, getErrorMsg } from '../utils';
 import TagsGroup from './TagsGroup';
 import styled from 'styled-components';
 import * as dbUtils from '../utils/dbUtils';
@@ -31,23 +30,6 @@ const StyledContent = styled.div`
   }
 `;
 
-const getErrorMsg = (val: string) => {
-  if (!val) {
-    return '不能为空';
-  }
-
-  if (!isUrl(val)) {
-    return '非合法url';
-  }
-
-  const local = getLocalProxy();
-  if (local.find((it) => it.originalUrl === val)) {
-    return '该配置已存在！';
-  }
-
-  return '';
-};
-
 const AddProxyModal = ({
   onOkCb,
   originalUrlSet
@@ -61,28 +43,15 @@ const AddProxyModal = ({
   const [loading, setLoading] = useState(false);
 
   const targetUrl = useMemo(() => {
-    let target = happyService;
-    try {
-      const theOrigin = originalUrl && new URL(originalUrl).origin;
-      target = originalUrl.replace(theOrigin, happyService);
-    } catch (error) {}
-
-    return target;
+    return getProxyTarget(originalUrl);
   }, [originalUrl]);
 
   const isNotUrl = useMemo(() => isUrl(originalUrl) === false, [originalUrl]);
 
-  const errorMsg = useMemo(() => {
-    if (originalUrlSet.has(originalUrl)) {
-      return '该配置已存在';
-    }
-
-    if (!isUrl(originalUrl)) {
-      return '非合法url';
-    }
-
-    return '';
-  }, [originalUrlSet, originalUrl]);
+  const errorMsg = useMemo(
+    () => getErrorMsg(originalUrl, originalUrlSet),
+    [originalUrlSet, originalUrl]
+  );
 
   const onOk = () => {
     setLoading(true);
@@ -93,10 +62,10 @@ const AddProxyModal = ({
       open: true,
       tags
     };
-    console.log({ nextItem });
+
     dbUtils
       .set(nextItem.id, nextItem)
-      .then((res) => {
+      .then(() => {
         message.success('增加成功');
         onOkCb();
       })

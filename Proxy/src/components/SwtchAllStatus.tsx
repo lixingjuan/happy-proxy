@@ -1,6 +1,6 @@
 import { Button, Tooltip } from 'antd';
-import { getLocalProxy, setLocalProxy } from 'src/utils';
 import { StopOutlined, AlertOutlined } from '@ant-design/icons';
+import * as dbUtils from '../utils/dbUtils';
 
 const StopAllIcon = () => (
   <Tooltip title="全部关闭">
@@ -13,21 +13,30 @@ const OpenAllIcon = () => (
   </Tooltip>
 );
 
-const CloseAll = ({ onOkCb }: { onOkCb: () => void }) => {
-  const handleChangeAll = (open: boolean) => {
-    const local = getLocalProxy();
-    const newLocal = local.map((it) => ({ ...it, open }));
-    setLocalProxy(newLocal);
-    onOkCb?.();
-  };
+const CloseAll = ({ updateDataSourceAndBg }: { updateDataSourceAndBg: () => void }) => {
+  const commonFunc = async (open: boolean) => {
+    const allItems = await dbUtils.getAll();
+    await Promise.all(allItems.map((it) => dbUtils.set(it.id, { ...it, open })));
 
-  const handleCloseAll = () => handleChangeAll(false);
-  const handleOpenAll = () => handleChangeAll(true);
+    updateDataSourceAndBg();
+  };
 
   return (
     <>
-      <Button size="small" onClick={handleCloseAll} icon={<StopAllIcon />} />
-      <Button size="small" onClick={handleOpenAll} icon={<OpenAllIcon />} />
+      <Button
+        size="small"
+        icon={<StopAllIcon />}
+        onClick={() => {
+          commonFunc(false);
+        }}
+      />
+      <Button
+        size="small"
+        icon={<OpenAllIcon />}
+        onClick={() => {
+          commonFunc(true);
+        }}
+      />
     </>
   );
 };

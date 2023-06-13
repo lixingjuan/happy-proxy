@@ -1,6 +1,6 @@
 import { useRequest } from 'ahooks';
 import { useState, useMemo } from 'react';
-import { Space, Button, Drawer, Tabs, message, Popconfirm } from 'antd';
+import { Space, Button, Drawer, Tabs, message } from 'antd';
 
 import Info from './Info';
 import Title from './Title';
@@ -88,7 +88,7 @@ const Detail = (props: { url: string }) => {
       <Button
         size="small"
         type="primary"
-        className="mr-10"
+        className="mr-5"
         onClick={() => {
           refreshDetail();
           setOpen(true);

@@ -31,7 +31,7 @@ export const generateLocalFilePath = () => {
 };
 
 /** 同步获取本地映射文件内容 */
-export const getRelationMap = () => {
+export const getRelationMap = (): Record<string /* originalUrl */, string /* responsePath */> => {
   try {
     return jsonfile.readFileSync(pathToFileMapPath);
   } catch (err) {
@@ -56,6 +56,19 @@ export const updateRelationMap = (newRecord: Record<string, string>) => {
   const newMap = {
     ...getRelationMap(),
     ...(newRecord || {})
+  };
+  setRelationMap(newMap);
+};
+
+/** 修改映射文件的key */
+export const updateOneKeyRelationMap = (oldKey: string, newKey: string) => {
+  checkDBFolder();
+  const filePath = getRelationMap()?.[oldKey];
+
+  // 更新 映射文件
+  const newMap = {
+    ...getRelationMap(),
+    [newKey]: filePath
   };
   setRelationMap(newMap);
 };

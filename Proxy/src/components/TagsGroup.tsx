@@ -3,8 +3,16 @@ import { PlusOutlined } from '@ant-design/icons';
 import type { InputRef } from 'antd';
 import { Input, Tag, Tooltip } from 'antd';
 
-const TagsGroup = ({ onChange }: { onChange: (val: string[]) => void }) => {
-  const [tags, setTags] = useState<string[]>([]);
+const TagsGroup = ({
+  onChange,
+  value = [],
+  canDelete = false
+}: {
+  onChange: (val: string[]) => void;
+  value?: string[];
+  canDelete?: boolean;
+}) => {
+  const [tags, setTags] = useState<string[]>(value);
   const [inputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [editInputIndex, setEditInputIndex] = useState(-1);
@@ -27,6 +35,7 @@ const TagsGroup = ({ onChange }: { onChange: (val: string[]) => void }) => {
     console.log(newTags);
     setTags(newTags);
     onChange(newTags);
+    console.log({ newTags });
   };
 
   const showInput = () => {
@@ -79,12 +88,7 @@ const TagsGroup = ({ onChange }: { onChange: (val: string[]) => void }) => {
         const isLongTag = tag.length > 20;
 
         const tagElem = (
-          <Tag
-            className="edit-tag"
-            key={tag}
-            closable={index !== 0}
-            onClose={() => handleClose(tag)}
-          >
+          <Tag className="edit-tag" key={tag} closable={canDelete} onClose={() => handleClose(tag)}>
             <span
               onDoubleClick={(e) => {
                 if (index !== 0) {
@@ -107,6 +111,7 @@ const TagsGroup = ({ onChange }: { onChange: (val: string[]) => void }) => {
           tagElem
         );
       })}
+
       {inputVisible && (
         <Input
           ref={inputRef}
@@ -119,6 +124,7 @@ const TagsGroup = ({ onChange }: { onChange: (val: string[]) => void }) => {
           onPressEnter={handleInputConfirm}
         />
       )}
+
       {!inputVisible && (
         <Tag className="site-tag-plus" onClick={showInput}>
           <PlusOutlined /> New Tag

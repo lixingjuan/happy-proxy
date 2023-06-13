@@ -1,30 +1,33 @@
-import { LocalProxyItem } from 'src/types';
+import { happyService } from 'src/constants';
 
 export const isUrl = (val: string) =>
   /^(((ht|f)tps?):\/\/)?([^!@#$%^&*?.\s-]([^!@#$%^&*?.\s]{0,63}[^!@#$%^&*?.\s])?\.)+[a-z]{2,6}\/?/.test(
     val
   ) || /^((https?):\/\/)?(localhost:\d)/.test(val);
 
-export const getLocalProxy = (): LocalProxyItem[] => {
+/** 根据提供的url, 获取目标url */
+export const getProxyTarget = (originalUrl: string) => {
+  let target = happyService;
   try {
-    const local = localStorage.getItem('proxyConfig');
+    const theOrigin = originalUrl && new URL(originalUrl).origin;
+    target = originalUrl.replace(theOrigin, happyService);
+  } catch (error) {}
 
-    const parseLocal = local ? JSON.parse(local) : '';
-
-    if (local && Array.isArray(parseLocal) && parseLocal.length > 0) {
-      return parseLocal;
-    }
-
-    return [];
-  } catch (error) {
-    return [];
-  }
+  return target;
 };
 
-export const setLocalProxy = (val: LocalProxyItem[]) => {
-  try {
-    localStorage.setItem('proxyConfig', JSON.stringify(val));
-  } catch (error) {
-    localStorage.setItem('proxyConfig', '[]');
+export const getErrorMsg = (originalUrl: string, hasAddedOriginalUrlSet: Set<string>) => {
+  if (!originalUrl) {
+    return '不能为空';
   }
+
+  if (!isUrl(originalUrl)) {
+    return '非合法url';
+  }
+
+  if (hasAddedOriginalUrlSet.has(originalUrl)) {
+    return '该配置已存在！';
+  }
+
+  return '';
 };

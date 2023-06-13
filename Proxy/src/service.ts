@@ -109,6 +109,12 @@ export const updateDetailApi = (props: {
   proxyUrl: string;
 }): Promise<Response<string>> => service.post('/update-detail', props).then((res) => res.data);
 
+/** 更新originalUrl */
+export const updateOriginalUrlApi = (data: {
+  oldUrl: string;
+  newUrl: string;
+}): Promise<Response<string>> => service.post('/modify-detail', data).then((res) => res.data);
+
 /** 删除一条 record */
 export const deleteRecordApi = (proxyUrl: string) =>
   service

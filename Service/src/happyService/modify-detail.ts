@@ -1,21 +1,19 @@
-import jsonfile from 'jsonfile';
+import { getRelationMap, updateOneKeyRelationMap } from '../utils';
 
-import { getRelationMap } from '../utils';
-
-const queryDetail = async (proxyUrl: string) => {
+const modifyDetail = async (oldUrl: string, newUrl: string) => {
   const localMap = getRelationMap();
   console.log({ localMap });
-
   try {
-    const localFilePath = localMap[proxyUrl];
+    const localFilePath = localMap[oldUrl];
 
     if (!localFilePath) {
       throw new Error('');
     }
 
-    const localFileContent = jsonfile.readFileSync(localFilePath);
+    updateOneKeyRelationMap(oldUrl, newUrl);
+
     return {
-      content: localFileContent,
+      content: null,
       message: '修改成功',
       code: 1
     };
@@ -28,4 +26,4 @@ const queryDetail = async (proxyUrl: string) => {
   }
 };
 
-export default queryDetail;
+export default modifyDetail;
