@@ -32,7 +32,7 @@ const ListItem = ({
 }: {
   itemData: LocalProxyItem;
   isEditingProxyItem: LocalProxyItem | null;
-  onDelete: (id: string) => void;
+  onDelete: () => void;
   toggleStatus: (val: string) => void;
   originalUrlSet: Set<string>;
   setIsEditingProxyItem: React.Dispatch<React.SetStateAction<LocalProxyItem | null>>;
@@ -148,14 +148,7 @@ const ListItem = ({
           编辑
         </Button>
 
-        <Popconfirm
-          title="确认删除？"
-          okText="Yes"
-          cancelText="No"
-          onConfirm={() => {
-            onDelete(id);
-          }}
-        >
+        <Popconfirm title="确认删除？" okText="Yes" cancelText="No" onConfirm={onDelete}>
           <Button danger size="small">
             删除
           </Button>

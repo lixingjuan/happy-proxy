@@ -22,8 +22,10 @@
   },
   "background": {
     "scripts": [
-      "background/actionCallback.js",
-      "background/index.js"
-    ]
+      "background/updateProxyList.js",
+      "background/onBeforeRequest.js",
+      "background/onBeforeSendHeaders.js"
+    ],
+    "type": "module"
   }
 }

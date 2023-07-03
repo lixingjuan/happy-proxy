@@ -11,7 +11,7 @@ import './style/index.less';
 import type { LocalProxyItem } from 'src/types';
 import * as dbUtils from './utils/dbUtils';
 import { updateBackground } from './utils/updateBackground';
-import { updateOriginalUrlApi } from './service';
+import { deleteRecordApi, updateOriginalUrlApi } from './service';
 
 import ErrorTip from './components/ErrorTip';
 import styled from 'styled-components';
@@ -78,9 +78,10 @@ const App = () => {
       .then(updateDataSourceAndBg);
   };
 
-  const onDelete = (id: string) => {
+  const onDelete = (id: string, proxyUrl: string) => {
     dbUtils.del(id).then(() => {
       updateDataSourceAndBg();
+      deleteRecordApi(proxyUrl);
     });
   };
 
@@ -120,7 +121,7 @@ const App = () => {
           <ListItem
             itemData={it}
             key={it.id}
-            onDelete={onDelete}
+            onDelete={() => onDelete(it.id, it.originalUrl)}
             onConfirm={() => onConfirm(it.originalUrl)}
             toggleStatus={onToggleItemOpen}
             originalUrlSet={originalUrlSet}

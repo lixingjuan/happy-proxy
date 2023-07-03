@@ -4,7 +4,6 @@ import { getRelationMap } from '../utils';
 
 const queryDetail = async (proxyUrl: string) => {
   const localMap = getRelationMap();
-  console.log({ localMap });
 
   try {
     const localFilePath = localMap[proxyUrl];

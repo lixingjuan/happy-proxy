@@ -2,7 +2,6 @@ import { getRelationMap, updateOneKeyRelationMap } from '../utils';
 
 const modifyDetail = async (oldUrl: string, newUrl: string) => {
   const localMap = getRelationMap();
-  console.log({ localMap });
   try {
     const localFilePath = localMap[oldUrl];
 
