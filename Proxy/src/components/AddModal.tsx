@@ -108,7 +108,7 @@ const AddProxyModal = ({
               <Input.TextArea
                 autoSize
                 allowClear
-                onChange={(e) => setOriginalUrl(e.target.value || '')}
+                onChange={(e) => setOriginalUrl(decodeURIComponent(e.target.value || ''))}
               />
               {errorMsg && originalUrl.length > 0 && (
                 <span className="color-red font-12">{errorMsg}</span>
