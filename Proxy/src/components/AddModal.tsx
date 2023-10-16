@@ -103,7 +103,10 @@ const AddProxyModal = ({
       >
         <StyledContent>
           <div>
-            <span>被代理url</span>
+            <span>
+              被转发url
+              <Tooltip></Tooltip>
+            </span>
             <div>
               <Input.TextArea
                 autoSize

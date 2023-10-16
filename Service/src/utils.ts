@@ -7,7 +7,7 @@ import { happyServiceFlag } from './constant';
 import { pathToFileMapPath, pathToFileMapFolder, responseBasePath } from './constant';
 
 /** 检查DB文件夹 */
-const checkDBFolder = () => {
+export const checkDBFolder = () => {
   try {
     fs.accessSync(pathToFileMapFolder);
   } catch (error) {
@@ -30,47 +30,52 @@ export const generateLocalFilePath = () => {
   return `${responseBasePath}/${fileName}`;
 };
 
+/** 获取配置url对应的本地数据地址 */
+export const getLocalFilePath = (proxyUrl: string) => {
+  console.log({ proxyUrl });
+  if (!proxyUrl) return null;
+  const relationMap = getRelationMap();
+
+  // 先找精准匹配的
+  const filePath = relationMap.get(proxyUrl);
+  if (filePath) return filePath;
+
+  // 再找模糊匹配的
+  let result = null;
+  relationMap.forEach((filePath, urlConfig) => {
+    if (urlToRegExp(urlConfig).test(proxyUrl)) {
+      result = filePath;
+    }
+  });
+
+  return result;
+};
+
 /** 同步获取本地映射文件内容 */
-export const getRelationMap = (): Record<string /* originalUrl */, string /* responsePath */> => {
+export const getRelationMap = (): Map<string /* originalUrl */, string /* responsePath */> => {
   try {
-    return jsonfile.readFileSync(pathToFileMapPath);
+    return new Map(Object.entries(jsonfile.readFileSync(pathToFileMapPath)));
   } catch (err) {
     checkDBFolder();
     jsonfile.writeFileSync(pathToFileMapPath, {}, { spaces: 2 });
-    return {};
+    return new Map();
   }
 };
 
-export const setRelationMap = (content: Record<string, string>) => {
+export const setRelationMap = (content: Map<string, string>) => {
   checkDBFolder();
   try {
-    jsonfile.writeFileSync(pathToFileMapPath, content, { spaces: 2 });
+    const formatContent = Object.fromEntries(content);
+    jsonfile.writeFileSync(pathToFileMapPath, formatContent, { spaces: 2 });
   } catch {}
 };
 
 /** 增加一条映射内容 */
-export const updateRelationMap = (newRecord: Record<string, string>) => {
+export const updateRelationMap = (proxyUrl: string, filePath: string) => {
   checkDBFolder();
-
-  // 更新 映射文件
-  const newMap = {
-    ...getRelationMap(),
-    ...(newRecord || {})
-  };
-  setRelationMap(newMap);
-};
-
-/** 修改映射文件的key */
-export const updateOneKeyRelationMap = (oldKey: string, newKey: string) => {
-  checkDBFolder();
-  const filePath = getRelationMap()?.[oldKey];
-
-  // 更新 映射文件
-  const newMap = {
-    ...getRelationMap(),
-    [newKey]: filePath
-  };
-  setRelationMap(newMap);
+  const nextRelationMap = getRelationMap();
+  nextRelationMap.set(proxyUrl, filePath);
+  setRelationMap(nextRelationMap);
 };
 
 /** add One Response */
@@ -106,10 +111,8 @@ export const updateOneResposne = (filePath: string, fileContent: Record<string, 
 };
 
 /** delete One Response */
-export const deleteOneResposne = (filePath: string) => {
-  if (!filePath) {
-    return;
-  }
+export const deleteOneResposneByFilePath = (filePath: string) => {
+  if (!filePath) return;
 
   checkDBResponseFolder();
 
@@ -140,7 +143,8 @@ export const saveResponseToLocalNew = (
   }
   const localFilePath = generateLocalFilePath();
 
-  updateRelationMap({ [proxyUrl]: localFilePath });
+  // updateRelationMap({ [proxyUrl]: localFilePath });
+  updateRelationMap(proxyUrl, localFilePath);
   addOneResposne(localFilePath, responseAndRequest);
 };
 
@@ -158,3 +162,53 @@ export const validateUrl = (url: string) => {
   }
   return false;
 };
+
+/** 转换url为正则表达式 */
+export const urlToRegExp = (target: string) => {
+  const formatInput = target
+    .replaceAll('/', '/')
+    .replaceAll('?', '\\?')
+    .replace(/\.([a-zA-Z0-9])/g, '\\.$1');
+
+  return new RegExp(`^${formatInput}$`);
+};
+
+/** 从header中获取配置url */
+export const getConfigUrlFromHeader = (headers: Record<string, any>) => {
+  const happyConfigUrl = headers['happy-config-url'] as string;
+  console.log({ happyConfigUrl });
+  return happyConfigUrl;
+};
+
+/** 根据header, 读取headr中happy-config-url对应的本地存储数据 */
+export const getLocalFilePathByHeader = (headers: Record<string, any>): string | null => {
+  const happyConfigUrl = getConfigUrlFromHeader(headers);
+  if (!happyConfigUrl) return null;
+
+  const localFilePath = getLocalFilePath(decodeURIComponent(happyConfigUrl));
+  return localFilePath;
+};
+
+/** error response */
+export class ErrorRes {
+  content: string | null;
+  message: string;
+  code: -1;
+  constructor(content: any = null, message: string = 'failed') {
+    this.content = content;
+    this.message = message;
+    this.code = -1;
+  }
+}
+
+/** success response */
+export class SuccessRes {
+  content: string | null;
+  message: string;
+  code: 1;
+  constructor(content: any = null) {
+    this.content = content;
+    this.message = 'successful';
+    this.code = 1;
+  }
+}

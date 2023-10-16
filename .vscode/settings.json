@@ -13,7 +13,7 @@
   },
   "[javascript]": {
     "editor.formatOnSave": true,
-    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.quickSuggestions": {
       "comments": "on",
       "strings": "on",
@@ -33,7 +33,7 @@
     }
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.quickSuggestions": {
       "comments": "on",
@@ -85,7 +85,6 @@
   "pasteImage.insertPattern": "![](images/${imageFileName})",
   "pasteImage.defaultName": "${currentFileNameWithoutExt}-YY-MM-DD-HH-mm-ss",
   "editor.linkedEditing": true,
-  "timeline.excludeSources": [],
   "explorer.confirmDragAndDrop": false,
 
   "redhat.telemetry.enabled": true,

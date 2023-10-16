@@ -94,10 +94,8 @@ export const getServiceStatus = (): ApiPromise<boolean> =>
 /** 查询接口详情数据 */
 export const getDetailByUrlApi = (proxyUrl: string): ApiPromise<DetailInterface> =>
   service
-    .get('/query-detail', {
-      params: {
-        proxyUrl
-      }
+    .post('/query-detail', {
+      proxyUrl
     })
     .then((res) => res.data);
 
@@ -119,7 +117,7 @@ export const updateOriginalUrlApi = (data: {
 export const deleteRecordApi = (proxyUrl: string) =>
   service
     .delete('/delete-record', {
-      params: {
+      data: {
         proxyUrl
       }
     })

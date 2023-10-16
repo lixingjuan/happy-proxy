@@ -1,62 +1,34 @@
 import Koa from 'koa';
-import jsonfile from 'jsonfile';
 
-import proxyRoute from './proxyService';
 import { happyServiceFlag } from './constant';
-import happyServiceApi from './happyService';
-import {
-  validateUrl,
-  getRelationMap,
-  saveResponseToLocalNew,
-  getCompleteRequestUrl
-} from './utils';
+import happyServiceDistribute from './happyService';
+import { validateUrl, getLocalFilePathByHeader } from './utils';
+import { readHttpResponse, readLocalData } from './proxyService';
 
 const routeMiddleWare = (ctx: Koa.Context) => {
-  const { url, method, body } = ctx.request;
-  // 接口合法性校验
+  const { url: encodeUrl, headers } = ctx.request;
+  const url = decodeURIComponent(encodeUrl);
+  console.log('url', url);
+  console.log('headers', headers);
+
+  // 1. 接口合法性校验
   if (!validateUrl(url)) {
-    return (ctx.body = {
-      message: 'happy-proxy Service报错: errorMsg: completeUrl获取失败'
-    });
+    return (ctx.body = { message: 'url 无效' });
   }
 
-  // 1. 本服务自己的请求
+  // 2. 本服务自己的请求
   if (url.includes(happyServiceFlag)) {
-    return happyServiceApi(ctx.request)
-      .then((res) => {
-        ctx.body = res;
-      })
-      .catch((err) => {
-        console.log('读取本地内容出错', err.message);
-      });
+    return happyServiceDistribute(ctx);
   }
 
-  // 2. 本地有该接口的mock-data, 则读取本地mock-data返回前端
-  const localUrlToFilePostionMap = getRelationMap();
-  const completeUrl = getCompleteRequestUrl(url);
-  const localFilePath = localUrlToFilePostionMap[completeUrl];
+  const localFilePath = getLocalFilePathByHeader(headers);
+  /** 3. 若本地有该urlresponse-data，从本地读取 */
   if (localFilePath) {
-    const content = jsonfile.readFileSync(localFilePath);
-    ctx.body = content?.response;
-    return;
+    return readLocalData(ctx, localFilePath);
   }
 
-  // 3. 接口响应
-  return proxyRoute(ctx.request, completeUrl)
-    .then((res) => {
-      saveResponseToLocalNew(completeUrl, {
-        response: res,
-        method: method,
-        payload: body,
-        proxyUrl: completeUrl
-      });
-      ctx.body = res;
-    })
-    .catch((err) => {
-      ctx.body = {
-        message: `happy-proxy Service报错: errorMsg: 请求真实接口失败，原因: ${err.message}`
-      };
-    });
+  /** 4. 本地未缓存过相关结果，需要请求真实的接口 */
+  return readHttpResponse(ctx);
 };
 
 export default routeMiddleWare;

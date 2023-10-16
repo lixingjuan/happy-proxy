@@ -1,7 +1,7 @@
 {
   "name": "Happy-Request",
   "description": "转发http到local-Service",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "manifest_version": 2,
   "browser_action": {
     "default_icon": "images/icon48.png",

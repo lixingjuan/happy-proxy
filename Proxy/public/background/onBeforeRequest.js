@@ -1,36 +1,34 @@
-// 当前url来自插件
-function filterBrowserRequest(url) {
-  return /^chrome-extension:\/\//i.test(url);
-}
+const localOrigin = 'http://localhost:4000';
+/** 根据原始的url, 获取将要重定向的目标地址 */
+function assembleRedirectRequest(originalUrl) {
+  try {
+    const parseUrlObj = new URL(originalUrl);
+    let urlSearchParams = parseUrlObj.searchParams;
+    urlSearchParams.append('originalUrl', originalUrl);
+    const oldHref = parseUrlObj.href;
+    const oldOrigin = parseUrlObj.origin;
 
-// 当前url是否有配置
-function filterNoConfigRequest(originalUrl) {
-  return !proxyConfigList.find((it) => it.originalUrl === originalUrl);
-}
-
-function assembleRedirectRequest(originalUrl, proxyItem) {
-  const { search = '' } = new URL(originalUrl);
-  const encodeOriginalURL = encodeURIComponent(originalUrl);
-  const params = search ? `&originalUrl=${encodeOriginalURL}` : `?originalUrl=${encodeOriginalURL}`;
-  const redirectUrl = `${proxyItem.targetUrl}${params}`;
-  return { redirectUrl };
-}
-
-function onBeforeRequest(details) {
-  const originalUrl = decodeURIComponent(details.url);
-  if (filterBrowserRequest(originalUrl)) {
-    return {};
+    // 把原始的origin, 替换为我们本地服务的origin
+    return oldHref.replace(oldOrigin, localOrigin);
+  } catch (error) {
+    return originalUrl;
   }
-  if (filterNoConfigRequest(originalUrl)) {
-    return {};
-  }
-
-  const proxyItem = proxyConfigList.find((it) => it.originalUrl === originalUrl);
-  return assembleRedirectRequest(originalUrl, proxyItem);
 }
 
 chrome.webRequest.onBeforeRequest.addListener(
-  onBeforeRequest,
+  (details) => {
+    const originalUrl = decodeURIComponent(details.url);
+    if (originalUrl.startsWith('chrome-extension://') || originalUrl.startsWith(localOrigin)) {
+      return {};
+    }
+
+    const matchItem = matchConfigByOriginRequestUrl(originalUrl);
+    if (!matchItem) {
+      return {};
+    }
+
+    return { redirectUrl: assembleRedirectRequest(originalUrl, matchItem) };
+  },
   {
     urls: ['<all_urls>']
   },

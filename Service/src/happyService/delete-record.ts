@@ -1,24 +1,24 @@
-import { deleteOneResposne, getRelationMap, setRelationMap } from '../utils';
+import {
+  ErrorRes,
+  SuccessRes,
+  setRelationMap,
+  getRelationMap,
+  getLocalFilePath,
+  deleteOneResposneByFilePath
+} from '../utils';
 
+/** 删除一条记录 & 本地response-data */
 const deleteOneRecord = async (proxyUrl: string) => {
-  if (!proxyUrl) {
-    return {
-      message: '删除失败, proxyUrl不能为空',
-      code: -1
-    };
-  }
+  if (!proxyUrl) return new ErrorRes(null, 'proxyUrl不能为空');
+
+  const filePath = getLocalFilePath(proxyUrl);
+  if (!filePath) return new ErrorRes(null, '未找到');
+
   const relationMap = getRelationMap();
-
-  deleteOneResposne(relationMap[proxyUrl]);
-
-  delete relationMap[proxyUrl];
-
+  relationMap.delete(proxyUrl);
   setRelationMap(relationMap);
-
-  return {
-    message: '删除成功',
-    code: 1
-  };
+  deleteOneResposneByFilePath(filePath);
+  return new SuccessRes();
 };
 
 export default deleteOneRecord;

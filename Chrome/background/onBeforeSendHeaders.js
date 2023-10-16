@@ -1,51 +1,65 @@
-function onBeforeSendHeaders(details) {
+const onBeforeSendHeaders = (details) => {
   try {
-    console.log(details.url);
+    const { initiator, url } = details;
 
-    const { originalUrl: encodeOriginalUrl } = new URL(details.url).search
-      .slice(1)
-      .split('&')
-      .reduce((tol, cur) => {
-        const [key, value] = cur.split('=');
-        Object.assign(tol, { [key]: value });
-        return tol;
-      }, {});
+    // 从路径search获取编码后的原始url
+    const encodeOriginalUrl = new URL(url).searchParams.get("originalUrl");
+    if (!encodeOriginalUrl) return { requestHeaders: details.requestHeaders };
 
-    const originalUrl = decodeURIComponent(encodeOriginalUrl);
-    const beProxyItem = proxyConfigList.find((it) => it.originalUrl === originalUrl);
-    if (!beProxyItem) {
+    console.log("encodeOriginalUrl", encodeOriginalUrl);
+
+    // 对原始url进行解码
+    const originalUrl = encodeOriginalUrl ? decodeURIComponent(encodeOriginalUrl) : "";
+
+    // 不需要处理的情况
+    const notNeedHandle =
+      !originalUrl ||
+      originalUrl.startsWith("chrome-extension://") ||
+      !matchConfigByOriginRequestUrl(originalUrl);
+
+    if (notNeedHandle) {
       return { requestHeaders: details.requestHeaders };
     }
 
+    // 补充cookie
     const currentItemCookie = details.requestHeaders.find(
-      (h) => h.name.toLocaleLowerCase() === 'cookie'
+      (h) => h.name.toLocaleLowerCase() === "cookie"
     );
 
+    const matchedProxyItem = matchConfigByOriginRequestUrl(originalUrl);
+    const happyCookies = matchedProxyItem.cookies.map(({ name, value }) => `${name}=${value}`);
 
+    // 组装最终版本cookie
+    const cookieValue = [...happyCookies].concat(currentItemCookie).join(";");
 
-    const happyCookies = beProxyItem.cookies.map(({ name, value })=>`${name}=${value}`)
-    const cookieValue = [...happyCookies].concat(currentItemCookie).join(';');
-
-
-
+    // headers
     const headers = [
       ...details.requestHeaders,
       {
-        name: 'Cookie',
-        value:cookieValue
-      }
+        name: "Cookie",
+        value: cookieValue,
+      },
+      {
+        name: "Referer",
+        value: new URL(initiator).host,
+      },
+      {
+        name: "happy-config-url",
+        value: encodeURIComponent(matchedProxyItem.originalUrl),
+      },
     ];
-    console.log({ headers });
+    console.log("matchedProxyItem.originalUrl", matchedProxyItem.originalUrl);
+
     return { requestHeaders: headers };
   } catch (error) {
     console.log(error.message);
   }
-}
+};
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
   onBeforeSendHeaders,
   {
-    urls: ['<all_urls>']
+    urls: ["<all_urls>"],
   },
-  ['blocking', 'requestHeaders', 'extraHeaders']
+  ["blocking", "requestHeaders", "extraHeaders"]
 );

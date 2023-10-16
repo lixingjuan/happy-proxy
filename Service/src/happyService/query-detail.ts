@@ -1,29 +1,18 @@
 import jsonfile from 'jsonfile';
 
-import { getRelationMap } from '../utils';
+import { ErrorRes, getLocalFilePath, SuccessRes } from '../utils';
 
-const queryDetail = async (proxyUrl: string) => {
-  const localMap = getRelationMap();
+const queryDetail = async (configUrl: string) => {
+  if (!configUrl) return new ErrorRes(null, 'not exist');
+
+  const localFilePath = getLocalFilePath(configUrl);
+  if (!localFilePath) return new ErrorRes(null, 'no local data');
 
   try {
-    const localFilePath = localMap[proxyUrl];
-
-    if (!localFilePath) {
-      throw new Error('');
-    }
-
     const localFileContent = jsonfile.readFileSync(localFilePath);
-    return {
-      content: localFileContent,
-      message: '修改成功',
-      code: 1
-    };
+    return new SuccessRes(localFileContent);
   } catch (error) {
-    return {
-      content: null,
-      message: '修改失败',
-      code: -1
-    };
+    return new ErrorRes(null, (error as Error).message);
   }
 };
 

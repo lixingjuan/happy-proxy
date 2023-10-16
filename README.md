@@ -63,6 +63,10 @@
    2. [x] 打开tab页
 6. [ ] ? MacBook Pro (13-inch, M1, 2020) 版本:11.2.3 => pm2启动，电脑频繁紫屏重启
 7. [ ] 两个接口支持使用一份mock-data
-8. [ ] 支持编辑
+8. [x] 支持编辑
+9. [ ] onBeforeSendHeade不会提供host信息，怎么处理？（暂时在background.js中写死了, 或者通过页面支持配置?）
+10. [x] url支持模糊匹配
+
+
 
 
